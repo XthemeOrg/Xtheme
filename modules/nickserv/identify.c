@@ -145,7 +145,7 @@ static void ns_cmd_login(sourceinfo_t *si, int parc, char *parv[])
 		        u->myuser = NULL;
 		}
 
-		command_success_nodata(si, nicksvs.no_nick_ownership ? _("You are now logged in as \2%s\2.") : _("You are now identified for \2%s\2."), entity(mu)->name);
+		command_success_nodata(si, nicksvs.no_nick_ownership ? _("You are now logged in as \2%s\2.") : _("AUTHENTICATION SUCCESSFUL as \2%s\2!"), entity(mu)->name);
 
 		myuser_login(si->service, u, mu, true);
 		logcommand(si, CMDLOG_LOGIN, COMMAND_UC);
@@ -155,7 +155,7 @@ static void ns_cmd_login(sourceinfo_t *si, int parc, char *parv[])
 
 	logcommand(si, CMDLOG_LOGIN, "failed " COMMAND_UC " to \2%s\2 (bad password)", entity(mu)->name);
 
-	command_fail(si, fault_authfail, _("Invalid password for \2%s\2."), entity(mu)->name);
+	command_fail(si, fault_authfail, _("AUTHENTICATION FAILED as \2%s\2!"), entity(mu)->name);
 	bad_password(si, mu);
 }
 
