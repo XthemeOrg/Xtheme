@@ -597,7 +597,7 @@ void handle_certfp(sourceinfo_t *si, user_t *u, const char *certfp)
 		return;
 	}
 
-	notice(svs->me->nick, u->nick, nicksvs.no_nick_ownership ? _("You are now logged in as \2%s\2.") : _("You are now identified for \2%s\2."), entity(mu)->name);
+	notice(svs->me->nick, u->nick, nicksvs.no_nick_ownership ? _("You are now logged in as \2%s\2.") : _("AUTHENTICATION SUCCESSFUL as \2%s\2!"), entity(mu)->name);
 
 	myuser_login(svs, u, mu, true);
 	logcommand_user(svs, u, CMDLOG_LOGIN, "LOGIN via CERTFP (%s)", certfp);
