@@ -6,7 +6,7 @@ channel in the event of a takeover.
 More precisely, everyone will be deopped,
 limit and key will be cleared, all bans
 matching you are removed, a ban exception
-matching you is added (in case of bans Atheme
+matching you is added (in case of bans &nick&
 can't see), the channel is set invite-only
 and moderated and you are invited.
 
