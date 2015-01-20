@@ -163,7 +163,7 @@ inet_pton6(const char *src, u_char *dst)
 	curtok = src;
 	saw_xdigit = 0;
 	val = 0;
-	while((ch = tolower(*src++)) != '\0')
+	while((ch = tolower((unsigned char)*src++)) != '\0')
 	{
 		const char *pch;
 
@@ -208,8 +208,6 @@ inet_pton6(const char *src, u_char *dst)
 				break;	/* '\0' was seen by inet_pton4(). */
 			}
 		}
-		else
-			continue;
 		return (0);
 	}
 	if(saw_xdigit)
@@ -366,6 +364,38 @@ match_cidr(const char *s1, const char *s2)
 	}
 	else
 		return 1;
+}
+
+int valid_ip_or_mask(const char *src)
+{
+	char ipaddr[HOSTLEN + 6], buf[IN6ADDRSZ];
+	char *mask, *end;
+	unsigned long cidrlen;
+
+	if (mowgli_strlcpy(ipaddr, src, sizeof ipaddr) >= sizeof ipaddr)
+		return 0;
+
+	int is_ipv6 = (strchr(ipaddr, ':') != NULL);
+
+	if (mask = strchr(ipaddr, '/'))
+	{
+		*mask++ = '\0';
+
+		if (!isdigit((unsigned char)*mask))
+			return 0;
+
+		cidrlen = strtoul(mask, &end, 10);
+		if (*end != '\0')
+			return 0;
+
+		if (cidrlen > (is_ipv6 ? 128 : 32))
+			return 0;
+	}
+
+	if (is_ipv6)
+		return inet_pton6(ipaddr, buf);
+	else
+		return inet_pton4(ipaddr, buf);
 }
 
 /* vim:cinoptions=>s,e0,n0,f0,{0,}0,^0,=s,ps,t0,c3,+s,(2s,us,)20,*30,gs,hs

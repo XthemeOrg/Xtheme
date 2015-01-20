@@ -381,7 +381,7 @@ static void os_cmd_clones_kline(sourceinfo_t *si, int parc, char *parv[])
 		wallops("\2%s\2 disabled CLONES klines", get_oper_name(si));
 		logcommand(si, CMDLOG_ADMIN, "CLONES:KLINE:OFF");
 	}
-	else if (isdigit(arg[0]))
+	else if (isdigit((unsigned char)arg[0]))
 	{
 		unsigned int newgrace = atol(arg);
 		if (kline_enabled && grace_count == newgrace)
@@ -450,6 +450,13 @@ static void os_cmd_clones_addexempt(sourceinfo_t *si, int parc, char *parv[])
 		return;
 	}
 
+	if (!valid_ip_or_mask(ip))
+	{
+		command_fail(si, fault_badparams, _("Invalid IP/mask given."));
+		command_fail(si, fault_badparams, _("Syntax: CLONES ADDEXEMPT <ip> <clones> [!P|!T <minutes>] <reason>"));
+		return;
+	}
+
 	clones = atoi(clonesstr);
 
 	if (expiry && !strcasecmp(expiry, "!P"))
@@ -478,33 +485,24 @@ static void os_cmd_clones_addexempt(sourceinfo_t *si, int parc, char *parv[])
 			*reason++ = '\0';
 		expiry += 3;
 
-		if (expiry)
-		{
-			duration = (atol(expiry) * 60);
-			while (isdigit(*expiry))
-				++expiry;
-			if (*expiry == 'h' || *expiry == 'H')
-				duration *= 60;
-			else if (*expiry == 'd' || *expiry == 'D')
-				duration *= 1440;
-			else if (*expiry == 'w' || *expiry == 'W')
-				duration *= 10080;
-			else if (*expiry == '\0')
-				;
-			else
-				duration = 0;
-
-			if (duration == 0)
-			{
-				command_fail(si, fault_badparams, _("Invalid duration given."));
-				command_fail(si, fault_badparams, _("Syntax: CLONES ADDEXEMPT <ip> <clones> [!P|!T <minutes>] <reason>"));
-				return;
-			}
-		}
+		duration = (atol(expiry) * 60);
+		while (isdigit((unsigned char)*expiry))
+			++expiry;
+		if (*expiry == 'h' || *expiry == 'H')
+			duration *= 60;
+		else if (*expiry == 'd' || *expiry == 'D')
+			duration *= 1440;
+		else if (*expiry == 'w' || *expiry == 'W')
+			duration *= 10080;
+		else if (*expiry == '\0')
+			;
 		else
+			duration = 0;
+
+		if (duration == 0)
 		{
-			command_fail(si, fault_needmoreparams, STR_INSUFFICIENT_PARAMS, "CLONES ADDEXEMPT");
-			command_fail(si, fault_needmoreparams, _("Syntax: AKILL ADD <nick|hostmask> [!P|!T <minutes>] <reason>"));
+			command_fail(si, fault_badparams, _("Invalid duration given."));
+			command_fail(si, fault_badparams, _("Syntax: CLONES ADDEXEMPT <ip> <clones> [!P|!T <minutes>] <reason>"));
 			return;
 		}
 
@@ -582,7 +580,11 @@ static void os_cmd_clones_delexempt(sourceinfo_t *si, int parc, char *parv[])
 	char *arg = parv[0];
 
 	if (!arg)
+	{
+		command_fail(si, fault_needmoreparams, STR_INSUFFICIENT_PARAMS, "CLONES DELEXEMPT");
+		command_fail(si, fault_needmoreparams, _("Syntax: CLONES DELEXEMPT <ip>"));
 		return;
+	}
 
 	MOWGLI_ITER_FOREACH_SAFE(n, tn, clone_exempts.head)
 	{
@@ -698,9 +700,9 @@ static void os_cmd_clones_setexempt(sourceinfo_t *si, int parc, char *parv[])
 						c->warn = 0;
 						return;
 					}
-					else if (clones >= c->allowed)
+					else if (clones > c->allowed)
 					{
-						command_fail(si, fault_badparams, _("Warned clones limit must be lower than the allowed limit of %d"), c->allowed);
+						command_fail(si, fault_badparams, _("Warned clones limit must be lower than or equal to the allowed limit of %d"), c->allowed);
 						return;
 					}
 
@@ -718,7 +720,7 @@ static void os_cmd_clones_setexempt(sourceinfo_t *si, int parc, char *parv[])
 					else
 					{
 						duration = (atol(expiry) * 60);
-						while (isdigit(*expiry))
+						while (isdigit((unsigned char)*expiry))
 							++expiry;
 						if (*expiry == 'h' || *expiry == 'H')
 							duration *= 60;
@@ -785,7 +787,7 @@ static void os_cmd_clones_duration(sourceinfo_t *si, int parc, char *parv[])
 	}
 
 	duration = (atol(s) * 60);
-	while (isdigit(*s))
+	while (isdigit((unsigned char)*s))
 		s++;
 	if (*s == 'h' || *s == 'H')
 		duration *= 60;

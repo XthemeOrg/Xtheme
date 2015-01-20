@@ -17,43 +17,43 @@ DECLARE_MODULE_V1("protocol/bahamut", true, _modinit, NULL, PACKAGE_STRING, "Ath
 /* *INDENT-OFF* */
 
 ircd_t Bahamut = {
-        "Bahamut 1.8.x",                /* IRCd name */
-        "$",                            /* TLD Prefix, used by Global. */
-        false,                          /* Whether or not we use IRCNet/TS6 UID */
-        false,                          /* Whether or not we use RCOMMAND */
-        false,                          /* Whether or not we support channel owners. */
-        false,                          /* Whether or not we support channel protection. */
-        false,                          /* Whether or not we support halfops. */
-	false,				/* Whether or not we use P10 */
-	false,				/* Whether or not we use vHosts. */
-	CMODE_OPERONLY,			/* Oper-only cmodes */
-        0,                              /* Integer flag for owner channel flag. */
-        0,                              /* Integer flag for protect channel flag. */
-        0,                              /* Integer flag for halfops. */
-        "+",                            /* Mode we set for owner. */
-        "+",                            /* Mode we set for protect. */
-        "+",                            /* Mode we set for halfops. */
-	PROTOCOL_BAHAMUT,		/* Protocol type */
-	0,                              /* Permanent cmodes */
-	0,                              /* Oper-immune cmode */
-	"beI",                          /* Ban-like cmodes */
-	'e',                            /* Except mchar */
-	'I',                            /* Invex mchar */
-	IRCD_HOLDNICK                   /* Flags */
+	.ircdname = "Bahamut 1.8.x",
+	.tldprefix = "$",
+	.uses_uid = false,
+	.uses_rcommand = false,
+	.uses_owner = false,
+	.uses_protect = false,
+	.uses_halfops = false,
+	.uses_p10 = false,
+	.uses_vhost = false,
+	.oper_only_modes = CMODE_OPERONLY,
+	.owner_mode = 0,
+	.protect_mode = 0,
+	.halfops_mode = 0,
+	.owner_mchar = "+",
+	.protect_mchar = "+",
+	.halfops_mchar = "+",
+	.type = PROTOCOL_BAHAMUT,
+	.perm_mode = 0,
+	.oimmune_mode = 0,
+	.ban_like_modes = "beI",
+	.except_mchar = 'e',
+	.invex_mchar = 'I',
+	.flags = IRCD_HOLDNICK,
 };
 
 struct cmode_ bahamut_mode_list[] = {
-  { 'i', CMODE_INVITE   },
-  { 'm', CMODE_MOD      },
-  { 'n', CMODE_NOEXT    },
-  { 'p', CMODE_PRIV     },
-  { 's', CMODE_SEC      },
-  { 't', CMODE_TOPIC    },
-  { 'c', CMODE_NOCOLOR  },
-  { 'M', CMODE_MODREG   },
-  { 'R', CMODE_REGONLY  },
+  { 'i', CMODE_INVITE	},
+  { 'm', CMODE_MOD	},
+  { 'n', CMODE_NOEXT	},
+  { 'p', CMODE_PRIV	},
+  { 's', CMODE_SEC	},
+  { 't', CMODE_TOPIC	},
+  { 'c', CMODE_NOCOLOR	},
+  { 'M', CMODE_MODREG	},
+  { 'R', CMODE_REGONLY	},
   { 'O', CMODE_OPERONLY },
-  { 'r', CMODE_CHANREG  },
+  { 'r', CMODE_CHANREG	},
   { '\0', 0 }
 };
 
@@ -101,7 +101,7 @@ static bool check_jointhrottle(const char *value, channel_t *c, mychan_t *mc, us
 				return false;
 			arg2 = p + 1;
 		}
-		else if (!isdigit(*p))
+		else if (!isdigit((unsigned char)*p))
 			return false;
 		p++;
 	}
@@ -486,7 +486,7 @@ static void m_sjoin(sourceinfo_t *si, int parc, char *parv[])
 {
 	/*
 	 *  -> :proteus.malkier.net SJOIN 1073516550 #shrike +tn :@sycobuny @+rakaur
-	 *      also:
+	 *	also:
 	 *  -> :nenolod_ SJOIN 1117334567 #chat
 	 */
 

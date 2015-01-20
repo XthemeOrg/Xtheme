@@ -17,29 +17,29 @@ DECLARE_MODULE_V1("protocol/charybdis", true, _modinit, NULL, PACKAGE_STRING, "A
 /* *INDENT-OFF* */
 
 ircd_t Charybdis = {
-        "Charybdis",			/* IRCd name */
-        "$$",                           /* TLD Prefix, used by Global. */
-        true,                           /* Whether or not we use IRCNet/TS6 UID */
-        false,                          /* Whether or not we use RCOMMAND */
-        false,                          /* Whether or not we support channel owners. */
-        false,                          /* Whether or not we support channel protection. */
-        false,                          /* Whether or not we support halfops. */
-	false,				/* Whether or not we use P10 */
-	false,				/* Whether or not we use vHosts. */
-	CMODE_EXLIMIT | CMODE_PERM,	/* Oper-only cmodes */
-        0,                              /* Integer flag for owner channel flag. */
-        0,                              /* Integer flag for protect channel flag. */
-        0,                              /* Integer flag for halfops. */
-        "+",                            /* Mode we set for owner. */
-        "+",                            /* Mode we set for protect. */
-        "+",                            /* Mode we set for halfops. */
-	PROTOCOL_CHARYBDIS,		/* Protocol type */
-	CMODE_PERM,                     /* Permanent cmodes */
-	0,                              /* Oper-immune cmode */
-	"beIq",                         /* Ban-like cmodes */
-	'e',                            /* Except mchar */
-	'I',                            /* Invex mchar */
-	IRCD_CIDR_BANS | IRCD_HOLDNICK  /* Flags */
+	.ircdname = "Charybdis",
+	.tldprefix = "$$",
+	.uses_uid = true,
+	.uses_rcommand = false,
+	.uses_owner = false,
+	.uses_protect = false,
+	.uses_halfops = false,
+	.uses_p10 = false,
+	.uses_vhost = false,
+	.oper_only_modes = CMODE_EXLIMIT | CMODE_PERM,
+	.owner_mode = 0,
+	.protect_mode = 0,
+	.halfops_mode = 0,
+	.owner_mchar = "+",
+	.protect_mchar = "+",
+	.halfops_mchar = "+",
+	.type = PROTOCOL_CHARYBDIS,
+	.perm_mode = CMODE_PERM,
+	.oimmune_mode = 0,
+	.ban_like_modes = "beIq",
+	.except_mchar = 'e',
+	.invex_mchar = 'I',
+	.flags = IRCD_CIDR_BANS | IRCD_HOLDNICK,
 };
 
 struct cmode_ charybdis_mode_list[] = {
@@ -58,12 +58,12 @@ struct cmode_ charybdis_mode_list[] = {
   { 'Q', CMODE_DISFWD },
 
   /* following modes are added as extensions */
-  { 'N', CMODE_NPC       },
-  { 'S', CMODE_SSLONLY   },
+  { 'N', CMODE_NPC	 },
+  { 'S', CMODE_SSLONLY	 },
   { 'O', CMODE_OPERONLY  },
   { 'A', CMODE_ADMINONLY },
-  { 'c', CMODE_NOCOLOR   },
-  { 'C', CMODE_NOCTCP    },
+  { 'c', CMODE_NOCOLOR	 },
+  { 'C', CMODE_NOCTCP	 },
 
   { '\0', 0 }
 };
@@ -148,7 +148,7 @@ static bool check_jointhrottle(const char *value, channel_t *c, mychan_t *mc, us
 				return false;
 			arg2 = p + 1;
 		}
-		else if (!isdigit(*p))
+		else if (!isdigit((unsigned char)*p))
 			return false;
 		p++;
 	}
@@ -290,6 +290,9 @@ static bool charybdis_is_extban(const char *mask)
 
 	if ((mask_len < 2 || mask[0] != '$'))
 		return NULL;
+
+	if (strchr(mask, ' '))
+		return false;
 
 	if (mask_len > 2 && mask[1] == '~')
 		offset = 1;

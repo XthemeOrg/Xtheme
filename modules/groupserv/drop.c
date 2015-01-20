@@ -71,13 +71,14 @@ static void gs_cmd_drop(sourceinfo_t *si, int parc, char *parv[])
 		create_challenge(si, entity(mg)->name, 1, key1);
 		if (strcmp(key, key0) && strcmp(key, key1))
 		{
-			command_fail(si, fault_badparams, _("Invalid key for %s."), "DROP");
+			command_fail(si, fault_badparams, _("Invalid key for \2%s\2."), "DROP");
 			return;
 		}
 	}
 
 	logcommand(si, CMDLOG_REGISTER, "DROP: \2%s\2", entity(mg)->name);
 	remove_group_chanacs(mg);
+	hook_call_group_drop(mg);
 	object_unref(mg);
 	command_success_nodata(si, _("The group \2%s\2 has been dropped."), name);
 	return;
