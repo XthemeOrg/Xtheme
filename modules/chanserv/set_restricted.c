@@ -78,6 +78,7 @@ static void cs_cmd_set_restricted(sourceinfo_t *si, int parc, char *parv[])
 		}
 
 		logcommand(si, CMDLOG_SET, "SET:RESTRICTED:ON: \2%s\2", mc->name);
+		verbose(mc, _("\2%s\2 enabled the RESTRICTED flag"), get_source_name(si));
 
 		mc->flags |= MC_RESTRICTED;
 
@@ -93,6 +94,7 @@ static void cs_cmd_set_restricted(sourceinfo_t *si, int parc, char *parv[])
 		}
 
 		logcommand(si, CMDLOG_SET, "SET:RESTRICTED:OFF: \2%s\2", mc->name);
+		verbose(mc, _("\2%s\2 disabled the RESTRICTED flag"), get_source_name(si));
 
 		mc->flags &= ~MC_RESTRICTED;
 

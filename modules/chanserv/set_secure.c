@@ -78,6 +78,7 @@ static void cs_cmd_set_secure(sourceinfo_t *si, int parc, char *parv[])
 		}
 
 		logcommand(si, CMDLOG_SET, "SET:SECURE:ON: \2%s\2", mc->name);
+		verbose(mc, _("\2%s\2 enabled the SECURE flag"), get_source_name(si));
 
 		mc->flags |= MC_SECURE;
 
@@ -93,6 +94,7 @@ static void cs_cmd_set_secure(sourceinfo_t *si, int parc, char *parv[])
 		}
 
 		logcommand(si, CMDLOG_SET, "SET:SECURE:OFF: \2%s\2", mc->name);
+		verbose(mc, _("\2%s\2 disabled the SECURE flag"), get_source_name(si));
 
 		mc->flags &= ~MC_SECURE;
 

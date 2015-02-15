@@ -78,6 +78,7 @@ static void cs_cmd_set_keeptopic(sourceinfo_t *si, int parc, char *parv[])
 		}
 
 		logcommand(si, CMDLOG_SET, "SET:KEEPTOPIC:ON: \2%s\2", mc->name);
+		verbose(mc, _("\2%s\2 enabled the KEEPTOPIC flag"), get_source_name(si));
 
 		mc->flags |= MC_KEEPTOPIC;
 
@@ -93,6 +94,7 @@ static void cs_cmd_set_keeptopic(sourceinfo_t *si, int parc, char *parv[])
 		}
 
 		logcommand(si, CMDLOG_SET, "SET:KEEPTOPIC:OFF: \2%s\2", mc->name);
+		verbose(mc, _("\2%s\2 disabled the KEEPTOPIC flag"), get_source_name(si));
 
 		mc->flags &= ~(MC_KEEPTOPIC | MC_TOPICLOCK);
 
