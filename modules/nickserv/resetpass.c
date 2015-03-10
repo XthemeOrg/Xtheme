@@ -56,35 +56,41 @@ static void ns_cmd_resetpass(sourceinfo_t *si, int parc, char *parv[])
 		return;
 	}
 
-	if ((md = metadata_find(mu, "private:mark:setter")) && has_priv(si, PRIV_MARK))
-	{
-		logcommand(si, CMDLOG_ADMIN, "RESETPASS: \2%s\2 (overriding mark by \2%s\2)", entity(mu)->name, md->value);
-		command_success_nodata(si, _("Overriding MARK placed by %s on the account %s."), md->value, entity(mu)->name);
-		newpass = random_string(12);
-		command_success_nodata(si, _("The password for the account %s has been changed to %s."), entity(mu)->name, newpass);
-		set_password(mu, newpass);
-		free(newpass);
-		wallops("%s reset the password for the \2MARKED\2 account %s.", get_oper_name(si), entity(mu)->name);
-		return;
-	}
-
 	if ((md = metadata_find(mu, "private:mark:setter")))
 	{
-		logcommand(si, CMDLOG_ADMIN, "failed RESETPASS \2%s\2 (marked by \2%s\2)", entity(mu)->name, md->value);
-		command_fail(si, fault_badparams, _("This operation cannot be performed on %s, because the account has been marked by %s."), entity(mu)->name, md->value);
-		return;
+		if (has_priv(si, PRIV_MARK))
+		{
+			wallops("%s reset the password for the \2MARKED\2 account %s.", get_oper_name(si), entity(mu)->name);
+			logcommand(si, CMDLOG_ADMIN, "RESETPASS: \2%s\2 (overriding mark by \2%s\2)", entity(mu)->name, md->value);
+			command_success_nodata(si, _("Overriding MARK placed by %s on the account %s."), md->value, entity(mu)->name);
+		}
+		else
+		{
+			logcommand(si, CMDLOG_ADMIN, "failed RESETPASS \2%s\2 (marked by \2%s\2)", entity(mu)->name, md->value);
+			command_fail(si, fault_badparams, _("This operation cannot be performed on %s, because the account has been marked by %s."), entity(mu)->name, md->value);
+			return;
+		}
+	}
+	else
+	{
+		wallops("%s reset the password for the account %s", get_oper_name(si), entity(mu)->name);
+		logcommand(si, CMDLOG_ADMIN, "RESETPASS: \2%s\2", entity(mu)->name);
 	}
 
 	newpass = random_string(12);
-	command_success_nodata(si, _("The password for the account %s has been changed to %s."), entity(mu)->name, newpass);
-	set_password(mu, newpass);
-	free(newpass);
 	metadata_delete(mu, "private:setpass:key");
-	metadata_delete(mu, "private:sendpass:sender");
-	metadata_delete(mu, "private:sendpass:timestamp");
+	metadata_add(mu, "private:sendpass:sender", get_oper_name(si));
+	metadata_add(mu, "private:sendpass:timestamp", number_to_string(time(NULL)));
+	set_password(mu, newpass);
+	command_success_nodata(si, _("The password for \2%s\2 has been changed to \2%s\2."), entity(mu)->name, newpass);
 
-	wallops("%s reset the password for the account %s", get_oper_name(si), entity(mu)->name);
-	logcommand(si, CMDLOG_ADMIN, "RESETPASS: \2%s\2", entity(mu)->name);
+	free(newpass);
+
+	if (mu->flags & MU_NOPASSWORD)
+	{
+		mu->flags &= ~MU_NOPASSWORD;
+		command_success_nodata(si, _("The \2%s\2 flag has been removed for account \2%s\2."), "NOPASSWORD", entity(mu)->name);
+	}
 }
 
 /* vim:cinoptions=>s,e0,n0,f0,{0,}0,^0,=s,ps,t0,c3,+s,(2s,us,)20,*30,gs,hs

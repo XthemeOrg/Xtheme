@@ -649,8 +649,17 @@ bool user_is_channel_banned(user_t *u, char ban_type)
 	{
 		chanuser_t *cu = n->data;
 
+		/* Assume that any prefix modes allow changing nicks even while banned */
+		if (cu->modes != 0)
+			continue;
+
 		if (next_matching_ban(cu->chan, u, ban_type, cu->chan->bans.head) != NULL)
-			return true;
+		{
+			if (ircd->except_mchar == '\0' || next_matching_ban(cu->chan, u, ircd->except_mchar, cu->chan->bans.head) == NULL)
+				return true;
+			else
+				continue;
+		}
 	}
 
 	return false;

@@ -27,6 +27,7 @@ static void cs_keeptopic_topicset(channel_t *c);
 static void cs_topiccheck(hook_channel_topic_check_t *data);
 static void cs_tschange(channel_t *c);
 static void cs_leave_empty(void *unused);
+static void cs_bounce_mode_change(hook_channel_mode_change_t *data);
 static void on_shutdown(void *unused);
 
 static mowgli_eventloop_timer_t *cs_leave_empty_timer = NULL;
@@ -278,6 +279,7 @@ void _modinit(module_t *m)
 	hook_add_event("channel_topic");
 	hook_add_event("channel_can_change_topic");
 	hook_add_event("channel_tschange");
+	hook_add_event("channel_mode_change");
 	hook_add_event("user_identify");
 	hook_add_event("shutdown");
 	hook_add_channel_join(cs_join);
@@ -288,6 +290,7 @@ void _modinit(module_t *m)
 	hook_add_channel_topic(cs_keeptopic_topicset);
 	hook_add_channel_can_change_topic(cs_topiccheck);
 	hook_add_channel_tschange(cs_tschange);
+	hook_add_channel_mode_change(cs_bounce_mode_change);
 	hook_add_shutdown(on_shutdown);
 
 	cs_leave_empty_timer = mowgli_timer_add(base_eventloop, "cs_leave_empty", cs_leave_empty, NULL, 300);
@@ -332,6 +335,7 @@ void _moddeinit(module_unload_intent_t intent)
 	hook_del_channel_topic(cs_keeptopic_topicset);
 	hook_del_channel_can_change_topic(cs_topiccheck);
 	hook_del_channel_tschange(cs_tschange);
+	hook_del_channel_mode_change(cs_bounce_mode_change);
 	hook_del_shutdown(on_shutdown);
 
 	mowgli_timer_destroy(base_eventloop, cs_leave_empty_timer);
@@ -346,7 +350,6 @@ static void cs_join(hook_channel_joinpart_t *hdata)
 	unsigned int flags;
 	bool noop;
 	bool secure;
-	bool guard;
 	metadata_t *md;
 	chanacs_t *ca2;
 	char akickreason[120] = "User is banned from this channel", *p;
@@ -368,9 +371,6 @@ static void cs_join(hook_channel_joinpart_t *hdata)
 	 * sophisticated mechanism is disabled */
 	secure = mc->flags & MC_SECURE || (!chansvs.changets &&
 			chan->nummembers == 1 && chan->ts > CURRTIME - 300);
-	/* chanserv or a botserv bot should join */
-	guard = mc->flags & MC_GUARD ||
-		metadata_find(mc, "private:botserv:bot-assigned") != NULL;
 
 	if (chan->nummembers == 1 && mc->flags & MC_GUARD &&
 		metadata_find(mc, "private:botserv:bot-assigned") == NULL)
@@ -383,10 +383,10 @@ static void cs_join(hook_channel_joinpart_t *hdata)
 	if ((mc->flags & MC_RESTRICTED) && !(flags & CA_ALLPRIVS) && !has_priv_user(u, PRIV_JOIN_STAFFONLY))
 	{
 		/* Stay on channel if this would empty it -- jilles */
-		if (chan->nummembers <= (guard ? 2 : 1))
+		if (chan->nummembers - chan->numsvcmembers == 1)
 		{
 			mc->flags |= MC_INHABIT;
-			if (!guard)
+			if (chan->numsvcmembers == 0)
 				join(chan->name, chansvs.nick);
 		}
 		if (mc->mlock_on & CMODE_INVITE || chan->modes & CMODE_INVITE)
@@ -409,10 +409,10 @@ static void cs_join(hook_channel_joinpart_t *hdata)
 	if (flags & CA_AKICK && !(flags & CA_EXEMPT))
 	{
 		/* Stay on channel if this would empty it -- jilles */
-		if (chan->nummembers <= (guard ? 2 : 1))
+		if (chan->nummembers - chan->numsvcmembers == 1)
 		{
 			mc->flags |= MC_INHABIT;
-			if (!guard)
+			if (chan->numsvcmembers == 0)
 				join(chan->name, chansvs.nick);
 		}
 		/* use a user-given ban mask if possible -- jilles */
@@ -471,13 +471,13 @@ static void cs_join(hook_channel_joinpart_t *hdata)
 	 */
 	if (mc->mlock_on & CMODE_INVITE && !(flags & CA_INVITE) &&
 			(!me.bursting || mc->flags & MC_RECREATED) &&
-			(!(u->server->flags & SF_EOB) || (chan->nummembers <= 2 && (chan->nummembers <= 1 || chanuser_find(chan, chansvs.me->me)))) &&
+			(!(u->server->flags & SF_EOB) || (chan->nummembers - chan->numsvcmembers == 1)) &&
 			(!ircd->invex_mchar || !next_matching_ban(chan, u, ircd->invex_mchar, chan->bans.head)))
 	{
-		if (chan->nummembers <= (guard ? 2 : 1))
+		if (chan->nummembers - chan->numsvcmembers == 1)
 		{
 			mc->flags |= MC_INHABIT;
-			if (!guard)
+			if (chan->numsvcmembers == 0)
 				join(chan->name, chansvs.nick);
 		}
 		if (!(chan->modes & CMODE_INVITE))
@@ -494,7 +494,7 @@ static void cs_join(hook_channel_joinpart_t *hdata)
 	 * triggering autocycle-for-ops scripts and immediately
 	 * destroying channels with kick on split riding.
 	 */
-	if (mc->flags & MC_INHABIT && chan->nummembers >= 3)
+	if (mc->flags & MC_INHABIT && chan->nummembers - chan->numsvcmembers >= 2)
 	{
 		mc->flags &= ~MC_INHABIT;
 		if (!(mc->flags & MC_GUARD) && !(chan->flags & CHAN_LOG) && chanuser_find(chan, chansvs.me->me))
@@ -624,7 +624,7 @@ static void cs_part(hook_channel_joinpart_t *hdata)
 		return;
 
 	/* we're not parting if the channel has more than one person on it */
-	if (cu->chan->nummembers > 2)
+	if (cu->chan->nummembers - cu->chan->numsvcmembers > 1)
 		return;
 
 	/* internal clients parting a channel shouldn't cause chanserv to leave. */
@@ -893,19 +893,55 @@ static void cs_leave_empty(void *unused)
 		if (!(mc->flags & MC_INHABIT))
 			continue;
 		/* If there is only one user, stay indefinitely. */
-		if (mc->chan != NULL && mc->chan->nummembers == 2)
+		if (mc->chan != NULL && mc->chan->nummembers - mc->chan->numsvcmembers == 1)
 			continue;
 		mc->flags &= ~MC_INHABIT;
 		if (mc->chan != NULL &&
 				!(mc->chan->flags & CHAN_LOG) &&
 				(!(mc->flags & MC_GUARD) ||
-				 (config_options.leave_chans && mc->chan->nummembers == 1) ||
+				 (config_options.leave_chans && mc->chan->nummembers == mc->chan->numsvcmembers) ||
 				 metadata_find(mc, "private:close:closer")) &&
 				chanuser_find(mc->chan, chansvs.me->me))
 		{
 			slog(LG_DEBUG, "cs_leave_empty(): leaving %s", mc->chan->name);
 			part(mc->chan->name, chansvs.nick);
 		}
+	}
+}
+
+static void cs_bounce_mode_change(hook_channel_mode_change_t *data)
+{
+	mychan_t *mc;
+	chanuser_t *cu;
+	channel_t *chan;
+
+	/* if we have SECURE mode enabled, then we want to bounce any changes */
+	cu = data->cu;
+	chan = cu->chan;
+	mc = chan->mychan;
+
+	if (mc == NULL || (mc != NULL && !(mc->flags & MC_SECURE)))
+		return;
+
+	if (ircd->uses_owner && data->mchar == ircd->owner_mchar[1] && !(chanacs_user_flags(mc, cu->user) & (CA_USEOWNER)))
+	{
+		modestack_mode_param(chansvs.nick, chan, MTYPE_DEL, ircd->owner_mchar[1], CLIENT_NAME(cu->user));
+		cu->modes &= ~data->mvalue;
+	}
+	else if (ircd->uses_protect && data->mchar == ircd->protect_mchar[1] && !(chanacs_user_flags(mc, cu->user) & (CA_USEPROTECT)))
+	{
+		modestack_mode_param(chansvs.nick, chan, MTYPE_DEL, ircd->protect_mchar[1], CLIENT_NAME(cu->user));
+		cu->modes &= ~data->mvalue;
+	}
+	else if (data->mchar == 'o' && !(chanacs_user_flags(mc, cu->user) & (CA_OP | CA_AUTOOP)))
+	{
+		modestack_mode_param(chansvs.nick, chan, MTYPE_DEL, 'o', CLIENT_NAME(cu->user));
+		cu->modes &= ~data->mvalue;
+	}
+	else if (ircd->uses_halfops && data->mchar == ircd->halfops_mchar[1] && !(chanacs_user_flags(mc, cu->user) & (CA_HALFOP | CA_AUTOHALFOP)))
+	{
+		modestack_mode_param(chansvs.nick, chan, MTYPE_DEL, ircd->halfops_mchar[1], CLIENT_NAME(cu->user));
+		cu->modes &= ~data->mvalue;
 	}
 }
 

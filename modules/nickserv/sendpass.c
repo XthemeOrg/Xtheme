@@ -98,8 +98,7 @@ static void ns_cmd_sendpass(sourceinfo_t *si, int parc, char *parv[])
 			command_fail(si, fault_badparams, _("This operation cannot be performed on %s, because the account has been marked by %s."), entity(mu)->name, md->value);
 			if (has_priv(si, PRIV_MARK))
 			{
-				snprintf(cmdtext, sizeof cmdtext,
-						"SENDPASS %s FORCE", entity(mu)->name);
+				snprintf(cmdtext, sizeof cmdtext, "SENDPASS %s FORCE", entity(mu)->name);
 				command_fail(si, fault_badparams, _("Use %s to override this restriction."), cmdtext);
 			}
 			return;
@@ -127,8 +126,7 @@ static void ns_cmd_sendpass(sourceinfo_t *si, int parc, char *parv[])
 			command_fail(si, fault_badparams, _("This operation cannot be performed on %s, because the account has been marked."), entity(mu)->name);
 			if (has_priv(si, PRIV_MARK))
 			{
-				snprintf(cmdtext, sizeof cmdtext,
-						"SENDPASS %s FORCE", entity(mu)->name);
+				snprintf(cmdtext, sizeof cmdtext, "SENDPASS %s FORCE", entity(mu)->name);
 				command_fail(si, fault_badparams, _("Use %s to override this restriction."), cmdtext);
 			}
 			return;
@@ -164,11 +162,10 @@ static void ns_cmd_sendpass(sourceinfo_t *si, int parc, char *parv[])
 
 	if (metadata_find(mu, "private:freeze:freezer"))
 	{
-		command_success_nodata(si, _("%s has been frozen by the %s administration."), entity(mu)->name, me.netname);
+		command_fail(si, fault_noprivs, _("%s has been frozen by the %s administration."), entity(mu)->name, me.netname);
 		return;
 	}
 
-	/* alternative, safer method? */
 	if (command_find(si->service->commands, "SETPASS"))
 	{
 		if (metadata_find(mu, "private:setpass:key"))
@@ -177,51 +174,66 @@ static void ns_cmd_sendpass(sourceinfo_t *si, int parc, char *parv[])
 			command_fail(si, fault_alreadyexists, _("Use SENDPASS %s CLEAR to clear it so that a new one can be sent."), entity(mu)->name);
 			return;
 		}
-		key = random_string(12);
-		if (sendemail(si->su != NULL ? si->su : si->service->me, mu, EMAIL_SETPASS, mu->email, key))
-		{
-			metadata_add(mu, "private:setpass:key", crypt_string(key, gen_salt()));
-			logcommand(si, CMDLOG_ADMIN, "SENDPASS: \2%s\2 (change key)", name);
-			command_success_nodata(si, _("The password change key for \2%s\2 has been sent to \2%s\2."), entity(mu)->name, mu->email);
-			if (ismarked)
-			{
-				wallops("%s sent the password for the \2MARKED\2 account %s.", get_oper_name(si), entity(mu)->name);
-				command_success_nodata(si, _("Overriding MARK"));
-			}
-		}
-		else
-			command_fail(si, fault_emailfail, _("Email send failed."));
-		free(key);
-		return;
-	}
 
-	/* this is not without controversy... :) */
-	if (mu->flags & MU_CRYPTPASS)
-	{
-		command_success_nodata(si, _("The password for the account \2%s\2 is encrypted; a new password will be assigned and sent."), name);
-		newpass = random_string(12);
-		set_password(mu, newpass);
-	}
-
-	if (sendemail(si->su != NULL ? si->su : si->service->me, mu, EMAIL_SENDPASS, mu->email, (newpass == NULL) ? mu->pass : newpass))
-	{
-		logcommand(si, CMDLOG_ADMIN, "SENDPASS: \2%s\2", name);
-		command_success_nodata(si, _("The password for \2%s\2 has been sent to \2%s\2."), entity(mu)->name, mu->email);
 		if (ismarked)
 		{
 			wallops("%s sent the password for the \2MARKED\2 account %s.", get_oper_name(si), entity(mu)->name);
-			command_success_nodata(si, _("Overriding MARK placed by %s on the account %s."), md->value, entity(mu)->name);
+			if (md)
+				command_success_nodata(si, _("Overriding MARK placed by %s on the account %s."), md->value, entity(mu)->name);
+			else
+				command_success_nodata(si, _("Overriding MARK on the account %s."), entity(mu)->name);
 		}
+		logcommand(si, CMDLOG_ADMIN, "SENDPASS: \2%s\2 (change key)", name);
+
+		key = random_string(12);
 		metadata_add(mu, "private:sendpass:sender", get_oper_name(si));
 		metadata_add(mu, "private:sendpass:timestamp", number_to_string(time(NULL)));
-	}
-	else
-		command_fail(si, fault_emailfail, _("Email send failed."));
 
-	if (newpass != NULL)
+		if (sendemail(si->su != NULL ? si->su : si->service->me, mu, EMAIL_SETPASS, mu->email, key))
+		{
+			command_fail(si, fault_emailfail, _("Email send failed."));
+			free(key);
+			return;
+		}
+
+		metadata_add(mu, "private:setpass:key", crypt_string(key, gen_salt()));
+		free(key);
+
+		command_success_nodata(si, _("The password change key for \2%s\2 has been sent to \2%s\2."), entity(mu)->name, mu->email);
+	}
+	else {
+		if (ismarked)
+		{
+			wallops("%s sent the password for the \2MARKED\2 account %s.", get_oper_name(si), entity(mu)->name);
+			if (md)
+				command_success_nodata(si, _("Overriding MARK placed by %s on the account %s."), md->value, entity(mu)->name);
+			else
+				command_success_nodata(si, _("Overriding MARK on the account %s."), entity(mu)->name);
+		}
+		logcommand(si, CMDLOG_ADMIN, "SENDPASS: \2%s\2", name);
+
+		newpass = random_string(12);
+		metadata_add(mu, "private:sendpass:sender", get_oper_name(si));
+		metadata_add(mu, "private:sendpass:timestamp", number_to_string(time(NULL)));
+
+		if (!sendemail(si->su != NULL ? si->su : si->service->me, mu, EMAIL_SENDPASS, mu->email, newpass))
+		{
+			command_fail(si, fault_emailfail, _("Email send failed."));
+			free(newpass);
+			return;
+		}
+
+		set_password(mu, newpass);
 		free(newpass);
 
-	return;
+		command_success_nodata(si, _("The password for \2%s\2 has been sent to \2%s\2."), entity(mu)->name, mu->email);
+
+		if (mu->flags & MU_NOPASSWORD)
+		{
+			mu->flags &= ~MU_NOPASSWORD;
+			command_success_nodata(si, _("The \2%s\2 flag has been removed for account \2%s\2."), "NOPASSWORD", entity(mu)->name);
+		}
+	}
 }
 
 /* vim:cinoptions=>s,e0,n0,f0,{0,}0,^0,=s,ps,t0,c3,+s,(2s,us,)20,*30,gs,hs

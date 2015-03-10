@@ -321,6 +321,24 @@ static void ts6_unqline_sts(const char *server, const char *name)
 	sts(":%s ENCAP %s UNRESV %s", svs != NULL ? CLIENT_NAME(svs->me) : ME, server, name);
 }
 
+/* server-to-server DLINE wrapper */
+static void ts6_dline_sts(const char *server, const char *host, long duration, const char *reason)
+{
+	service_t *svs;
+
+	svs = service_find("operserv");
+	sts(":%s ENCAP %s DLINE %ld %s :%s", svs != NULL ? CLIENT_NAME(svs->me) : ME, server, duration, host, reason);
+}
+
+/* server-to-server UNDLINE wrapper */
+static void ts6_undline_sts(const char *server, const char *host)
+{
+	service_t *svs;
+
+	svs = service_find("operserv");
+	sts(":%s ENCAP %s UNDLINE %s", svs != NULL ? CLIENT_NAME(svs->me) : ME, server, host);
+}
+
 /* topic wrapper */
 static void ts6_topic_sts(channel_t *c, user_t *source, const char *setter, time_t ts, time_t prevts, const char *topic)
 {
@@ -516,7 +534,7 @@ static void ts6_holdnick_sts(user_t *source, int duration, const char *nick, myu
 
 static void ts6_mlock_sts(channel_t *c)
 {
-	mychan_t *mc = MYCHAN_FROM(c);
+	mychan_t *mc = mychan_from(c);
 
 	if (use_mlock == false)
 		return;
@@ -541,7 +559,7 @@ static void m_mlock(sourceinfo_t *si, int parc, char *parv[])
 	if (!(c = channel_find(parv[1])))
 		return;
 
-	if (!(mc = MYCHAN_FROM(c)))
+	if (!(mc = mychan_from(c)))
 	{
 		/* Unregistered channel. Clear the MLOCK. */
 		sts(":%s MLOCK %lu %s :", ME, (unsigned long)c->ts, c->name);
@@ -1278,6 +1296,7 @@ static void m_encap(sourceinfo_t *si, int parc, char *parv[])
 		smsg.mode = *parv[4];
 		smsg.buf = parv[5];
 		smsg.ext = parc >= 6 ? parv[6] : NULL;
+		smsg.server = si->s ? si->s : NULL;
 		hook_call_sasl_input(&smsg);
 	}
 	else if (!irccasecmp(parv[1], "RSMSG"))
@@ -1475,6 +1494,8 @@ void _modinit(module_t * m)
 	sasl_sts = &ts6_sasl_sts;
 	is_valid_host = &ts6_is_valid_host;
 	mlock_sts = &ts6_mlock_sts;
+	dline_sts = &ts6_dline_sts;
+	undline_sts = &ts6_undline_sts;
 
 	pcommand_add("PING", m_ping, 1, MSRC_USER | MSRC_SERVER);
 	pcommand_add("PONG", m_pong, 1, MSRC_SERVER);

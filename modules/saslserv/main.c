@@ -7,6 +7,7 @@
  */
 
 #include "atheme.h"
+#include "uplink.h"
 
 DECLARE_MODULE_V1
 (
@@ -18,9 +19,10 @@ DECLARE_MODULE_V1
 mowgli_list_t sessions;
 static mowgli_list_t sasl_mechanisms;
 static char mechlist_string[400];
+static bool hide_server_names;
 
 sasl_session_t *find_session(const char *uid);
-sasl_session_t *make_session(const char *uid);
+sasl_session_t *make_session(const char *uid, server_t *server);
 void destroy_session(sasl_session_t *p);
 static void sasl_logcommand(sasl_session_t *p, myuser_t *login, int level, const char *fmt, ...);
 static void sasl_input(sasl_message_t *smsg);
@@ -130,6 +132,7 @@ void _modinit(module_t *m)
 	delete_stale_timer = mowgli_timer_add(base_eventloop, "sasl_delete_stale", delete_stale, NULL, 30);
 
 	saslsvs = service_add("saslserv", saslserv);
+	add_bool_conf_item("HIDE_SERVER_NAMES", &saslsvs->conf_table, 0, &hide_server_names, false);
 	authservice_loaded++;
 }
 
@@ -142,6 +145,8 @@ void _moddeinit(module_unload_intent_t intent)
 	hook_del_server_eob(sasl_server_eob);
 
 	mowgli_timer_destroy(base_eventloop, delete_stale_timer);
+
+	del_conf_item("HIDE_SERVER_NAMES", &saslsvs->conf_table);
 
         if (saslsvs != NULL)
 		service_delete(saslsvs);
@@ -181,7 +186,7 @@ sasl_session_t *find_session(const char *uid)
 }
 
 /* create a new session if it does not already exist */
-sasl_session_t *make_session(const char *uid)
+sasl_session_t *make_session(const char *uid, server_t *server)
 {
 	sasl_session_t *p = find_session(uid);
 	mowgli_node_t *n;
@@ -192,7 +197,7 @@ sasl_session_t *make_session(const char *uid)
 	p = malloc(sizeof(sasl_session_t));
 	memset(p, 0, sizeof(sasl_session_t));
 	p->uid = strdup(uid);
-
+	p->server = server;
 	n = mowgli_node_create();
 	mowgli_node_add(p, n, &sessions);
 
@@ -237,7 +242,7 @@ void destroy_session(sasl_session_t *p)
 /* interpret an AUTHENTICATE message */
 static void sasl_input(sasl_message_t *smsg)
 {
-	sasl_session_t *p = make_session(smsg->uid);
+	sasl_session_t *p = make_session(smsg->uid, smsg->server);
 	int len = strlen(smsg->buf);
 	char *tmpbuf;
 	int tmplen;
@@ -438,6 +443,38 @@ static void sasl_packet(sasl_session_t *p, char *buf, int len)
 			sasl_sts(p->uid, 'C', "+");
 			free(out);
 			return;
+		}
+	}
+
+	/* If we reach this, they failed SASL auth, so if they were trying
+	 * to identify as a specific user, bad_password them.
+	 */
+	if (p->username)
+	{
+		myuser_t *mu = myuser_find_by_nick(p->username);
+		if (mu)
+		{
+			char description[BUFSIZE];
+
+			if (p->server && !hide_server_names)
+				snprintf(description, BUFSIZE, "Unknown user on %s (via SASL)", p->server->name);
+			else
+				snprintf(description, BUFSIZE, "Unknown user (via SASL)");
+
+			struct sourceinfo_vtable sasl_vtable = {
+				.description = description
+			};
+
+			sourceinfo_t *si = sourceinfo_create();
+			si->service = saslsvs;
+			si->sourcedesc = p->uid;
+			si->connection = curr_uplink->conn;
+			si->v = &sasl_vtable;
+			si->force_language = language_find("en");
+
+			bad_password(si, mu);
+
+			object_unref(si);
 		}
 	}
 

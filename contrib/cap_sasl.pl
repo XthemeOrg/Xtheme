@@ -6,12 +6,12 @@ use constant CHALLENGE_SIZE => 32;
 
 $VERSION = "1.10";
 %IRSSI = (
-    authors     => 'Michael Tharp (gxti), Jilles Tjoelker (jilles), Mantas Mikulėnas (grawity)',
-    contact     => 'grawity@gmail.com',
-    name        => 'cap_sasl.pl',
-    description => 'Implements SASL authentication and enables CAP "multi-prefix"',
-    license     => 'GPLv2',
-    url         => 'http://ircv3.atheme.org/extensions/sasl-3.1',
+	authors => 'Michael Tharp (gxti), Jilles Tjoelker (jilles), Mantas Mikulėnas (grawity)',
+	contact => 'grawity@gmail.com',
+	name => 'cap_sasl.pl',
+	description => 'Implements SASL authentication and enables CAP "multi-prefix"',
+	license => 'GPLv2',
+	url => 'http://ircv3.atheme.org/extensions/sasl-3.1',
 );
 
 my %sasl_auth = ();
@@ -362,8 +362,7 @@ if (eval {require Crypt::PK::ECC}) {
 		}
 
 		my $cmdchar = substr(Irssi::settings_get_str("cmdchars"), 0, 1);
-		my $cmd = "msg NickServ SET PROPERTY pubkey $pub";
-		# TODO: change to 'SET PUBKEY' when freenode gets support for that
+		my $cmd = "msg NickServ SET PUBKEY $pub";
 
 		if ($server) {
 			$print->("SASL: updating your Irssi settings...");
