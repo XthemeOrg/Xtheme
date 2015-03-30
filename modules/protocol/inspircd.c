@@ -489,9 +489,8 @@ static void inspircd_unkline_sts(const char *server, const char *user, const cha
 {
 	service_t *svs;
 
-	/* I know this looks wrong, but it's really not. Trust me. --w00t */
 	svs = service_find("operserv");
-	sts(":%s GLINE %s@%s", svs != NULL ? svs->me->uid : ME, user, host);
+	sts(":%s DELLINE G %s@%s", svs != NULL ? svs->me->uid : ME, user, host);
 }
 
 /* server-to-server QLINE wrapper */
@@ -518,7 +517,7 @@ static void inspircd_unqline_sts(const char *server, const char *name)
 {
 	if (!VALID_GLOBAL_CHANNEL_PFX(name))
 	{
-		sts(":%s QLINE %s", ME, name);
+		sts(":%s DELLINE Q %s", ME, name);
 		return;
 	}
 
@@ -526,6 +525,24 @@ static void inspircd_unqline_sts(const char *server, const char *name)
 		sts(":%s CBAN %s", ME, name);
 	else
 		slog(LG_INFO, "SQLINE: Could not remove SQLINE on \2%s\2 due to m_cban not being loaded in inspircd.", name);
+}
+
+/* server-to-server ZLINE/DLINE wrapper */
+static void inspircd_dline_sts(const char *server, const char *host, long duration, const char *reason)
+{
+	service_t *svs;
+
+	svs = service_find("operserv");
+	sts(":%s ADDLINE Z %s %s %lu %ld :%s", me.numeric, host, svs != NULL ? svs->nick : me.name, (unsigned long)CURRTIME, duration, reason);
+}
+
+/* server-to-server UNZLINE/UNDLINE wrapper */
+static void inspircd_undline_sts(const char *server, const char *host)
+{
+	service_t *svs;
+
+	svs = service_find("operserv");
+	sts(":%s DELLINE Z %s", svs != NULL ? svs->me->uid : ME, host);
 }
 
 /* topic wrapper */
@@ -1668,6 +1685,8 @@ void _modinit(module_t * m)
 	mlock_sts = &inspircd_mlock_sts;
 	topiclock_sts = &inspircd_topiclock_sts;
 	is_extban = &inspircd_is_extban;
+	dline_sts = &inspircd_dline_sts;
+	undline_sts = &inspircd_undline_sts;
 
 	mode_list = inspircd_mode_list;
 	ignore_mode_list = inspircd_ignore_mode_list;
