@@ -22,6 +22,12 @@ Xtheme will default to installing in `$HOME/xtheme`, so make sure you plan accor
 
 If you're still lost, read [INSTALL](INSTALL) or [GIT-Access](GIT-Access) for hints.
 
+## SWI (services web interface)
+
+If you are interested in having a Services Web Interface (or Services Web Panel), SWI
+*IS* compatible with Xtheme and other Atheme forks, and is available at:
+http://www.irc4fun.net/xtheme/ or http://github.com/IRC4Fun/Xtheme/
+
 ## links / contact
 
  * [GitHub](http://www.github.com/IRC4Fun/xtheme)
