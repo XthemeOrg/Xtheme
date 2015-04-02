@@ -30,7 +30,7 @@ http://www.irc4fun.net/xtheme/ or http://github.com/IRC4Fun/Xtheme/
 
 ## links / contact
 
- * [GitHub](http://www.github.com/IRC4Fun/xtheme)
+ * [GitHub](http://www.github.com/IRC4Fun/Xtheme)
  * [Website](http://www.IRC4Fun.net/xtheme/)
  * [IRC](irc://irc.IRC4Fun.net/#Xtheme) irc.IRC4Fun.net #Xtheme
  * [IRC](irc://chat.freenode.net/##Xtheme) chat.Freenode.net ##Xtheme
