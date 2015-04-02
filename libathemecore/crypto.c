@@ -1,5 +1,5 @@
 /*
- * atheme-services: A collection of minimalist IRC services
+ * xtheme-services: A collection of minimalist IRC services
  * crypto.c: Cryptographic module support.
  *
  * Copyright (c) 2012 William Pitcock <nenolod@dereferenced.org>.

@@ -51,7 +51,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* To configure/use, add a block to the proxyscan{} section of your atheme.conf
+/* To configure/use, add a block to the proxyscan{} section of your xtheme.conf
  * like this:
  *
  * blacklists {

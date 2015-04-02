@@ -76,7 +76,7 @@ struct soper_ {
   char *password;
 };
 
-#define SOPER_CONF	0x1 /* oper is listed in atheme.conf */
+#define SOPER_CONF	0x1 /* oper is listed in xtheme.conf */
 
 /* privs.c */
 E mowgli_list_t operclasslist;

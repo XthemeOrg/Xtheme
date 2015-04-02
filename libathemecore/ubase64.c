@@ -1,7 +1,8 @@
 /*
- * atheme-services: A collection of minimalist IRC services
+ * xtheme-services: A collection of minimalist IRC services
  * ubase64.c: ircu base64 routines.
  *
+ * Copyright (c) 2014-2015 IRC4Fun Development Group
  * Copyright (c) 2005-2007 Atheme Project (http://www.atheme.org)
  *
  * Permission to use, copy, modify, and/or distribute this software for any

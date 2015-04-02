@@ -1,5 +1,5 @@
 /*
- * atheme-services: A collection of minimalist IRC services
+ * xtheme-services: A collection of minimalist IRC services
  * qrcode.c: IRC encoding of QR codes
  *
  * Copyright (c) 2014 William Pitcock <nenolod@dereferenced.org>

@@ -8,8 +8,8 @@ includedir=@includedir@/@PACKAGE_NAME@
 libdir=@libdir@
 MODDIR=@MODDIR@/modules
 
-Name: atheme-services
-Description: Atheme IRC services (for building modules)
+Name: xtheme-services
+Description: Xtheme IRC services (for building modules)
 Version: @PACKAGE_VERSION@
 Libs: -L${libdir} -lathemecore
 Cflags: -I${includedir}

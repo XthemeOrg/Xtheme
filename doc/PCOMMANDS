@@ -1,22 +1,22 @@
-Non-PRIVMSG commands to Atheme
+Non-PRIVMSG commands to Xtheme
 ------------------------------
 
-Atheme supports several commands other than PRIVMSG.
+Xtheme supports several commands other than PRIVMSG.
 
-Listed are the command, the required Atheme privilege (the ircd may require
+Listed are the command, the required Xtheme privilege (the ircd may require
 specific ircop privileges as well) and the effect. Unfortunately, some ircds do
 not support all of these commands, and there is not always a /msg equivalent.
 
-<atheme> means Atheme's server name or a name of a service.
+<xtheme> means Xtheme's server name or a name of a service.
 
-/admin <atheme> (-) Show administrative information (adminname and adminemail
-from atheme.conf).
+/admin <xtheme> (-) Show administrative information (adminname and adminemail
+from xtheme.conf).
 
-/info <atheme> (-) Shows copyright information and a list of authors.
+/info <xtheme> (-) Shows copyright information and a list of authors.
 
-/motd <atheme> (-) Shows etc/atheme.motd (some substitutions are done).
+/motd <xtheme> (-) Shows etc/xtheme.motd (some substitutions are done).
 
-/stats <letter> <atheme> (-) Shows various statistics and configuration
+/stats <letter> <xtheme> (-) Shows various statistics and configuration
 information. The following letters are recognized:
 	B (general:auspex) Shows hash statistics.
 	C (general:auspex) Shows uplink blocks.
@@ -32,15 +32,15 @@ information. The following letters are recognized:
 
 /squit <jupe> (-) Removes a jupe.
 
-/trace <atheme> (-) Shows a listing of all services (with server name) or
+/trace <xtheme> (-) Shows a listing of all services (with server name) or
 a single service. If listing all services, general:auspex also causes a line
 describing the uplink to be sent. Two-argument trace as in TSora ircds is
 also supported.
 
-/version <atheme> (-) Shows version information, slightly more detailed than
+/version <xtheme> (-) Shows version information, slightly more detailed than
 a CTCP reply.
 
-/whois <atheme> <client> (-) Shows WHOIS information about <client>:
+/whois <xtheme> <client> (-) Shows WHOIS information about <client>:
 nick, username, vhost, server, server description, ircop status, services
 login name. Note that this works for all clients on the network, not just
 services and no channel information is shown. It is assumed that networks

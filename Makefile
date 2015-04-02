@@ -1,6 +1,6 @@
 SUBDIRS=$(LIBMOWGLI) include libathemecore modules src $(PODIR)
 CLEANDIRS = ${SUBDIRS}
-DISTCLEAN = extra.mk buildsys.mk config.log config.status atheme-services.pc
+DISTCLEAN = extra.mk buildsys.mk config.log config.status xtheme-services.pc
 
 -include extra.mk
 -include buildsys.mk
@@ -14,7 +14,7 @@ install-extra:
 	@echo "----------------------------------------------------------------"
 	@echo ">>> Remember to cd to ${prefix} and edit your config file.";
 	@echo "----------------------------------------------------------------"
-	i="atheme-services.pc"; \
+	i="xtheme-services.pc"; \
 	${INSTALL_STATUS}; \
 	if ${MKDIR_P} ${DESTDIR}${libdir}/pkgconfig && ${INSTALL} -m 644 $$i ${DESTDIR}${libdir}/pkgconfig/$$i; then \
 		${INSTALL_OK}; \
@@ -23,7 +23,7 @@ install-extra:
 	fi
 
 uninstall-extra:
-	i="atheme-services.pc"; \
+	i="xtheme-services.pc"; \
 	if [ -f ${DESTDIR}${libdir}/pkgconfig/$$i ]; then \
 		if rm -f ${DESTDIR}${libdir}/pkgconfig/$$i; then \
 			${DELETE_OK}; \

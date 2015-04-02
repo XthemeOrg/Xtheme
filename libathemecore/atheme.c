@@ -1,7 +1,8 @@
 /*
- * atheme-services: A collection of minimalist IRC services
+ * xtheme-services: A collection of minimalist IRC services
  * atheme.c: Initialization and startup of the services system
  *
+ * Copyright (c) 2014-2015 IRC4Fun Development Group
  * Copyright (c) 2005-2007 Atheme Project (http://www.atheme.org)
  *
  * Permission to use, copy, modify, and/or distribute this software for any
@@ -67,7 +68,7 @@ void (*db_load) (const char *name) = NULL;
 /* *INDENT-OFF* */
 static void print_help(void)
 {
-	printf("usage: atheme [-dhnvr] [-c conf] [-l logfile] [-p pidfile]\n\n"
+	printf("usage: xtheme [-dhnvr] [-c conf] [-l logfile] [-p pidfile]\n\n"
 	       "-c <file>    Specify the config file\n"
 	       "-d           Start in debugging mode\n"
 	       "-h           Print this message and exit\n"
@@ -84,7 +85,7 @@ static void print_version(void)
 {
 	int i;
 
-	printf("Atheme IRC Services (%s), build-id %s\n", PACKAGE_STRING, revision);
+	printf("xtheme IRC Services (%s), build-id %s\n", PACKAGE_STRING, revision);
 
 	for (i = 0; infotext[i] != NULL; i++)
 		printf("%s\n", infotext[i]);
@@ -268,7 +269,7 @@ int atheme_main(int argc, char *argv[])
 	char buf[32];
 	int pid, r;
 	FILE *pid_file;
-	const char *pidfilename = RUNDIR "/atheme.pid";
+	const char *pidfilename = RUNDIR "/xtheme.pid";
 	char *log_p = NULL;
 	mowgli_getopt_option_t long_opts[] = {
 		{ NULL, 0, NULL, 0, 0 },
@@ -314,17 +315,17 @@ int atheme_main(int argc, char *argv[])
 			  exit(EXIT_SUCCESS);
 			  break;
 		  default:
-			  printf("usage: atheme [-dhnvr] [-c conf] [-l logfile] [-p pidfile]\n");
+			  printf("usage: xtheme [-dhnvr] [-c conf] [-l logfile] [-p pidfile]\n");
 			  exit(EXIT_FAILURE);
 			  break;
 		}
 	}
 
 	if (!have_conf)
-		config_file = sstrdup(SYSCONFDIR "/atheme.conf");
+		config_file = sstrdup(SYSCONFDIR "/xtheme.conf");
 
 	if (!have_log)
-		log_p = sstrdup(LOGDIR "/atheme.log");
+		log_p = sstrdup(LOGDIR "/xtheme.log");
 
 	if (!have_datadir)
 		datadir = sstrdup(DATADIR);
@@ -347,7 +348,7 @@ int atheme_main(int argc, char *argv[])
 
 			if (!kill(pid, 0))
 			{
-				fprintf(stderr, "atheme: daemon is already running\n");
+				fprintf(stderr, "xtheme: daemon is already running\n");
 				exit(EXIT_FAILURE);
 			}
 		}
@@ -379,7 +380,7 @@ int atheme_main(int argc, char *argv[])
 
 	if (!backend_loaded && authservice_loaded)
 	{
-		slog(LG_ERROR, "atheme: no backend modules loaded, see your configuration file.");
+		slog(LG_ERROR, "xtheme: no backend modules loaded, see your configuration file.");
 		exit(EXIT_FAILURE);
 	}
 
@@ -391,7 +392,7 @@ int atheme_main(int argc, char *argv[])
 		db_load(NULL);
 	else if (backend_loaded)
 	{
-		slog(LG_ERROR, "atheme: backend module does not provide db_load()!");
+		slog(LG_ERROR, "xtheme: backend module does not provide db_load()!");
 		exit(EXIT_FAILURE);
 	}
 	db_check();
@@ -405,7 +406,7 @@ int atheme_main(int argc, char *argv[])
 	}
 	else
 	{
-		fprintf(stderr, "atheme: unable to write pid file\n");
+		fprintf(stderr, "xtheme: unable to write pid file\n");
 		exit(EXIT_FAILURE);
 	}
 #endif
@@ -469,7 +470,7 @@ int atheme_main(int argc, char *argv[])
 		slog(LG_INFO, "main(): restarting");
 
 #ifdef HAVE_EXECVE
-		execv(BINDIR "/atheme-services", argv);
+		execv(BINDIR "/xtheme-services", argv);
 #endif
 	}
 

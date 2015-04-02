@@ -1,8 +1,9 @@
 /*
  * Copyright (c) 2005-2006 Atheme Development Group
+ * Copyright (c) 2014-2015 IRC4Fun Development Group
  * Rights to this code are as documented in doc/LICENSE.
  *
- * Stuff for internal use in Atheme.
+ * Stuff for internal use in Xtheme.
  *
  */
 

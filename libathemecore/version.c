@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2005-2010 Atheme Development Group
+ * Copyright (c) 2014-2015 IRC4Fun Development Group
  * Rights to this code are documented in doc/LICENSE.
  *
  * This file contains version information.
@@ -12,8 +13,10 @@ const char *revision = SERNO;
 
 const char *infotext[] =
 {
-  "Atheme IRC Services --",
-  "Copyright (c) 2005-2015 Atheme Development Group (http://www.atheme.org)",
+  "Xtheme IRC Services --",
+  "Xtheme is a fork of Atheme",
+  "Copyright (c) 2014-2015 IRC4Fun Development Group",
+  "Portions copyright(c) 2005-2015 Atheme Development Group (http://www.atheme.org)",
   "Portions copyright (c) 2004 Shrike Developers (http://www.malkier.net)",
   " ",
   "Permission to use, copy, modify, and/or distribute this software for any",
@@ -31,16 +34,18 @@ const char *infotext[] =
   "(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS",
   "SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.",
   " ",
-  "Currently Atheme's core group consists of the following developers,",
+  "Currently Xtheme's core group consists of the following developers,",
   "in nick-alphabetical order:",
+  "  siniStar, Austin <siniStar@IRC4Fun.net>",
+  " ",
+  "The following people have contributed blood, sweat and tears to",
+  "previous Atheme releases:",
   "  elly, Elly <elly@leptoquark.net>",
   "  jdhore, JD Horelick <jdhore1@gmail.com>",
   "  jilles, Jilles Tjoelker <jilles@stack.nl>",
   "  nenolod, William Pitcock <nenolod@nenolod.net>",
   "  spb, Stephen Bennett <spb@exherbo.org>",
   " ",
-  "The following people have contributed blood, sweat and tears to",
-  "this Atheme release:",
   "  Adam, Adam <adam@sigterm.info>",
   "  aji, Alex Iadicicco <alex@ajitek.net>",
   "  alambert, Alex Lambert <alambert@quickfire.org>",
@@ -72,6 +77,6 @@ const char *infotext[] =
   "  rintaun, Matt Lanigan <rintaun@projectxero.net>",
   "  sycobuny, Stephen Belcher <sycobuny@malkier.net>",
   " ",
-  "Visit our website at http://www.atheme.net",
+  "Visit our website at http://www.IRC4Fun.net/xtheme",
   0,
 };

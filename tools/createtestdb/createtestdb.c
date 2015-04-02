@@ -25,9 +25,9 @@
  */
 /*
  * make createtestdb
- * ./createtestdb 500000 >atheme.db
+ * ./createtestdb 500000 >xtheme.db
  *
- * then start atheme-services with this atheme.db
+ * then start xtheme-services with this xtheme.db
  */
 
 #include	<stdio.h>

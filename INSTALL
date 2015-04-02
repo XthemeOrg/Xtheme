@@ -1,10 +1,11 @@
-atheme-services -- a set of services for IRC networks
+Xtheme-services -- a set of services for IRC networks
+	(forked from Atheme IRC Services by siniStar@IRC4Fun)
 =====================================================
 
 This program is free but copyrighted software; see the LICENSE file for
 details.
 
-Information about Services may be found at http://www.atheme.net/.
+Information about Services may be found at http://www.IRC4Fun.net/xtheme/.
 
 TABLE OF CONTENTS
 -----------------
@@ -23,7 +24,7 @@ You should also read the README and FAQ files.
 NOTE: if you are using a third party package of Services, most of this section
 will not apply.
 
-NOTE: if you are using a copy of Atheme downloaded from Git, you need to 
+NOTE: if you are using a copy of Xtheme downloaded from Git, you need to 
 remember to run `git submodule update --init`. If not, you may ignore this step.
 
 IMPORTANT NOTE: it is not recommended to use and install services as root.
@@ -66,7 +67,7 @@ will not be able to run services. However, most systems include a runtime
 linker these days.
 
 The IRCds supported by Services are listed in the example config
-(dist/atheme.conf.example). Although many others are supported, Services can
+(dist/xtheme.conf.example). Although many others are supported, Services can
 provide the richest experience with one of the recommended IRCds: Charybdis,
 ShadowIRCD and UnrealIRCd.
 
@@ -76,7 +77,7 @@ GIT-Access file for information on how to pull in libmowgli as a submodule.
 Run the "configure" script:
 	$ ./configure --prefix=/path/to/install/
 
-If no prefix is specified, the default install path is ~/atheme/.
+If no prefix is specified, the default install path is ~/xtheme/.
 
 If you're running a large network (more than 2000 users), you should 
 pass the --enable-large-net switch to configure for enhanced performance.
@@ -109,13 +110,13 @@ It can also be fixed by installing your operating system's gettext package.
 
 The newly-compiled binary and several supporting files will be copied to the
 directory you specified in the "configure" script. If no directory (prefix)
-was specified, all the relevant files will be in ~/atheme/.
+was specified, all the relevant files will be in ~/xtheme/.
 
 It is recommended to keep the source directory; you will need it to
 (re)compile modules later.
 
 Next, you'll want to go to the directory you specified in "configure" and edit
-etc/atheme.conf. You'll need to change every setting or services will 
+etc/xtheme.conf. You'll need to change every setting or services will 
 not work.
 
 2. UPGRADING
@@ -165,34 +166,34 @@ running services.
 4. STARTING SERVICES
 --------------------
 
-Go into the directory where you installed atheme-services (by default, 
-~/atheme/). Type ./bin/atheme-services to launch services.
+Go into the directory where you installed xtheme-services (by default, 
+~/xtheme/). Type ./bin/xtheme-services to launch services.
 
 Services will report any errors and/or detach into the background.
 
 If services doesn't link and/or terminates without warning check the log
-file (var/atheme.log) to see what happened. If this tells you nothing try
-rerunning services via ./bin/atheme-services -dn for more verbose 
+file (var/xtheme.log) to see what happened. If this tells you nothing try
+rerunning services via ./bin/xtheme-services -dn for more verbose 
 information.
 
 5. SETTING UP A CRONTAB ENTRY
 -----------------------------
 
 A crontab entry will allow you to check periodically whether services is 
-still running, and restart it if not. You'll need to have atheme-services 
+still running, and restart it if not. You'll need to have xtheme-services 
 binaries and data installed in the same directory for this to work 
 without modification.
 
-First rename the etc/atheme.cron.example script that is in Atheme path (by default, 
-~/atheme/) and edit it. You'll need to modify the "cd" part of the file.
+First rename the etc/xtheme.cron.example script that is in Xtheme path (by default, 
+~/xtheme/) and edit it. You'll need to modify the "cd" part of the file.
 Then ensure that the file is marked as executable by typing
-"chmod +x atheme.cron.example" and try to launch the script to see if it works.
+"chmod +x xtheme.cron.example" and try to launch the script to see if it works.
 
 When this is done, you'll have to add the crontab entry. Type "crontab -e"
 This will open the default text editor with the crontab file. Enter the
 following (with correct path):
 
-*/5 * * * * /home/nenolod/atheme/etc/atheme.cron.example >/dev/null 2>&1
+*/5 * * * * /home/nenolod/xtheme/etc/xtheme.cron.example >/dev/null 2>&1
 
 The */5 at the beginning means "check every 5 minutes." You may replace
 the 5 with other another number if you want (but less than 60). Save and exit,
@@ -201,7 +202,7 @@ and it's installed.
 6. COMPILING THE CONTRIB MODULES
 --------------------------------
 
-In the Atheme source there is a directory called contrib filled with
+In the Xtheme source there is a directory called contrib filled with
 all sorts of modules that are not included in the main modules directory
 for one reason or another. Compiling these modules is very simple.
 
@@ -211,7 +212,7 @@ Simply pass the --enable-contrib switch to the configure script like so:
 
 			$ ./configure --enable-contrib
 
-The contrib modules will then be in your atheme install directory (by default
-this is ~/atheme/) in the modules/contrib directory. you can then load them on a live
-network like: "/msg operserv modload contrib/os_kill" or in your atheme.conf
+The contrib modules will then be in your xtheme install directory (by default
+this is ~/xtheme/) in the modules/contrib directory. you can then load them on a live
+network like: "/msg operserv modload contrib/os_kill" or in your xtheme.conf
 by adding a loadmodule line like: loadmodule "modules/contrib/os_kill";

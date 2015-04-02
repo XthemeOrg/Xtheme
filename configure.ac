@@ -1,4 +1,5 @@
 dnl Copyright (c) 2005 Atheme Development Group
+dnl Copyright (c) 2014-2015 IRC4Fun Development Group
 dnl Rights to this code are documented in doc/LICENSE.
 dnl
 dnl This file is the autoconf stub.
@@ -7,12 +8,12 @@ dnl Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.59)
 
-AC_INIT(atheme, 7.2.5, bugs@atheme.org)
+AC_INIT(xtheme, 7.3.0, xtheme-bugs@IRC4Fun.net)
 
 AC_CONFIG_AUX_DIR(autoconf)
 
 AC_CONFIG_HEADER(include/sysconf.h)
-AC_PREFIX_DEFAULT(~/atheme)
+AC_PREFIX_DEFAULT(~/xtheme)
 
 dnl Buildsys module stuff
 BUILDSYS_INIT
@@ -148,7 +149,7 @@ AS_IF([test "x$with_perl" != "xno"],
       PERL_LIBS=`perl -MExtUtils::Embed -e ldopts`
   fi
 
-  dnl if Perl is built with threading support, we need to link atheme against libpthread
+  dnl if Perl is built with threading support, we need to link xtheme against libpthread
   if test -n "`echo "$PERL_LIBS" | grep pthread`"; then
      LIBS="$LIBS -lpthread"
   fi
@@ -180,12 +181,12 @@ AC_HELP_STRING([--enable-fhs-paths],[ Use more FHS-like pathnames (for packagers
   case "$enableval" in
   yes)
     FHSPATHS="yes"
-    DOCDIR='${datadir}/doc/atheme'
-    MODDIR='${libdir}/atheme'
-    SHAREDIR='${datadir}/atheme'
-    LOGDIR='${localstatedir}/log/atheme'
-    DATADIR='${localstatedir}/lib/atheme'
-    RUNDIR='${localstatedir}/run/atheme'
+    DOCDIR='${datadir}/doc/xtheme'
+    MODDIR='${libdir}/xtheme'
+    SHAREDIR='${datadir}/xtheme'
+    LOGDIR='${localstatedir}/log/xtheme'
+    DATADIR='${localstatedir}/lib/xtheme'
+    RUNDIR='${localstatedir}/run/xtheme'
     ;;
   no)
     FHSPATHS="no"
@@ -423,14 +424,14 @@ BUILDSYS_TOUCH_DEPS
 AC_OUTPUT([
 	buildsys.mk
 	extra.mk
-	atheme-services.pc
+	xtheme-services.pc
 ])
 
 d=`eval echo ${MODDIR}`
 d=`eval echo $d`
 echo "
 Configuration:
-	Atheme version       : ${PACKAGE_VERSION}
+	Xtheme version       : ${PACKAGE_VERSION}
 	Installation prefix  : ${prefix}
 	Module root directory: `eval echo $d`
 	Config directory     : ${sysconfdir}
@@ -447,4 +448,4 @@ Configuration:
 	CFLAGS               : ${CFLAGS}
 	Internationalization : ${USE_NLS}
 
-Type make to build Atheme, and make install to install it."
+Type make to build Xtheme, and make install to install it."

@@ -1,7 +1,8 @@
 /*
- * atheme-services: A collection of minimalist IRC services
+ * xtheme-services: A collection of minimalist IRC services
  * auth.c: Authentication.
  *
+ * Copyright (c) 2014-2015 IRC4Fun Development Group
  * Copyright (c) 2005-2009 Atheme Project (http://www.atheme.org)
  *
  * Permission to use, copy, modify, and/or distribute this software for any

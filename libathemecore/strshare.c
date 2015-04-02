@@ -1,7 +1,8 @@
 /*
- * atheme-services: A collection of minimalist IRC services
+ * xtheme-services: A collection of minimalist IRC services
  * strshare.c: Shared strings.
  *
+ * Copyright (c) 2014-2015 IRC4Fun Development Group
  * Copyright (c) 2008 Atheme Project (http://www.atheme.org)
  *
  * Permission to use, copy, modify, and/or distribute this software for any

@@ -1,6 +1,7 @@
 #!/bin/sh
-# application.sh: Special package building rules for atheme-services.
+# application.sh: Special package building rules for xtheme-services.
 #
+# Copyright (c) 2014-2015 IRC4Fun Development Group
 # Copyright (c) 2007 atheme.org
 #
 # Permission to use, copy, modify, and/or distribute this software for
@@ -25,7 +26,7 @@ if [ "x$TIP" = "x" ]; then
 fi
 
 # Services wants the hg tip to be in include/serno.h.
-echo "[atheme-services] Generating include/serno.h for tip $TIP."
+echo "[xtheme-services] Generating include/serno.h for tip $TIP."
 cat << _EOF_ > include/serno.h
 /* Generated automatically by makepackage. Any changes made here will be lost. */
 #define SERNO "$TIP"

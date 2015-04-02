@@ -1,8 +1,9 @@
 /*
- * atheme-services: A collection of minimalist IRC services
+ * xtheme-services: A collection of minimalist IRC services
  * account.c: Account management
  *
  * Copyright (c) 2005-2007 Atheme Project (http://www.atheme.org)
+ * Copyright (c) 2014-2015 IRC4Fun Development Group
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -1976,7 +1977,7 @@ static int expire_myuser_cb(myentity_t *mt, void *unused)
 	if ((nicksvs.expiry > 0 && mu->lastlogin < CURRTIME && (unsigned int)(CURRTIME - mu->lastlogin) >= nicksvs.expiry) ||
 			(mu->flags & MU_WAITAUTH && CURRTIME - mu->registered >= 86400))
 	{
-		/* Don't expire accounts with privs on them in atheme.conf,
+		/* Don't expire accounts with privs on them in xtheme.conf,
 		 * otherwise someone can reregister
 		 * them and take the privs -- jilles */
 		if (is_conf_soper(mu))

@@ -1,8 +1,9 @@
 /*
- * atheme-services: A collection of minimalist IRC services
+ * xtheme-services: A collection of minimalist IRC services
  * ptasks.c: Implementation of common protocol tasks.
  *
  * Copyright (c) 2005-2007 Atheme Project (http://www.atheme.org)
+ * Copyright (c) 2014-2015 IRC4Fun Development Group
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -71,7 +72,7 @@ void handle_admin(user_t *u)
 
 	numeric_sts(me.me, 256, u, ":Administrative info about %s", me.name);
 	numeric_sts(me.me, 257, u, ":%s", me.adminname);
-	numeric_sts(me.me, 258, u, ":Atheme IRC Services (%s)", PACKAGE_STRING);
+	numeric_sts(me.me, 258, u, ":Xtheme IRC Services (%s)", PACKAGE_STRING);
 	numeric_sts(me.me, 259, u, ":<%s>", me.adminemail);
 }
 

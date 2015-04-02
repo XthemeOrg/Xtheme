@@ -1,26 +1,26 @@
-Atheme uses GNU Gettext for translation of strings that are
+Xtheme uses GNU Gettext for translation of strings that are
 user-visible. This allows for networks to change the language that
-Atheme uses for its interface.
+Xtheme uses for its interface.
 
-We would like your help with translating Atheme into your native
+We would like your help with translating Xtheme into your native
 language. In order to do this, I suggest installing a po-file
 editor such as poEdit. poEdit is a lot nicer for translation work
 than a traditional text editor, although that will do as well, as
 long as the file is in UTF-8.
 
-To start the translation, you should open atheme.pot in a text
+To start the translation, you should open xtheme.pot in a text
 editor or poEdit. In poEdit, you can start a new project using the
 pot, which is more useful than just editing it, but that is not
 covered here.
 
 Once you have completed the translation, you should file a bug on
-the atheme bugtracker, and attach the file.
+the xtheme bugtracker, and attach the file.
 
 Users can set their language using /msg NickServ SET LANGUAGE.
-The default language is set in atheme.conf. The localization
+The default language is set in xtheme.conf. The localization
 environment variables (LANG in particular) affect the charset
 used for the translated messages, but not help files, and also,
 gettext may refuse to translate anything at all if LANG is not
 set or set to "C" or "POSIX".
 
-   -- nenolod
+   -- siniStar

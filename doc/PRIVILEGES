@@ -7,15 +7,15 @@ IRCop
 	user with user mode +o, usually obtained with /oper
 	users whose operator status is indicated by a different user mode
 	than +o, or whose user mode +o is not propagated to other servers,
-	are not IRCops from atheme's point of view
+	are not IRCops from xtheme's point of view
 operclass
-	group of privileges defined in an operclass{} block in atheme.conf
+	group of privileges defined in an operclass{} block in xtheme.conf
 config services operator
 	user logged into an account named in an operator{} block in
-	atheme.conf
+	xtheme.conf
 services operator
 	user logged into an account named in an operator{} block in
-	atheme.conf or an account granted privileges with /os soper
+	xtheme.conf or an account granted privileges with /os soper
 
 Note that an account cannot have both an operator{} block and privileges
 granted with /os soper. If this happens, the privileges from /os soper
@@ -97,12 +97,12 @@ general:viewprivs
 	see all operator{} blocks, see the privs users and operclasses have:
 	/stats o, /os specs
 general:flood
-	exempt from services flood control (general::flood* in atheme.conf)
+	exempt from services flood control (general::flood* in xtheme.conf)
 general:metadata
 	mess with private metadata (but only on own accounts and channels)
 general:admin
 	restart/shutdown/rehash services, load modules, use raw/inject (if
-	globally allowed in atheme.conf), resetpass/sendpass on accounts
+	globally allowed in xtheme.conf), resetpass/sendpass on accounts
 	with operator{} blocks, use /os ignore
 
 operserv:omode
@@ -144,7 +144,7 @@ impersonate:entity:<entity>
 Overriding the default privilege scheme
 ---------------------------------------
 
-Starting with Atheme 7, it is possible to override the default privilege
+Starting with Xtheme 7, it is possible to override the default privilege
 scheme using the config file.
 
 Each block related to a service, e.g. nickserv{} or chanserv{} has a

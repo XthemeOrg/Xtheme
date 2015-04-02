@@ -1,14 +1,14 @@
-Compiling Atheme on Windows
+Compiling Xtheme on Windows
 ---------------------------
 
-Since Atheme 7.0.0-alpha13pre2 there has been relatively mature Windows
-support in Atheme.  Unfortunately, as Atheme heavily uses C99/C11
-features, you cannot use Microsoft Visual C to compile Atheme, as it does
+Since Xtheme 7.0.0-alpha13pre2 there has been relatively mature Windows
+support in Xtheme.  Unfortunately, as Xtheme heavily uses C99/C11
+features, you cannot use Microsoft Visual C to compile Xtheme, as it does
 not support anything newer than C89.
 
 The solution is to use MinGW.  MinGW stands for Minimalist GNU for Windows,
 and provides a basic GCC development environment.  GCC is the compiler
-typically used to build Atheme on POSIX-compliant platforms.
+typically used to build Xtheme on POSIX-compliant platforms.
 
 To install MinGW, download the mingw-get-inst.exe installer from their website.
 The latest one at time of writing can be found at:
@@ -26,29 +26,29 @@ Once the installation of MinGW is completed, you will have a new Start Menu
 entry for "MinGW Shell."  Provided you have this, the installation was
 successful.
 
-As of 7.1.0-alpha1, Atheme requires pkg-config to build.  You will require
+As of 7.1.0-alpha1, Xtheme requires pkg-config to build.  You will require
 additional configuration on Windows for installing pkg-config that will not
 be addressed here. As of the time of writing, documentation for doing so may
 be found at:
         http://www.gaia-gis.it/spatialite-3.0.0-BETA/mingw_how_to.html#pkg-config
         
-Versions of Atheme before 7.1.0-alpha1 do not require pkg-config, so if you are
+Versions of Xtheme before 7.1.0-alpha1 do not require pkg-config, so if you are
 using an older version, skip installing pkg-config.
 
-This will download and install all MinGW components needed to build Atheme.
+This will download and install all MinGW components needed to build Xtheme.
 
-Now download a tarball containing the Atheme sources which is sufficiently
+Now download a tarball containing the Xtheme sources which is sufficiently
 new enough.  If the tarball has this file, it is sufficiently new enough.
 
 Extract the tarball to a preferred work area.  For this example, the sources
-will be in C:\Users\nenolod\dev-src\atheme.
+will be in C:\Users\siniStar\dev-src\xtheme.
 
 Start the MinGW shell, and change into a temporary directory.
 
 	$ cd /tmp
 
-Before we build Atheme, we need to install a regular expressions library.  This is
-required by Atheme for various reasons and is a hard requirement.  The utility
+Before we build Xtheme, we need to install a regular expressions library.  This is
+required by Xtheme for various reasons and is a hard requirement.  The utility
 "mingw-get" can install a suitable regular expressions library (GNU libregex).
 
 However, if we do that, we have to depend on MSYS, which is entirely unnecessary.
@@ -74,9 +74,9 @@ place.
 	$ cp /c/OpenSSL-Win32/lib/MinGW/* /mingw/lib
 	$ cp -r /c/OpenSSL-Win32/include/openssl /mingw/include/openssl
 
-Now change into the atheme sources directory:
+Now change into the xtheme sources directory:
 
-	$ cd /c/Users/nenolod/dev-src/atheme
+	$ cd /c/Users/siniStar/dev-src/xtheme
 
 In order to normalize line-endings so that the configure scripts work correctly,
 you may need to regenerate the configuration files.  You may do so by running the
@@ -91,21 +91,21 @@ This will rebuild the configuration files so that they are usable by MinGW.
 
 Now, run configure to configure the sources for building:
 
-	$ ./configure --prefix=/c/atheme --enable-contrib
+	$ ./configure --prefix=/c/xtheme --enable-contrib
 
 An explanation of the configuration options:
 
-	--prefix=/c/atheme:
-		This means that you want the Atheme files installed to the
-		C:\atheme directory.  This is a good default, and is what we
+	--prefix=/c/xtheme:
+		This means that you want the Xtheme files installed to the
+		C:\xtheme directory.  This is a good default, and is what we
 		use for our QA testing purposes.  If you want a different
 		destination, that is fine, just make sure that the first
 		directory in the prefix is a drive letter.
 		
-		For example, to install to D:\IRCStuff\atheme, use the
+		For example, to install to D:\IRCStuff\xtheme, use the
 		following prefix option:
 
-			--prefix=/d/IRCStuff/atheme
+			--prefix=/d/IRCStuff/xtheme
 
 	--enable-contrib:
 		Enable support for 'contrib' modules.  These modules add some
@@ -131,27 +131,27 @@ Now to build the sources, run 'make':
 You will see a lot of lines about compiling specific source files and DLLs,
 which is normal.
 
-To install what you just built to C:\atheme (or wherever you specified they
+To install what you just built to C:\xtheme (or wherever you specified they
 should go), run 'make install':
 
 	$ make install
 
-This should provide you with a working Atheme installation, if launched from
-MinGW.  If you want to launch your Atheme installation from the DOS prompt,
+This should provide you with a working Xtheme installation, if launched from
+MinGW.  If you want to launch your Xtheme installation from the DOS prompt,
 you will need to copy some DLLs.
 
 To do this, run the following commands:
 
-	$ cd c:/atheme/bin
+	$ cd c:/xtheme/bin
 	$ cp /mingw/bin/libgnurx-0.dll .
 
 Now you need to configure your services install.  The appropriate file for this
-is in c:\atheme\etc\atheme.conf.  You can find a sample file called
-"atheme.conf.example" that you can copy and use as a starting point.  Save that
-file as atheme.conf when you are done making your changes.
+is in c:\xtheme\etc\xtheme.conf.  You can find a sample file called
+"xtheme.conf.example" that you can copy and use as a starting point.  Save that
+file as xtheme.conf when you are done making your changes.
 
 This file doesn't cover setting up link blocks to your IRCd.  Read your IRCd's
 documentation for that.
 
 This will give you a working services install.  Please report any bugs to
-http://jira.atheme.org/.
+http://jira.xtheme.org/.
