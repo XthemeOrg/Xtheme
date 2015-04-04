@@ -10,10 +10,7 @@ In order to complete your account registration, you must type the following
 command on IRC:
 
    /msg &nicksvs& VERIFY REGISTER &accountname& &param&
-
-You can also verify your account by logging into the web interface at:
-http://www.IRC4Fun.net/services and clicking the NickServ tab, then the
-Verify button with the following Verification Key: &param& 
+ 
 
 Thank you for registering your account on the &netname& IRC network!
 

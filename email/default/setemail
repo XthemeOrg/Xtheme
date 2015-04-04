@@ -11,9 +11,6 @@ e-mail address by issuing the following command on IRC:
 
    /msg &nicksvs& VERIFY EMAILCHG &accountname& &param&
    
-You can also verify your email by logging into the web interface at:
-http://www.IRC4Fun.net/services and clicking the NickServ tab, then the
-Verify button with the following Verification Key: &param& 
 
 Thank you for updating your e-mail address on file with the &netname&
 IRC network!
