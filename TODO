@@ -1,51 +1,41 @@
-This TODO is no longer valid, as Atheme has been discontinued as of
-2014-10-31. It remains here for the benefit of forks.
+This TODO list was originally created by the Atheme Development Group.
+  It has been updated for Xtheme by the IRC4Fun Development Group.
 
 ---
 
 7.0 TODO
 
-[ ] Split tracking (datamine STATS c to make/apply routing suggestions?)
-  [ ] log splits cleanly to log channels
-  [ ] if we datamine, use this information to make suggestions
-[ ] Statistics
+[x] Split tracking 
+  [x] log splits cleanly to log channels
+[/] Statistics
   [/] base collector
     [ ] kills collector
     [ ] users collector
-  [ ] servers collector
+  [x] servers collector
   [/] channels collector
     [ ] channel info
     [x] channel topics
     [ ] channel userlist
       [ ] channel op/deop status
     [ ] channel modes
-  [?] netsplit history
-  [ ] Basic StatServ nonsense (mainly interesting for xmlrpc)
+  [x] netsplit history
+  [x] Basic StatServ nonsense (mainly interesting for xmlrpc)
 [x] IPv6 linking support
 
 frontend (www+xmlrpc)
-  [ ] make it!
-  [ ] work ^^^ into atheme-web
+  [x] make it!  SOLUTION: SWI (http://irc4fun.github.io/SWI/)
 
 ---
 
 Some ideas concerning things that we may eventually work on.
 
-interruptible commands (so as to make ns_mxcheck lookup async)
-
-cidr limits in /os clones
-
-think about additional timestamps for recognized vs identified
-
-account merging?
-
-/cs rename?
-
-more fault codes
-
-/ns ghost does not allow disconnecting a user that does not use a registered
+* cidr limits in /os clones
+* think about additional timestamps for recognized vs identified
+* account merging?
+* /cs rename?
+* more fault codes
+* /ns ghost does not allow disconnecting a user that does not use a registered
 nick but is logged in to an account with a known password (it is possible to
 disconnect any user logged in to the same account as you); however, it would be
 bad to check the same password against two accounts (nick/login). new syntax?
-
-make sendpass/setpass codes expire after some time
+* make sendpass/setpass codes expire after some time
