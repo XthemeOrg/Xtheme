@@ -487,7 +487,7 @@ void handle_setlogin(sourceinfo_t *si, user_t *u, const char *login, time_t ts)
 
 	if (authservice_loaded)
 	{
-		wallops("Ignoring attempt from %s to set login name for %s to %s",
+		slog(LG_INFO, "Ignoring attempt from %s to set login name for %s to %s",
 				get_oper_name(si), u->nick, login);
 		return;
 	}
@@ -546,7 +546,7 @@ void handle_clearlogin(sourceinfo_t *si, user_t *u)
 
 	if (authservice_loaded)
 	{
-		wallops("Ignoring attempt from %s to clear login name for %s",
+		slog(LG_INFO, "Ignoring attempt from %s to clear login name for %s",
 				get_oper_name(si), u->nick);
 		return;
 	}
