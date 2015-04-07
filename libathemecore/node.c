@@ -258,7 +258,7 @@ void kline_expire(void *arg)
 			/* TODO: determine validity of k->reason */
 			reason = k->reason ? k->reason : "(none)";
 
-			slog(LG_INFO, _("KLINE:EXPIRE: \2%s@%s\2 set \2%s\2 ago by \2%s\2 (reason: %s)"),
+			slog(LG_INFO, _("AKILL:EXPIRE: \2%s@%s\2 set \2%s\2 ago by \2%s\2 (reason: %s)"),
 				k->user, k->host, time_ago(k->settime), k->setby, reason);
 
 			verbose_wallops(_("AKILL expired on \2%s@%s\2, set by \2%s\2 (reason: %s)"),
