@@ -2039,19 +2039,19 @@ general {
 	ratelimit_period = 60;
 
 	/* (*)kline_time
-	 * The default expire time for KLINE's in days.
-	 * Setting this to 0 makes all KLINE's permanent.
+	 * The default expire time for AKILL's in days.
+	 * Setting this to 0 makes all AKILL's permanent.
 	 */
 	kline_time = 7;
 
 	/* (*)kline_with_ident
-	 * KLINE user@host instead of *@host.
-	 * Applies to all automatic KLINE's set by services.
+	 * AKILL user@host instead of *@host.
+	 * Applies to all automatic AKILL's set by services.
 	 */
 	#kline_with_ident;
 
 	/* (*)kline_verified_ident
-	 * KLINE *@host if the first character of the ident is ~,
+	 * AKILL *@host if the first character of the ident is ~,
 	 * irrespective of the value of kline_with_ident.
 	 * /
 	#kline_verified_ident;
@@ -2068,7 +2068,7 @@ general {
 	commit_interval = 5;
 
 	/* (*)default_clone_allowed
-	 * The limit after which clones will be KILLed or TKLINEd.
+	 * The limit after which clones will be KILLed or AKILLed.
 	 * Used by operserv/clones.
 	 */
 	default_clone_allowed = 5;

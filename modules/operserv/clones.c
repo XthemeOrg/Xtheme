@@ -82,7 +82,7 @@ static inline bool cexempt_expired(cexcept_t *c)
 
 command_t os_clones = { "CLONES", N_("Manages network wide clones."), PRIV_AKILL, 5, os_cmd_clones, { .path = "oservice/clones" } };
 
-command_t os_clones_kline = { "KLINE", N_("Enables/disables klines for excessive clones."), AC_NONE, 1, os_cmd_clones_kline, { .path = "" } };
+command_t os_clones_kline = { "AKILL", N_("Enables/disables akills for excessive clones."), AC_NONE, 1, os_cmd_clones_kline, { .path = "" } };
 command_t os_clones_list = { "LIST", N_("Lists clones on the network."), AC_NONE, 0, os_cmd_clones_list, { .path = "" } };
 command_t os_clones_addexempt = { "ADDEXEMPT", N_("Adds a clones exemption."), AC_NONE, 3, os_cmd_clones_addexempt, { .path = "" } };
 command_t os_clones_delexempt = { "DELEXEMPT", N_("Deletes a clones exemption."), AC_NONE, 1, os_cmd_clones_delexempt, { .path = "" } };
@@ -335,7 +335,7 @@ static void os_cmd_clones(sourceinfo_t *si, int parc, char *parv[])
 	if (!cmd)
 	{
 		command_fail(si, fault_needmoreparams, STR_INSUFFICIENT_PARAMS, "CLONES");
-		command_fail(si, fault_needmoreparams, _("Syntax: CLONES KLINE|LIST|ADDEXEMPT|DELEXEMPT|LISTEXEMPT|SETEXEMPT|DURATION [parameters]"));
+		command_fail(si, fault_needmoreparams, _("Syntax: CLONES AKILL|LIST|ADDEXEMPT|DELEXEMPT|LISTEXEMPT|SETEXEMPT|DURATION [parameters]"));
 		return;
 	}
 
@@ -360,51 +360,51 @@ static void os_cmd_clones_kline(sourceinfo_t *si, int parc, char *parv[])
 	{
 		if (kline_enabled && grace_count == 0)
 		{
-			command_fail(si, fault_nochange, _("CLONES klines are already enabled."));
+			command_fail(si, fault_nochange, _("CLONES akills are already enabled."));
 			return;
 		}
 		kline_enabled = true;
 		grace_count = 0;
-		command_success_nodata(si, _("Enabled CLONES klines."));
-		wallops("\2%s\2 enabled CLONES klines", get_oper_name(si));
-		logcommand(si, CMDLOG_ADMIN, "CLONES:KLINE:ON");
+		command_success_nodata(si, _("Enabled CLONES akills."));
+		wallops("\2%s\2 enabled CLONES akills", get_oper_name(si));
+		logcommand(si, CMDLOG_ADMIN, "CLONES:AKILL:ON");
 	}
 	else if (!strcasecmp(arg, "OFF"))
 	{
 		if (!kline_enabled)
 		{
-			command_fail(si, fault_nochange, _("CLONES klines are already disabled."));
+			command_fail(si, fault_nochange, _("CLONES akills are already disabled."));
 			return;
 		}
 		kline_enabled = false;
-		command_success_nodata(si, _("Disabled CLONES klines."));
-		wallops("\2%s\2 disabled CLONES klines", get_oper_name(si));
-		logcommand(si, CMDLOG_ADMIN, "CLONES:KLINE:OFF");
+		command_success_nodata(si, _("Disabled CLONES akills."));
+		wallops("\2%s\2 disabled CLONES akill", get_oper_name(si));
+		logcommand(si, CMDLOG_ADMIN, "CLONES:AKILL:OFF");
 	}
 	else if (isdigit((unsigned char)arg[0]))
 	{
 		unsigned int newgrace = atol(arg);
 		if (kline_enabled && grace_count == newgrace)
 		{
-			command_fail(si, fault_nochange, _("CLONES kline grace is already enabled and set to %d kills."), grace_count);
+			command_fail(si, fault_nochange, _("CLONES akill grace is already enabled and set to %d kills."), grace_count);
 		}
 		kline_enabled = true;
 		grace_count = newgrace;
-		command_success_nodata(si, _("Enabled CLONES klines with a grace of %d kills"), grace_count);
-		wallops("\2%s\2 enabled CLONES klines with a grace of %d kills", get_oper_name(si), grace_count);
-		logcommand(si, CMDLOG_ADMIN, "CLONES:KLINE:ON grace %d", grace_count);
+		command_success_nodata(si, _("Enabled CLONES akill with a grace of %d kills"), grace_count);
+		wallops("\2%s\2 enabled CLONES akill with a grace of %d kills", get_oper_name(si), grace_count);
+		logcommand(si, CMDLOG_ADMIN, "CLONES:AKILL:ON grace %d", grace_count);
 	}
 	else
 	{
 		if (kline_enabled)
 		{
 			if (grace_count)
-				command_success_string(si, "ON", _("CLONES klines are currently enabled with a grace of %d kills."), grace_count);
+				command_success_string(si, "ON", _("CLONES akill are currently enabled with a grace of %d kills."), grace_count);
 			else
-				command_success_string(si, "ON", _("CLONES klines are currently enabled."));
+				command_success_string(si, "ON", _("CLONES akill are currently enabled."));
 		}
 		else
-			command_success_string(si, "OFF", _("CLONES klines are currently disabled."));
+			command_success_string(si, "OFF", _("CLONES akill are currently disabled."));
 	}
 }
 
@@ -903,7 +903,7 @@ static void clones_newuser(hook_user_nick_t *data)
 	{
 		/* User has exceeded the maximum number of allowed clones. */
 		if (is_autokline_exempt(u))
-			slog(LG_INFO, "CLONES: \2%d\2 clones on \2%s\2 (%s!%s@%s) (user is autokline exempt)", i, u->ip, u->nick, u->user, u->host);
+			slog(LG_INFO, "CLONES: \2%d\2 clones on \2%s\2 (%s!%s@%s) (user is akill exempt)", i, u->ip, u->nick, u->user, u->host);
 		else if (!kline_enabled || he->gracekills < grace_count || (grace_count > 0 && he->firstkill < time(NULL) - CLONES_GRACE_TIMEPERIOD))
 		{
 			if (he->firstkill < time(NULL) - CLONES_GRACE_TIMEPERIOD)
@@ -917,7 +917,7 @@ static void clones_newuser(hook_user_nick_t *data)
 			}
 
 			if (!kline_enabled)
-				slog(LG_INFO, "CLONES: \2%d\2 clones on \2%s\2 (%s!%s@%s) (TKLINE disabled, killing user)", i, u->ip, u->nick, u->user, u->host);
+				slog(LG_INFO, "CLONES: \2%d\2 clones on \2%s\2 (%s!%s@%s) (AKILL disabled, killing user)", i, u->ip, u->nick, u->user, u->host);
 			else
 				slog(LG_INFO, "CLONES: \2%d\2 clones on \2%s\2 (%s!%s@%s) (grace period, killing user, %d grace kills remaining)", i, u->ip, u->nick,
 					u->user, u->host, grace_count - he->gracekills);
@@ -927,7 +927,7 @@ static void clones_newuser(hook_user_nick_t *data)
 		}
 		else
 		{
-			slog(LG_INFO, "CLONES: \2%d\2 clones on \2%s\2 (%s!%s@%s) (TKLINE due to excess clones)", i, u->ip, u->nick, u->user, u->host);
+			slog(LG_INFO, "CLONES: \2%d\2 clones on \2%s\2 (%s!%s@%s) (AKILL due to excess clones)", i, u->ip, u->nick, u->user, u->host);
 			kline_sts("*", "*", u->ip, kline_duration, "Excessive clones");
 		}
 

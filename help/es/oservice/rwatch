@@ -36,8 +36,8 @@ Changes the action for a regular expression. Possible
 values for <options> are:
     SNOOP   - enables display in the snoop channel
     NOSNOOP - disables display in the snoop channel
-    KLINE   - enables network bans
-    NOKLINE - disables network bans
+    AKILL   - enables network bans
+    NOAKILL - disables network bans
 
 Example:
     /msg &nick& RWATCH ADD /^m(oo|00)cow/i moocow figure

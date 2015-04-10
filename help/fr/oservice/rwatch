@@ -37,8 +37,8 @@ Modifie l'action pour une expression régulière. Les valeurs
 possibles pour <options> sont :
     SNOOP   - active l'affichage dans le snoop channel
     NOSNOOP - désactive l'affichage dans le snoop channel
-    KLINE   - active les bannissements du network
-    NOKLINE - désactive les bannissements du network
+    AKILL   - active les bannissements du network
+    NOAKILL - désactive les bannissements du network
 
 Exemple :
     /msg &nick& RWATCH ADD /^m(oo|00)cow/i moocow figure

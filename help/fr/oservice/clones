@@ -12,7 +12,7 @@ Si des adresses IP ne sont pas envoyées pour les
 clients spoofés, ces clients seront exemptés
 de vérifications de clones.
 
-Syntaxe : CLONES KLINE ON|OFF
+Syntaxe : CLONES AKILL ON|OFF
 
 Active/désactive le bannissement pour une heure des
 adresses IP avec plus du nombre autorisé de clients 

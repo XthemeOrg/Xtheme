@@ -12,7 +12,7 @@ es inútil; si no se envían direcciones IP por
 clientes con hosts falseados (spoof), entonces
 tales están exentos de la comprobación de CLONES.
 
-Sintaxis: CLONES KLINE ON|OFF
+Sintaxis: CLONES AKILL ON|OFF
 
 Activa/desactiva el veto de direcciones IP con más
 del número de clientes permitido por la red por una

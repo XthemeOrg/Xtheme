@@ -362,7 +362,7 @@ static void os_cmd_rwatch_del(sourceinfo_t *si, int parc, char *parv[])
 					command_fail(si, fault_noprivs, STR_NO_PRIVILEGE, PRIV_MASS_AKILL);
 					return;
 				}
-				wallops("\2%s\2 disabled kline on regex watch pattern \2%s\2", get_oper_name(si), pattern);
+				wallops("\2%s\2 disabled akill on regex watch pattern \2%s\2", get_oper_name(si), pattern);
 			}
 			if (rw->actions & RWACT_QUARANTINE)
 			{
@@ -421,7 +421,7 @@ static void os_cmd_rwatch_set(sourceinfo_t *si, int parc, char *parv[])
 	if (args == NULL)
 	{
 		command_fail(si, fault_needmoreparams, STR_INSUFFICIENT_PARAMS, "RWATCH SET");
-		command_fail(si, fault_needmoreparams, _("Syntax: RWATCH SET /<regex>/[i] [KLINE] [NOKLINE] [SNOOP] [NOSNOOP] [QUARANTINE] [NOQUARANTINE]"));
+		command_fail(si, fault_needmoreparams, _("Syntax: RWATCH SET /<regex>/[i] [AKILL] [NOAKILL] [SNOOP] [NOSNOOP] [QUARANTINE] [NOQUARANTINE]"));
 		return;
 	}
 
@@ -429,7 +429,7 @@ static void os_cmd_rwatch_set(sourceinfo_t *si, int parc, char *parv[])
 	if (pattern == NULL)
 	{
 		command_fail(si, fault_badparams, STR_INVALID_PARAMS, "RWATCH SET");
-		command_fail(si, fault_badparams, _("Syntax: RWATCH SET /<regex>/[i] [KLINE] [NOKLINE] [SNOOP] [NOSNOOP] [QUARANTINE] [NOQUARANTINE]"));
+		command_fail(si, fault_badparams, _("Syntax: RWATCH SET /<regex>/[i] [AKILL] [NOAKILL] [SNOOP] [NOSNOOP] [QUARANTINE] [NOQUARANTINE]"));
 		return;
 	}
 	while (*args == ' ')
@@ -438,16 +438,16 @@ static void os_cmd_rwatch_set(sourceinfo_t *si, int parc, char *parv[])
 	if (*args == '\0')
 	{
 		command_fail(si, fault_needmoreparams, STR_INSUFFICIENT_PARAMS, "RWATCH SET");
-		command_fail(si, fault_needmoreparams, _("Syntax: RWATCH SET /<regex>/[i] [KLINE] [NOKLINE] [SNOOP] [NOSNOOP] [QUARANTINE] [NOQUARANTINE]"));
+		command_fail(si, fault_needmoreparams, _("Syntax: RWATCH SET /<regex>/[i] [AKILL] [NOAKILL] [SNOOP] [NOSNOOP] [QUARANTINE] [NOQUARANTINE]"));
 		return;
 	}
 
 	opts = args;
 	while (*args != '\0')
 	{
-		if (!strncasecmp(args, "KLINE", 5))
+		if (!strncasecmp(args, "AKILL", 5))
 			addflags |= RWACT_KLINE, removeflags &= ~RWACT_KLINE, args += 5;
-		else if (!strncasecmp(args, "NOKLINE", 7))
+		else if (!strncasecmp(args, "NOAKILL", 7))
 			removeflags |= RWACT_KLINE, addflags &= ~RWACT_KLINE, args += 7;
 		else if (!strncasecmp(args, "SNOOP", 5))
 			addflags |= RWACT_SNOOP, removeflags &= ~RWACT_SNOOP, args += 5;
@@ -461,7 +461,7 @@ static void os_cmd_rwatch_set(sourceinfo_t *si, int parc, char *parv[])
 		if (*args != '\0' && *args != ' ')
 		{
 			command_fail(si, fault_badparams, STR_INVALID_PARAMS, "RWATCH SET");
-			command_fail(si, fault_badparams, _("Syntax: RWATCH SET /<regex>/[i] [KLINE] [NOKLINE] [SNOOP] [NOSNOOP] [QUARANTINE] [NOQUARANTINE]"));
+			command_fail(si, fault_badparams, _("Syntax: RWATCH SET /<regex>/[i] [AKILL] [NOAKILL] [SNOOP] [NOSNOOP] [QUARANTINE] [NOQUARANTINE]"));
 			return;
 		}
 		while (*args == ' ')
@@ -496,9 +496,9 @@ static void os_cmd_rwatch_set(sourceinfo_t *si, int parc, char *parv[])
 			command_success_nodata(si, _("Set options \2%s\2 on \2%s\2."), opts, pattern);
 
 			if (addflags & RWACT_KLINE)
-				wallops("\2%s\2 enabled kline on regex watch pattern \2%s\2", get_oper_name(si), pattern);
+				wallops("\2%s\2 enabled akill on regex watch pattern \2%s\2", get_oper_name(si), pattern);
 			if (removeflags & RWACT_KLINE)
-				wallops("\2%s\2 disabled kline on regex watch pattern \2%s\2", get_oper_name(si), pattern);
+				wallops("\2%s\2 disabled akill on regex watch pattern \2%s\2", get_oper_name(si), pattern);
 
 			if (addflags & RWACT_QUARANTINE)
 				wallops("\2%s\2 enabled quarantine on regex watch pattern \2%s\2", get_oper_name(si), pattern);
@@ -539,18 +539,18 @@ static void rwatch_newuser(hook_user_nick_t *data)
 			if (rw->actions & RWACT_SNOOP)
 			{
 				slog(LG_INFO, "RWATCH:%s \2%s\2 matches \2%s\2 (reason: \2%s\2)",
-						rw->actions & RWACT_KLINE ? "KLINE:" : "",
+						rw->actions & RWACT_KLINE ? "AKILL:" : "",
 						usermask, rw->regex, rw->reason);
 			}
 			if (rw->actions & RWACT_KLINE)
 			{
 				if (is_autokline_exempt(u))
-					slog(LG_INFO, "rwatch_newuser(): not klining *@%s (user %s!%s@%s is autokline exempt but matches %s %s)",
+					slog(LG_INFO, "rwatch_newuser(): not akilling *@%s (user %s!%s@%s is akill exempt but matches %s %s)",
 							u->host, u->nick, u->user, u->host,
 							rw->regex, rw->reason);
 				else
 				{
-					slog(LG_VERBOSE, "rwatch_newuser(): klining *@%s (user %s!%s@%s matches %s %s)",
+					slog(LG_VERBOSE, "rwatch_newuser(): akilling *@%s (user %s!%s@%s matches %s %s)",
 							u->host, u->nick, u->user, u->host,
 							rw->regex, rw->reason);
 					kline_sts("*", "*", u->host, 86400, rw->reason);
@@ -559,7 +559,7 @@ static void rwatch_newuser(hook_user_nick_t *data)
 			else if (rw->actions & RWACT_QUARANTINE)
 			{
 				if (is_autokline_exempt(u))
-					slog(LG_INFO, "rwatch_newuser(): not qurantining *@%s (user %s!%s@%s is autokline exempt but matches %s %s)",
+					slog(LG_INFO, "rwatch_newuser(): not qurantining *@%s (user %s!%s@%s is akill exempt but matches %s %s)",
 							u->host, u->nick, u->user, u->host,
 							rw->regex, rw->reason);
 				else
@@ -605,18 +605,18 @@ static void rwatch_nickchange(hook_user_nick_t *data)
 			if (rw->actions & RWACT_SNOOP)
 			{
 				slog(LG_INFO, "RWATCH:NICKCHANGE:%s \2%s\2 -> \2%s\2 matches \2%s\2 (reason: \2%s\2)",
-						rw->actions & RWACT_KLINE ? "KLINE:" : "",
+						rw->actions & RWACT_KLINE ? "AKILL:" : "",
 						data->oldnick, usermask, rw->regex, rw->reason);
 			}
 			if (rw->actions & RWACT_KLINE)
 			{
 				if (is_autokline_exempt(u))
-					slog(LG_INFO, "rwatch_nickchange(): not klining *@%s (user %s -> %s!%s@%s is autokline exempt but matches %s %s)",
+					slog(LG_INFO, "rwatch_nickchange(): not akilling *@%s (user %s -> %s!%s@%s is akill exempt but matches %s %s)",
 							u->host, data->oldnick, u->nick, u->user, u->host,
 							rw->regex, rw->reason);
 				else
 				{
-					slog(LG_VERBOSE, "rwatch_nickchange(): klining *@%s (user %s -> %s!%s@%s matches %s %s)",
+					slog(LG_VERBOSE, "rwatch_nickchange(): akilling *@%s (user %s -> %s!%s@%s matches %s %s)",
 							u->host, data->oldnick, u->nick, u->user, u->host,
 							rw->regex, rw->reason);
 					kline_sts("*", "*", u->host, 86400, rw->reason);
@@ -625,7 +625,7 @@ static void rwatch_nickchange(hook_user_nick_t *data)
 			else if (rw->actions & RWACT_QUARANTINE)
 			{
 				if (is_autokline_exempt(u))
-					slog(LG_INFO, "rwatch_newuser(): not qurantining *@%s (user %s!%s@%s is autokline exempt but matches %s %s)",
+					slog(LG_INFO, "rwatch_newuser(): not qurantining *@%s (user %s!%s@%s is akill exempt but matches %s %s)",
 							u->host, u->nick, u->user, u->host,
 							rw->regex, rw->reason);
 				else

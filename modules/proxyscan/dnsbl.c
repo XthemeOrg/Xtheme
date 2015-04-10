@@ -145,7 +145,7 @@ static void os_cmd_set_dnsblaction(sourceinfo_t *si, int parc, char *parv[])
 		return;
 	}
 
-	if (!strcasecmp("SNOOP", act) || !strcasecmp("KLINE", act) || !strcasecmp("NOTIFY", act))
+	if (!strcasecmp("SNOOP", act) || !strcasecmp("AKILL", act) || !strcasecmp("NOTIFY", act))
 	{
 		action = sstrdup(act);
 		command_success_nodata(si, _("DNSBLACTION successfully set to \2%s\2"), act);
@@ -497,9 +497,9 @@ static void dnsbl_hit(user_t *u, struct Blacklist *blptr)
 		/* abort_blacklist_queries(u); */
 		return;
 	}
-	else if (!strcasecmp("KLINE", action))
+	else if (!strcasecmp("AKILL", action))
 	{
-		slog(LG_INFO, "DNSBL: k-lining \2%s\2!%s@%s [%s] who is listed in DNS Blacklist %s.", u->nick, u->user, u->host, u->gecos, blptr->host);
+		slog(LG_INFO, "DNSBL: akilling \2%s\2!%s@%s [%s] who is listed in DNS Blacklist %s.", u->nick, u->user, u->host, u->gecos, blptr->host);
 		/* abort_blacklist_queries(u); */
 		notice(svs->nick, u->nick, "Your IP address %s is listed in DNS Blacklist %s", u->ip, blptr->host);
 		kline_sts("*", "*", u->host, 86400, "Banned (DNS Blacklist)");
