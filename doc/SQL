@@ -5,12 +5,12 @@ As of version 2.2, Services no longer supports SQL databases. To use
 Services 2.2 or newer, you will need to switch to the flatfile backend.
 
 The information on how to use the SQL backend has been removed as
-versions prior to 2.2 are extremely unsupported by Atheme and it
+versions prior to 2.2 are extremely unsupported by Xtheme and it
 is highly recommended to upgrade. The information on how to switch
 to a SQL backend (and vice-versa) is still left in this file in case
 you are upgrading from a old version to a newer version.
 
-If you would like web integration with your Atheme Services setup,
+If you would like web integration with your Xtheme Services setup,
 it is highly recommended to use the XML-RPC interface which also
 happens to be "live".
 

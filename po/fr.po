@@ -1,12 +1,12 @@
-# Translation for Atheme IRC Services.
+# Translation for Xtheme IRC Services.
 # Copyright (C) 2004 - 2011 Atheme
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Atheme\n"
-"Report-Msgid-Bugs-To: http://jira.atheme.org/browse/SRV\n"
+"Project-Id-Version: Xtheme\n"
+"Report-Msgid-Bugs-To: https://github.com/IRC4Fun/Xtheme/issues\n"
 "POT-Creation-Date: 2011-10-28 15:54-0500\n"
 "PO-Revision-Date: 2013-02-21 22:00+0200\n"
 "Last-Translator: Jessy AMYOT <harakiri@overstack.fr>\n"

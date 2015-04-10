@@ -5,4 +5,4 @@ SET GUARD allows you to have &nick& join your channel.
 Syntax: SET <#channel> GUARD ON|OFF
 
 Example:
-    /msg &nick& SET #atheme GUARD ON
+    /msg &nick& SET #Xtheme GUARD ON

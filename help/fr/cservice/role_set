@@ -9,6 +9,6 @@ par un "modifieur" (+ ou -).
 Syntaxe : ROLE <#salon> SET <rôle> <flags>
 
 Exemples :
-    /msg &nick& ROLE #atheme SET channel-ops +acl-change +set +recover
-    /msg &nick& ROLE #atheme SET helpers +invite
+    /msg &nick& ROLE #xtheme SET channel-ops +acl-change +set +recover
+    /msg &nick& ROLE #xtheme SET helpers +invite
     /msg &nick& ROLE #foo SET helpers -topic -invite

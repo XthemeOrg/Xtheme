@@ -7,4 +7,4 @@ eligible successors.
 Syntax: HOLD <#channel> ON|OFF
 
 Examples:
-    /msg &nick& HOLD #atheme ON
+    /msg &nick& HOLD #xtheme ON

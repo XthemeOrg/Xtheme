@@ -10,4 +10,4 @@ un canal.
 Sintaxis: CLEAR <#canal> FLAGS
 
 Ejemplos:
-    /msg &nick& CLEAR #atheme FLAGS
+    /msg &nick& CLEAR #xtheme FLAGS

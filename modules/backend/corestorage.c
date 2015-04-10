@@ -3,8 +3,8 @@
  * Rights to this code are as documented in doc/LICENSE.
  *
  * This contains the core storage components, which comprises basically
- * everything which used to live in atheme.db a long time ago.  It is not
- * tied to any specific storage engine, but the Atheme storage APIs assume
+ * everything which used to live in xtheme.db a long time ago.  It is not
+ * tied to any specific storage engine, but the Xtheme storage APIs assume
  * that all database systems are similar to OpenSEX (which is basically like
  * flatfile, but on acid, e.g. assumptions that the database is layered out like
  * a set of non-finite table cells).

@@ -8,4 +8,4 @@ AKICK-листом и другими, не менее полезными функциями.
 Синтаксис: REGISTER <#канал>
 
 Примеры:
-    /msg &nick& REGISTER #atheme
+    /msg &nick& REGISTER #xtheme

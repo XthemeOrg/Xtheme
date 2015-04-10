@@ -1,6 +1,6 @@
 Ayuda para GENERATEHASH:
 
-GENERATEHASH genera un hash de contraseña para Atheme. Esto es
+GENERATEHASH genera un hash de contraseña para Xtheme. Esto es
 útil para generar fácilmente una contraseña de operador de servicios.
 
 Sintaxis: GENERATEHASH <contraseña>

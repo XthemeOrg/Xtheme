@@ -9,6 +9,6 @@ This would give you the total amount of channels.
 Syntax: CHANNEL TOPIC <channel>
 
 Examples:
-    /msg &nick& CHANNEL TOPIC #atheme
+    /msg &nick& CHANNEL TOPIC #xtheme
 
-This example would get the topic for #atheme.
+This example would get the topic for #xtheme.

@@ -6,4 +6,4 @@ le salon donné.
 Syntaxe : ACCESS <#salon> SET <utilisateur> <role>
 
 Exemples :
-    /msg &nick& ACCESS #atheme SET stitch lowlevel-staff
+    /msg &nick& ACCESS #xtheme SET stitch lowlevel-staff

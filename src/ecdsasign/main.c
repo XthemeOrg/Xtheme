@@ -82,7 +82,7 @@ int main(int argc, const char **argv)
 
 int main(int argc, const char **argv)
 {
-	printf("I'm sorry, you didn't compile Atheme with OpenSSL support.\n");
+	printf("I'm sorry, you didn't compile Xtheme with OpenSSL support.\n");
 	return EXIT_SUCCESS;
 }
 

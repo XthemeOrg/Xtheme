@@ -1,7 +1,7 @@
 User modes
 ----------
 
-The Atheme core knows the following user modes:
+The Xtheme core knows the following user modes:
 
 +i	invisible, only tracked for use by modules
 +o	IRC operator
@@ -24,7 +24,7 @@ E	prefix
 Modes of type E are characterized both by a letter and by a special
 character to be prefixed to a nick (or UID).
 
-The Atheme core knows the following channel modes:
+The Xtheme core knows the following channel modes:
 
 A	+b	channel ban
 B	+k	channel key (password)
@@ -39,7 +39,7 @@ prefix_mode_list).
 The mode_list should contain at least +i, +m, +n, +s and +t with the
 standard values.
 
-The Atheme core has special treatment for the following extended channel modes:
+The Xtheme core has special treatment for the following extended channel modes:
 A	ban exception		ircd->except_mchar
 A	invite exception	ircd->invex_mchar
 D	permanent channel	ircd->perm_mode

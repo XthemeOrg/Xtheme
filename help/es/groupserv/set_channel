@@ -7,4 +7,4 @@ acerca del grupo.
 Sintaxis: SET <!grupo> CHANNEL [#canal]
 
 Ejemplo:
-    /msg &nick& SET !atheme CHANNEL #atheme
+    /msg &nick& SET !xtheme CHANNEL #xtheme

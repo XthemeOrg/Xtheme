@@ -3,7 +3,7 @@ Ayuda para BADMAIL:
 BADMAIL le permite mantener una lista de direcciones de email no
 autorizadas para el registro de cuentas de servicios.
 
-Estas direcciones son almacenadas en la base de datos de Atheme y
+Estas direcciones son almacenadas en la base de datos de Xtheme y
 preservadas entre reinicios del software.
 
 Con BADMAIL ADD, Ud. puede utilizar comodines para denegar el uso

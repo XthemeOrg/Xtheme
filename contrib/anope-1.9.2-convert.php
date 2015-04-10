@@ -7,16 +7,16 @@
    upon usage you will recieve a shiny new atheme database.
    
    this script takes the anope.db file in which it is ran and will generate
-   an atheme.db in opensex format.  your anope.db will not be altered.
+   an xtheme.db in opensex format.  your anope.db will not be altered.
    
    side effects:
    it will not save MLOCKS on channels
    it does not save user/channel FLAGS - accounts and channels are all 
-   granted default atheme flags
+   granted default xtheme flags
    it only understands anope default access level numerics, if you have channels
    that use non-default, you need to adjust the PHP accordingly.
    
-   this script is UNSUPPORTED by atheme.org and is provided for convience only
+   this script is UNSUPPORTED by Xtheme and is provided for convience only
    ask all questions to stitch on IRC
    
 */
@@ -46,7 +46,7 @@ $hostnicks = array();
 $queue = "";
 $chanfounders = array();
 
-$atheme = fopen("atheme.db.tmp", 'w');
+$atheme = fopen("xtheme.db.tmp", 'w');
 
 function queue_line($str)
 {
@@ -158,12 +158,12 @@ function ts_convert()
 {	
 	printf("Converting some registration timestamps for MU's\n");
 
-	$tdata = file_get_contents("atheme.db.tmp");
+	$tdata = file_get_contents("xtheme.db.tmp");
 	$data = explode("\n", $tdata);
 	$data2 = explode("\n", $tdata);
 	unset($tdata);
 
-	$atheme = fopen("atheme.db", 'w');
+	$atheme = fopen("xtheme.db", 'w');
 
         for($i = 0; $i < count($data); $i++)
         {
@@ -203,7 +203,7 @@ function ts_convert()
 	fclose($atheme);
 }
 
-function atheme_convert()
+function xtheme_convert()
 {
 	/* atheme MU flags */
 	$mu_hold =       	0x00000001;
@@ -241,7 +241,7 @@ function atheme_convert()
 	printf("Opening old anope database\n");
 
 	printf("Beginning conversion process\n");
-	printf("atheme opensex compatible db - DBV 7\n");
+	printf("Xtheme opensex compatible db - DBV 7\n");
 
 	fwrite($atheme, "DBV 7\n");
 	fwrite($atheme, "CF +vVoOtsriRfhHAb\n");
@@ -394,7 +394,7 @@ function atheme_convert()
 			{
 				if($nudata[1] == "VHOST")
 				{
-					/* atheme has one vhost per account, anope has one vhost per nick,
+					/* Xtheme has one vhost per account, anope has one vhost per nick,
 						 fuck this */
 					if($hostnicks[$lastnick] != "used")
 					{
@@ -472,12 +472,12 @@ function atheme_convert()
 	}
 }
 
-atheme_convert();
+xtheme_convert();
 
 fclose($atheme);
 ts_convert();
-unlink('atheme.db.tmp');
-printf("Conversion complete. Enjoy atheme :)\n");
+unlink('xtheme.db.tmp');
+printf("Conversion complete. Enjoy Xtheme :)\n");
 
 ?>
 

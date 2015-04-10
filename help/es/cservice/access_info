@@ -7,4 +7,4 @@ con la fecha última de modificación del acceso del usuario.
 Sintaxis: ACCESS <#canal> INFO <usuario>
 
 Examples:
-    /msg &nick& ACCESS #atheme INFO nenolod
+    /msg &nick& ACCESS #xtheme INFO Medusa

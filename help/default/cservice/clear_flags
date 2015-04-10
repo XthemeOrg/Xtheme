@@ -9,4 +9,4 @@ This command can only be used by channel founders.
 Syntax: CLEAR <#channel> FLAGS
 
 Examples:
-    /msg &nick& CLEAR #atheme FLAGS
+    /msg &nick& CLEAR #xtheme FLAGS

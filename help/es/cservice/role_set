@@ -8,6 +8,6 @@ modificador (+ o -) en frente.
 Sintaxis: ROLE <#canal> SET <rol> <opciones>
 
 Ejemplos:
-    /msg &nick& ROLE #atheme SET chanops +acl-change +set +recover
-    /msg &nick& ROLE #atheme SET ayudantes +invite
+    /msg &nick& ROLE #xtheme SET chanops +acl-change +set +recover
+    /msg &nick& ROLE #xtheme SET ayudantes +invite
     /msg &nick& ROLE #foo SET ayudantes -topic -invite

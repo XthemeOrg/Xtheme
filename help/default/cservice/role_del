@@ -5,4 +5,4 @@ ROLE DEL will delete a channel-specific role.
 Syntax: ROLE <#channel> DEL <role>
 
 Examples:
-    /msg &nick& ROLE #atheme DEL helpers
+    /msg &nick& ROLE #xtheme DEL helpers

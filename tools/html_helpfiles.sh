@@ -10,10 +10,10 @@ helpdir=${2:-../help/default}
 mkdir -p "$htmldir"
 
 {
-echo "<html><head><title>Atheme help</title>"
-echo "<meta name=\"generator\" content=\"atheme html_helpfiles.sh\">"
+echo "<html><head><title>Xtheme help</title>"
+echo "<meta name=\"generator\" content=\"xtheme html_helpfiles.sh\">"
 echo "</head><body>"
-echo "<h1>Atheme help</h1>"
+echo "<h1>Xtheme help</h1>"
 echo "Services"
 echo "<ul>"
 for d in $helpdir/*; do
@@ -37,8 +37,8 @@ for d in $helpdir/*; do
 	esac
 	echo "<li><a href=\"$service.html\">$service</a>"
 	{
-		echo "<html><head><title>Atheme help - $service</title>"
-		echo "<meta name=\"generator\" content=\"atheme html_helpfiles.sh\">"
+		echo "<html><head><title>Xtheme help - $service</title>"
+		echo "<meta name=\"generator\" content=\"xtheme html_helpfiles.sh\">"
 		echo "</head><body>"
 		echo "</head><body>"
 		echo "<h1>$service</h1>"

@@ -31,11 +31,11 @@
 #  USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
 #  OF SUCH DAMAGE.
 #
-# $Id: hybservtoatheme.pl 8315 2007-05-24 16:45:39Z jilles $
+# $Id: hybservtoxtheme.pl 8315 2007-05-24 16:45:39Z jilles $
 #
-# HybServ2/dancer-services to Atheme database converter
+# HybServ2/dancer-services to Xtheme database converter
 # - Reads nick.db and chan.db from the current directory.
-# - Writes an Atheme flatfile db to stdout.
+# - Writes an Xtheme flatfile db to stdout.
 # - Certain errors abort the script and give a message on stderr.
 # - Several other problematic cases are noted in the output as comments.
 # - Derived from my hybserv to ratbox-services converter.
@@ -56,7 +56,7 @@
 # <jilles@stack.nl>
 # http://www.stack.nl/~jilles/irc/
 
-print "# hybservtoatheme.pl Copyright 2005-2008 Jilles Tjoelker\n";
+print "# hybservtoxtheme.pl Copyright 2005-2008 Jilles Tjoelker\n";
 print "DBV 5\n";
 print "CF +vVhHoOtsriRfAb\n";
 
@@ -161,7 +161,7 @@ while (<NICKDB>) {
 		$athflags |= 0x2000 if $hsflags & 0x40000; # hideaddr/private
 		$athflags |= 0x2010 if $hsflags & 0x10; # private/private+hidemail
 		# transform either of noregister and nochanops to suspend
-		# hope atheme doesn't mind we don't know the suspender...
+		# hope xtheme doesn't mind we don't know the suspender...
 		#$athflags |= 1 if ($hsflags & 0x300000);
 		# theia:
 		# 0x00800000 unfiltered
@@ -420,4 +420,4 @@ while (<CHANDB>) {
 }
 print "CA $missingfounderchanacs $founder +AivrhtoRfs\n" if $missingfounderchanacs ne '';
 close(CHANDB);
-print "# End of hybservtoatheme.pl output\n";
+print "# End of hybservtoxtheme.pl output\n";

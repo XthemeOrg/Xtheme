@@ -7,4 +7,4 @@ informations sur le groupe.
 Syntaxe : SET <!groupe> CHANNEL [#salon]
 
 Exemple :
-    /msg &nick& SET !atheme CHANNEL #atheme
+    /msg &nick& SET !xtheme CHANNEL #xtheme

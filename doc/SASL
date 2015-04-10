@@ -2,7 +2,7 @@ SASL authentication
 -------------------
 
 This document describes the client protocol for SASL authentication, as
-implemented in charybdis and atheme.
+implemented in charybdis and Xtheme.
 
 SASL authentication relies on the CAP client capability framework [1].
 Support for SASL authentication is indicated with the "sasl" capability.

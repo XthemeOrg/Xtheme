@@ -8,4 +8,4 @@ pas exactement, il sera listé comme le rôle le plus proche correspondant.
 Syntaxe : ACCESS <#salon> LIST
 
 Exemples :
-    /msg &nick& ACCESS #atheme LIST
+    /msg &nick& ACCESS #xtheme LIST

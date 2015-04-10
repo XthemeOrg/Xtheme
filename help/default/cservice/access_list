@@ -8,4 +8,4 @@ the closest role they match.
 Syntax: ACCESS <#channel> LIST
 
 Examples:
-    /msg &nick& ACCESS #atheme LIST
+    /msg &nick& ACCESS #xtheme LIST

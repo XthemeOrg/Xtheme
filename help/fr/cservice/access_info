@@ -7,4 +7,4 @@ seront affichés depuis la dernière modification de l'accès de l'utilisateur.
 Syntaxe : ACCESS <#salon> INFO <utilisateur>
 
 Exemples :
-    /msg &nick& ACCESS #atheme INFO nenolod
+    /msg &nick& ACCESS #xtheme INFO siniStar

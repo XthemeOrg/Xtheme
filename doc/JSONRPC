@@ -1,9 +1,9 @@
-Atheme JSONRPC interface
+Xtheme JSONRPC interface
 -----------------------
 
-The modules/transport/jsonrpc/main module provides an JSONRPC interface to Atheme.
+The modules/transport/jsonrpc/main module provides an JSONRPC interface to Xtheme.
 
-Atheme does not use HTTP authentication, instead using its own system with
+Xtheme does not use HTTP authentication, instead using its own system with
 authentication cookies.
 
 JSONRPC is documented in http://json-rpc.org/. It's an exchange of JSON objects
@@ -39,7 +39,7 @@ Source ip is logged with the request, it does not need to be an IP address.
 For web interfaces, the resulting authcookie can be stored in a HTTP cookie,
 avoiding password storage.
 
-The authcookie will be valid for one hour or until Atheme shuts down.
+The authcookie will be valid for one hour or until Xtheme shuts down.
 
 /*
  * atheme.logout

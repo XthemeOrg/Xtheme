@@ -16,4 +16,4 @@ no ban exception will be added.
 Syntax: RECOVER <#channel>
 
 Example:
-    /msg &nick& RECOVER #foo
+    /msg &nick& RECOVER #FunChat

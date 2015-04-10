@@ -6,4 +6,4 @@ of a group. This is shown when a user requests info about the group.
 Syntax: SET <!group> CHANNEL [#channel]
 
 Example:
-    /msg &nick& SET !atheme CHANNEL #atheme
+    /msg &nick& SET !xtheme CHANNEL #Xtheme

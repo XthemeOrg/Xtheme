@@ -5,4 +5,4 @@ ROLE DEL supprimera le rôle du salon spécifié.
 Syntaxe : ROLE <#salon> DEL <rôle>
 
 Exemples :
-    /msg &nick& ROLE #atheme DEL helpers
+    /msg &nick& ROLE #xtheme DEL helpers

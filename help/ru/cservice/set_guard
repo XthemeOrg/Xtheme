@@ -7,4 +7,4 @@
 Syntax: SET <#канал> GUARD ON|OFF
 
 Пример:
-    /msg &nick& SET #atheme GUARD ON
+    /msg &nick& SET #xtheme GUARD ON

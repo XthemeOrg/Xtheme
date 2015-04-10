@@ -6,7 +6,7 @@ the snoop channel about IP addresses with
 multiple clients.
 
 CLONES only works on clients whose IP address
-Atheme knows. If the ircd does not support
+Xtheme knows. If the ircd does not support
 propagating IP addresses at all, CLONES is
 not useful; if IP addresses are not sent for
 spoofed clients, those clients are exempt from

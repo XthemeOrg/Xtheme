@@ -4,4 +4,4 @@ The taxonomy command lists metadata information associated
 with registered channels.
 
 Examples:
-    /msg &nick& TAXONOMY #atheme
+    /msg &nick& TAXONOMY #xtheme

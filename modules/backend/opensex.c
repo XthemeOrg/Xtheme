@@ -3,7 +3,7 @@
  * Rights to this code are as documented in doc/LICENSE.
  *
  * This file contains the OpenSEX (Open Services Exchange) database backend for
- * Atheme. The purpose of OpenSEX is to destroy the old DB format, subjugate its
+ * Xtheme. The purpose of OpenSEX is to destroy the old DB format, subjugate its
  * peoples, burn its cities to the ground, and salt the earth so that nothing
  * ever grows there again.
  */

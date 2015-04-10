@@ -10,4 +10,4 @@ channel tends to never empty.
 Syntax: SET <#channel> KEEPTOPIC ON|OFF
 
 Example:
-    /msg &nick& SET #foo KEEPTOPIC ON
+    /msg &nick& SET #freenode KEEPTOPIC ON

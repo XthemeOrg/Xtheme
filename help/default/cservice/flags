@@ -35,7 +35,7 @@ restricted further, see help for SET LIMITFLAGS.
 #endif
 
 #if module exttarget/main
-As of Atheme 7.0, there are now extended entity targets
+As of Xtheme 7.0, there are now extended entity targets
 which allow you to match chanacs against a situation instead
 of against a nickname, hostmask or group.
 

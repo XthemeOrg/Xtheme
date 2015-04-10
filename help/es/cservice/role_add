@@ -42,4 +42,4 @@ Opciones:
     +banned - Activa la expulsión y veto automáticos.
 
 Ejemplos:
-    /msg &nick& ROLE #atheme ADD ayudantes topic autovoice
+    /msg &nick& ROLE #xtheme ADD ayudantes topic autovoice

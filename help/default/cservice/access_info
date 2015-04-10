@@ -8,4 +8,4 @@ access was modified.
 Syntax: ACCESS <#channel> INFO <user>
 
 Examples:
-    /msg &nick& ACCESS #atheme INFO nenolod
+    /msg &nick& ACCESS #xtheme INFO siniStar

@@ -7,4 +7,4 @@ the group.
 Syntax: SET <!group> DESCRIPTION [description]
 
 Example:
-    /msg &nick& SET !atheme DESCRIPTION Official Atheme Group
+    /msg &nick& SET !xtheme DESCRIPTION Official Xtheme Group

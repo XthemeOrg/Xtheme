@@ -35,7 +35,7 @@ Voir l'aide pour SET LIMITFLAGS
 #endif
 
 #if module exttarget/main
-Sur Atheme 7.0, il y a maintenant des cibles étendues,
+Sur Xtheme 7.0, il y a maintenant des cibles étendues,
 ce qui vous permet de faire correspondre des accès avec
 des 'situations' à la place de les faire correspondre à
 des nickname, hostmask ou groupes.

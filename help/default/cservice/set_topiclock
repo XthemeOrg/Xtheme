@@ -12,4 +12,4 @@ will disable TOPICLOCK also.
 Syntax: SET <#channel> TOPICLOCK ON|OFF
 
 Example:
-    /msg &nick& SET #foo TOPICLOCK ON
+    /msg &nick& SET #xtheme TOPICLOCK ON

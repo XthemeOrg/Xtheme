@@ -21,7 +21,7 @@ For host hiding (umode +x, <account>.<suffix>) to work, the hosthidesuffix
 in serverinfo{} must be correct (same value as F:HIDDEN_HOST in ircd.conf).
 
 SETHOST (umode +h [ident@]host) is supported. When changing the ident via +h,
-atheme will not restore the ident on -h. This can be worked around by never
+Xtheme will not restore the ident on -h. This can be worked around by never
 changing ident with +h, never doing -h or doing a +h with the original ident@
 before -h.
 
@@ -49,18 +49,18 @@ inspircd
 --------
 
 You should use the "inspircd" protocol module for InspIRCd 2.0.
-InspIRCd 1.2 support was deprecated in atheme 7.1 and has been dropped
-in atheme 7.2.
+InspIRCd 1.2 support was deprecated in Xtheme 7.1 and has been dropped
+in Xtheme 7.2.
 
 You need <uline> tags for services on all servers on the network.
 
-Several of the modes supported by Atheme are in optional modules. It should
+Several of the modes supported by Xtheme are in optional modules. It should
 usually not be a problem if those modules are not loaded. The exception to
 this is the m_services_account.so module, which must be loaded at all times 
-on your inspircd servers if you wish to use this version of atheme.
+on your inspircd servers if you wish to use this version of xtheme.
 
-Using the m_invisible module on inspircd with Atheme connected is an unsupported
-condition and will result in your Atheme installation being "tainted".
+Using the m_invisible module on inspircd with Xtheme connected is an unsupported
+condition and will result in your Xtheme installation being "tainted".
 
 Jupes will use SIDs numerically following services's SID, make sure to leave 
 plenty of space.
@@ -68,7 +68,7 @@ plenty of space.
 ircnet
 ------
 
-Atheme links as a server (C:, N:, H: lines), not as a service. IRCnet-style
+Xtheme links as a server (C:, N:, H: lines), not as a service. IRCnet-style
 services cannot do enough (like manipulating channel modes).
 
 Nick delay will lock any nicks killed, so /ns ghost is worthless; it is
@@ -77,17 +77,17 @@ probably best to use userserv instead of nickserv.
 Only # channels are supported.
 
 Tklines are used for /os akill but this only works on the server
-Atheme is directly linked to.
+Xtheme is directly linked to.
 
 It is recommended to enable join_chans, otherwise many things will be sent
 from the server (possibly generating nasty server notices) or chanserv will
 join and part to do the action. Alternatively, disable it and avoid commands
-that cause Atheme to kick as much as possible.
+that cause Xtheme to kick as much as possible.
 
 Jupes will use SIDs numerically following services's SID, make sure to
 leave plenty of space.
 
-Server hostmasking mostly works, but Atheme will not mask itself (this would
+Server hostmasking mostly works, but Xtheme will not mask itself (this would
 not be useful anyway). Messages from masked servers which have the server
 name as prefix are not recognized. This may affect KILL in particular.
 
@@ -104,7 +104,7 @@ Only F:HOST_HIDING_STYLE:1 (<account>.<suffix>) is supported,
 F:HOST_HIDING_STYLE:2 (scrambled hostname/IP) is not.
 
 SETHOST (umode +h [ident@]host) is supported. When changing the ident via +h,
-atheme will not restore the ident on -h. This can be worked around by never
+xtheme will not restore the ident on -h. This can be worked around by never
 changing ident with +h, never doing -h or doing a +h with the original ident@
 before -h.
 
@@ -156,10 +156,10 @@ Users dropping their account will be killed; this cannot be avoided.
 For host hiding (umode +x, <account>.<suffix>) to work, the hosthidesuffix
 in serverinfo{} must be correct (same value as F:HIDDEN_HOST in ircd.conf).
 
-Atheme does not support oplevels; they should be disabled.
+Xtheme does not support oplevels; they should be disabled.
 
 chanserv::changets can be used with ircu version 2.10.12.06 or newer; if any
-server on the network is 2.10.11.x, netsplits will occur whenever Atheme tries
+server on the network is 2.10.11.x, netsplits will occur whenever Xtheme tries
 to lower TS.
 
 unreal

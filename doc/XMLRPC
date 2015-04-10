@@ -1,9 +1,9 @@
-Atheme XMLRPC interface
+Xtheme XMLRPC interface
 -----------------------
 
-The modules/transport/xmlrpc/main module provides an XMLRPC interface to Atheme.
+The modules/transport/xmlrpc/main module provides an XMLRPC interface to Xtheme.
 
-Atheme does not use HTTP authentication, instead using its own system with
+Xtheme does not use HTTP authentication, instead using its own system with
 authentication cookies.
 
 All parameters are strings.
@@ -33,7 +33,7 @@ Source ip is logged with the request, it does not need to be an IP address.
 For web interfaces, the resulting authcookie can be stored in a HTTP cookie,
 avoiding password storage.
 
-The authcookie will be valid for one hour or until Atheme shuts down.
+The authcookie will be valid for one hour or until Xtheme shuts down.
 
 /*
  * atheme.logout

@@ -6,7 +6,7 @@ alertan en el canal snoop sobre IPs con múltiples
 clientes.
 
 CLONES sólo funciona con clientes cuya IP es
-conocida por Atheme. Si el ircd no soporta la
+conocida por Xtheme. Si el ircd no soporta la
 propagación de direcciones IP, entonces CLONES
 es inútil; si no se envían direcciones IP por
 clientes con hosts falseados (spoof), entonces

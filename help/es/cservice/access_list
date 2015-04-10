@@ -8,4 +8,4 @@ le mostrará con el rol más parecido que se encuentre.
 Sintaxis: ACCESS <#canal> LIST
 
 Ejemplos:
-    /msg &nick& ACCESS #atheme LIST
+    /msg &nick& ACCESS #xtheme LIST

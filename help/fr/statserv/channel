@@ -9,6 +9,6 @@ Ceci donnera le nombre total de salons.
 Syntaxe : CHANNEL TOPIC <salon>
 
 Exemples :
-    /msg &nick& CHANNEL TOPIC #atheme
+    /msg &nick& CHANNEL TOPIC #xtheme
 
-Cet exemple vous retournera le topic du salon #atheme.
+Cet exemple vous retournera le topic du salon #xtheme.

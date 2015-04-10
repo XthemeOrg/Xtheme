@@ -6,4 +6,4 @@
 Синтаксис: WHY <#канал> <ник>
 
 Пример:
-    /msg &nick& WHY #atheme Vasya
+    /msg &nick& WHY #xtheme Vasya

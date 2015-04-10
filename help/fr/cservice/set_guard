@@ -5,4 +5,4 @@ SET GUARD vous autorise à faire rejoindre &nick& sur votre salon.
 Syntaxe : SET <#salon> GUARD ON|OFF
 
 Exemple :
-    /msg &nick& SET #atheme GUARD ON
+    /msg &nick& SET #xtheme GUARD ON

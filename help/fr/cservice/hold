@@ -7,4 +7,4 @@ n'y a pas de successeur éligible.
 Syntaxe : HOLD <#salon> ON|OFF
 
 Exemples :
-    /msg &nick& HOLD #atheme ON
+    /msg &nick& HOLD #xtheme ON
