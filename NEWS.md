@@ -2,9 +2,22 @@ Xtheme Services 7.3.0 Development Notes
 =====================================
 
 chanserv
+--------
 - Make `NOSYNC` show in ChanServ INFO output
 * Atheme has decided to end development.  IRC4Fun forked Atheme to create
  Xtheme IRC Services!  
+ 
+operserv
+--------
+- Change KLINE messages to AKILL to be more appropriate with todays most
+ commonly used IRCds.
+- "Ignoring attempt from..." wallops from OperServ have been turned into a 
+ log event instead.
+ 
+help files
+----------
+- Help files have been updated to reference Xtheme, instead of Atheme.
+
 
 Atheme Services 7.2.5 Development Notes
 =====================================
