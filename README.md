@@ -8,12 +8,12 @@ Xtheme's behavior is tunable using modules and a highly detailed configuration f
 Almost all behavior can be changed at deployment time just by editing the configuration.
 
 If you are running this code from Git, you should read GIT-Access for instructions on
-how to fully check out the xtheme tree, as it is spread across many repositories.
+how to fully check out the Xtheme tree, as it is spread across many repositories.
 
 ## basic build instructions for the impatient
 
 Whatever you do, make sure you do *not* install Xtheme into the same location as the source.
-Xtheme will default to installing in `$HOME/xtheme`, so make sure you plan accordingly for this.
+Xtheme will default to installing in `$HOME/Xtheme`, so make sure you plan accordingly for this.
 
     $ git submodule update --init
     $ ./configure
@@ -22,11 +22,11 @@ Xtheme will default to installing in `$HOME/xtheme`, so make sure you plan accor
 
 If you're still lost, read [INSTALL](INSTALL) or [GIT-Access](GIT-Access) for hints. 
 
-## SWI (services web interface)
+## SWI (services web interface) Web Panel for Xtheme
 
 If you are interested in having a Services Web Interface (or Services Web Panel), SWI
 *IS* compatible with Xtheme and other Atheme forks, and is available at:
-http://www.irc4fun.net/xtheme/ or http://github.com/IRC4Fun/Xtheme/
+http://irc4fun.github.io/SWI/ or http://github.com/IRC4Fun/SWI/
 
 ## links / contact
 
