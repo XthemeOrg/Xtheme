@@ -20,7 +20,7 @@ Xtheme will default to installing in `$HOME/xtheme`, so make sure you plan accor
     $ make
     $ make install
 
-If you're still lost, read [INSTALL](INSTALL) or [GIT-Access](GIT-Access) for hints.
+If you're still lost, read [INSTALL](INSTALL) or [GIT-Access](GIT-Access) for hints. 
 
 ## SWI (services web interface)
 
