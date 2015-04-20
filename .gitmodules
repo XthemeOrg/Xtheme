@@ -6,4 +6,4 @@
 	url = git://git.savannah.gnu.org/libunwind.git
 [submodule "modules/contrib"]
 	path = modules/contrib
-	url = git://github.com/IRC4Fun/xtheme-contrib-modules.git
+	url = git://github.com/XthemeOrg/xtheme-contrib-modules.git
