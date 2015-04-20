@@ -26,11 +26,11 @@ If you're still lost, read [INSTALL](INSTALL) or [GIT-Access](GIT-Access) for hi
 
 If you are interested in having a Services Web Interface (or Services Web Panel), SWI
 *IS* compatible with Xtheme and other Atheme forks, and is available at:
-http://irc4fun.github.io/SWI/ or http://github.com/IRC4Fun/SWI/
+http://www.Xtheme.org/SWI/ or http://github.com/XthemeOrg/SWI/
 
 ## links / contact
 
- * [GitHub](http://www.github.com/IRC4Fun/Xtheme)
- * [Website](http://www.IRC4Fun.net/xtheme/)
+ * [GitHub](http://www.github.com/XthemeOrg/Xtheme)
+ * [Website](http://www.Xtheme.org/Xtheme/)
  * [IRC](irc://irc.IRC4Fun.net/#Xtheme) irc.IRC4Fun.net #Xtheme
- * [IRC](irc://chat.freenode.net/##Xtheme) chat.Freenode.net ##Xtheme
+ * [IRC](irc://chat.freenode.net/#Xtheme) chat.Freenode.net #Xtheme
