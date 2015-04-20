@@ -1,6 +1,6 @@
 ## Xtheme
 
-Xtheme is a *legacy* set of services for IRC networks designed for large IRC networks with high
+Xtheme is a set of services for IRC networks designed for large IRC networks with high
 scalability requirements.  It is relatively mature software, with some code and design
 derived from another package called Atheme and Shrike.
 
