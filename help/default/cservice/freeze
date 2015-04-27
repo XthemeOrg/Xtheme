@@ -1,0 +1,20 @@
+Help for FREEZE:
+
+FREEZE will "suspend" all users (Founder too), 
+allowing the channel to continue to be used.
+Users with flags or access to the channel are 
+unable to use their access while frozen.
+Channels cannot be dropped or transferred and
+will continue to EXPIRE according to the normal
+expiration policy set for channels.
+
+Enabling FREEZE will immediately deop all ops
+currently in the channel.
+
+Use FREEZE OFF to un-suspend a channel.
+
+Syntax: FREEZE <#channel> ON|OFF [reason]
+
+Examples:
+    /msg &nick& FREEZE #lamers ON spamming
+    /msg &nick& FREEZE #teens OFF
