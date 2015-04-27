@@ -1,4 +1,5 @@
 /*
+ * Copyright (c) 2015 Xtheme Development Group (Xtheme.org)
  * Copyright (c) 2005 William Pitcock, et al.
  * Rights to this code are as documented in doc/LICENSE.
  *
@@ -12,7 +13,7 @@ DECLARE_MODULE_V1
 (
 	"chanserv/status", false, _modinit, _moddeinit,
 	PACKAGE_STRING,
-	"Atheme Development Group <http://www.atheme.org>"
+	"Xtheme Development Group <http://www.Xtheme.org>"
 );
 
 static void cs_cmd_status(sourceinfo_t *si, int parc, char *parv[]);
@@ -56,6 +57,12 @@ static void cs_cmd_status(sourceinfo_t *si, int parc, char *parv[])
 		if (metadata_find(mc, "private:close:closer"))
 		{
 			command_fail(si, fault_noprivs, _("\2%s\2 is closed."), chan);
+			return;
+		}
+		
+		if (metadata_find(mc, "private:frozen:freezer"))
+		{
+			command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), chan);
 			return;
 		}
 

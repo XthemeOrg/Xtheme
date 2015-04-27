@@ -1,4 +1,5 @@
 /*
+ * Copyright (c) 2015 Xtheme Development Group (Xtheme.org)
  * Copyright (c) 2005 Robin Burchell, et al.
  * Copyright (c) 2010 William Pitcock <nenolod@atheme.org>.
  * Rights to this code are as documented in doc/LICENSE.
@@ -12,7 +13,7 @@ DECLARE_MODULE_V1
 (
 	"chanserv/list", false, _modinit, _moddeinit,
 	PACKAGE_STRING,
-	"Atheme Development Group <http://www.atheme.org>"
+	"Xtheme Development Group <http://www.Xtheme.org>"
 );
 
 static void cs_cmd_list(sourceinfo_t *si, int parc, char *parv[]);
@@ -137,20 +138,21 @@ static void build_criteriastr(char *buf, int parc, char *parv[])
 static void cs_cmd_list(sourceinfo_t *si, int parc, char *parv[])
 {
 	mychan_t *mc;
-	metadata_t *md, *mdclosed;
-	char *chanpattern = NULL, *markpattern = NULL, *closedpattern = NULL;
+	metadata_t *md, *mdclosed, *mdfrozen;
+	char *chanpattern = NULL, *markpattern = NULL, *closedpattern = NULL, *frozenpattern = NULL;
 	char buf[BUFSIZE];
 	char criteriastr[BUFSIZE];
 	unsigned int matches = 0;
 	unsigned int flagset = 0;
 	int aclsize = 0;
 	time_t age = 0, lastused = 0;
-	bool closed = false, marked = false, markmatch, closedmatch;
+	bool closed = false, frozen = false, marked = false, markmatch, closedmatch;
 	mowgli_patricia_iteration_state_t state;
 	list_option_t optstable[] = {
 		{"pattern",	OPT_STRING,	{.strval = &chanpattern}, 0},
 		{"mark-reason", OPT_STRING,	{.strval = &markpattern}, 0},
 		{"close-reason", OPT_STRING,    {.strval = &closedpattern}, 0},
+		{"freeze-reason", OPT_STRING,    {.strval = &frozenpattern}, 0},
 		{"noexpire",	OPT_FLAG,	{.flagval = &flagset}, MC_HOLD},
 		{"held",	OPT_FLAG,	{.flagval = &flagset}, MC_HOLD},
 		{"hold",	OPT_FLAG,	{.flagval = &flagset}, MC_HOLD},
@@ -166,6 +168,7 @@ static void cs_cmd_list(sourceinfo_t *si, int parc, char *parv[])
 		{"guard",	OPT_FLAG,	{.flagval = &flagset}, MC_GUARD},
 		{"private",	OPT_FLAG,	{.flagval = &flagset}, MC_PRIVATE},
 		{"closed",	OPT_BOOL,	{.boolval = &closed}, 0},
+		{"frozen",	OPT_BOOL,	{.boolval = &frozen}, 0},
 		{"marked",	OPT_BOOL,	{.boolval = &marked}, 0},
 		{"aclsize",	OPT_INT,	{.intval = &aclsize}, 0},
 		{"registered",	OPT_AGE,	{.ageval = &age}, 0},
@@ -203,11 +206,25 @@ static void cs_cmd_list(sourceinfo_t *si, int parc, char *parv[])
 			if (!closedmatch)
 				continue;
 		}
+		
+		if (frozenpattern)
+		{
+			closedmatch = false;
+			mdclosed = metadata_find(mc, "private:frozen:reason");
+			if (mdclosed != NULL && !match(closedpattern, mdclosed->value))
+				closedmatch = true;
+
+			if (!closedmatch)
+				continue;
+		}
 
 		if (marked && !metadata_find(mc, "private:mark:setter"))
 			continue;
 
 		if (closed && !metadata_find(mc, "private:close:closer"))
+			continue;
+		
+		if (frozen && !metadata_find(mc, "private:frozen:freezer"))
 			continue;
 
 		if (flagset && (mc->flags & flagset) != flagset)
@@ -233,6 +250,12 @@ static void cs_cmd_list(sourceinfo_t *si, int parc, char *parv[])
 				mowgli_strlcat(buf, " ", BUFSIZE);
 
 			mowgli_strlcat(buf, "\2[closed]\2", BUFSIZE);
+		}
+		if (metadata_find(mc, "private:frozen:freezer")) {
+			if (*buf)
+				mowgli_strlcat(buf, " ", BUFSIZE);
+
+			mowgli_strlcat(buf, "\2[frozen]\2", BUFSIZE);
 		}
 		if (mc->flags & MC_HOLD) {
 			if (*buf)

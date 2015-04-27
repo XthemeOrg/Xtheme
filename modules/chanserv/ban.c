@@ -1,4 +1,5 @@
 /*
+ * Copyright (c) 2015 Xtheme Development Group (Xtheme.org)
  * Copyright (c) 2005 William Pitcock, et al.
  * Rights to this code are as documented in doc/LICENSE.
  *
@@ -12,7 +13,7 @@ DECLARE_MODULE_V1
 (
 	"chanserv/ban", false, _modinit, _moddeinit,
 	PACKAGE_STRING,
-	"Atheme Development Group <http://www.atheme.org>"
+	"Xtheme Development Group <http://www.Xtheme.org>"
 );
 
 static void cs_cmd_ban(sourceinfo_t *si, int parc, char *parv[]);
@@ -54,6 +55,12 @@ static void cs_cmd_ban(sourceinfo_t *si, int parc, char *parv[])
 	if (!mc)
 	{
 		command_fail(si, fault_nosuch_target, _("Channel \2%s\2 is not registered."), channel);
+		return;
+	}
+	
+	if (metadata_find(mc, "private:frozen:freezer"))
+	{
+		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), channel);
 		return;
 	}
 
@@ -138,6 +145,12 @@ static void cs_cmd_unban(sourceinfo_t *si, int parc, char *parv[])
 	if (!mc)
 	{
 		command_fail(si, fault_nosuch_target, _("Channel \2%s\2 is not registered."), channel);
+		return;
+	}
+	
+	if (metadata_find(mc, "private:frozen:freezer"))
+	{
+		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), chan);
 		return;
 	}
 

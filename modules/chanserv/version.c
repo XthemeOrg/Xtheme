@@ -5,7 +5,7 @@ DECLARE_MODULE_V1
 (
 	"chanserv/version", false, _modinit, _moddeinit,
 	PACKAGE_STRING,
-	"Atheme Development Group <http://www.atheme.org>"
+	"Xtheme Development Group <http://www.Xtheme.org>"
 );
 
 static void cs_cmd_version(sourceinfo_t *si, int parc, char *parv[]);

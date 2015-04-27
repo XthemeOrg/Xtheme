@@ -1,4 +1,5 @@
 /*
+ * Copyright (c) 2015 Xtheme Development Group (Xtheme.org)
  * Copyright (c) 2010 Atheme Development Group
  * Rights to this code are as documented in doc/LICENSE.
  *
@@ -12,7 +13,7 @@ DECLARE_MODULE_V1
 (
 	"chanserv/clone", false, _modinit, _moddeinit,
 	PACKAGE_STRING,
-	"Atheme Development Group <http://www.atheme.org>"
+	"Xtheme Development Group <http://www.Xtheme.org>"
 );
 
 static void cs_cmd_clone(sourceinfo_t *si, int parc, char *parv[]);
@@ -63,7 +64,19 @@ static void cs_cmd_clone(sourceinfo_t *si, int parc, char *parv[])
 		command_fail(si, fault_nochange, "Cannot clone a channel to itself.");
 		return;
 	}
+	
+	if (metadata_find(mc, "private:frozen:freezer"))
+	{
+		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), source);
+		return;
+	}
 
+	if (metadata_find(mc2, "private:frozen:freezer"))
+	{
+		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), target);
+		return;
+	}
+	
 	if (metadata_find(mc, "private:close:closer"))
 	{
 		command_fail(si, fault_noprivs, "\2%s\2 is closed.", source);

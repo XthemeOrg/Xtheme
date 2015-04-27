@@ -1,4 +1,5 @@
 /*
+ * Copyright (c) 2015 Xtheme Development Group (Xtheme.org)
  * Copyright (c) 2005 William Pitcock, et al.
  * Rights to this code are as documented in doc/LICENSE.
  *
@@ -12,7 +13,7 @@ DECLARE_MODULE_V1
 (
 	"chanserv/topic", false, _modinit, _moddeinit,
 	PACKAGE_STRING,
-	"Atheme Development Group <http://www.atheme.org>"
+	"Xtheme Development Group <http://www.Xtheme.org>"
 );
 
 static void cs_cmd_topic(sourceinfo_t *si, int parc, char *parv[]);
@@ -78,6 +79,12 @@ static void cs_cmd_topic(sourceinfo_t *si, int parc, char *parv[])
 	if (metadata_find(mc, "private:close:closer"))
 	{
 		command_fail(si, fault_noprivs, _("\2%s\2 is closed."), chan);
+		return;
+	}
+	
+	if (metadata_find(mc, "private:frozen:freezer"))
+	{
+		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), chan);
 		return;
 	}
 
@@ -151,6 +158,12 @@ static void cs_cmd_topicappend(sourceinfo_t *si, int parc, char *parv[])
 		return;
 	}
 
+        if (metadata_find(mc, "private:frozen:freezer"))
+	{
+		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), chan);
+		return;
+	}
+	
 	topicbuf[0] = '\0';
 
 	if (c->topic)
@@ -223,6 +236,12 @@ static void cs_cmd_topicprepend(sourceinfo_t *si, int parc, char *parv[])
         if (metadata_find(mc, "private:close:closer"))
 	{
 		command_fail(si, fault_noprivs, _("\2%s\2 is closed."), chan);
+		return;
+	}
+	
+        if (metadata_find(mc, "private:frozen:freezer"))
+	{
+		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), chan);
 		return;
 	}
 
@@ -317,6 +336,12 @@ static void cs_cmd_topicswap(sourceinfo_t *si, int parc, char *parv[])
 	if (metadata_find(mc, "private:close:closer"))
 	{
 		command_fail(si, fault_noprivs, _("\2%s\2 is closed."), chan);
+		return;
+	}
+	
+	if (metadata_find(mc, "private:frozen:freezer"))
+	{
+		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), chan);
 		return;
 	}
 

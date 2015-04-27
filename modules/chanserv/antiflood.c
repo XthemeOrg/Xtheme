@@ -1,4 +1,5 @@
 /*
+ * Copyright (c) 2014-2015 Xtheme Development Group (Xtheme.org)
  * Copyright (c) 2013 William Pitcock <nenolod@dereferenced.org>.
  *
  * Permission to use, copy, modify, and/or distribute this software for any
@@ -24,7 +25,7 @@ DECLARE_MODULE_V1
 (
 	"chanserv/antiflood", false, _modinit, _moddeinit,
 	PACKAGE_STRING,
-	"Atheme Development Group <http://www.atheme.org/>"
+	"Xtheme Development Group <http://www.Xtheme.org/>"
 );
 
 static int antiflood_msg_time = 60;
@@ -404,6 +405,12 @@ cs_set_cmd_antiflood(sourceinfo_t *si, int parc, char *parv[])
 	if (!(mc = mychan_find(parv[0])))
 	{
 		command_fail(si, fault_nosuch_target, _("Channel \2%s\2 is not registered."), parv[0]);
+		return;
+	}
+	
+	if (metadata_find(mc, "private:frozen:freezer"))
+	{
+		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), parv[0]);
 		return;
 	}
 

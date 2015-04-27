@@ -1,4 +1,5 @@
 /*
+ * Copyright (c) 2015 Xtheme Development Group (Xtheme.org)
  * Copyright (c) 2005-2007 Atheme Development Group
  * Rights to this code are as documented in doc/LICENSE.
  *
@@ -14,7 +15,7 @@ DECLARE_MODULE_V1
 (
 	"chanserv/xop", false, _modinit, _moddeinit,
 	PACKAGE_STRING,
-	"Atheme Development Group <http://www.atheme.org>"
+	"Xtheme Development Group <http://www.Xtheme.org>"
 );
 
 /* the individual command stuff, now that we've reworked, hardcode ;) --w00t */
@@ -107,6 +108,12 @@ static void cs_xop(sourceinfo_t *si, int parc, char *parv[], const char *levelde
 	if (metadata_find(mc, "private:close:closer") && (!has_priv(si, PRIV_CHAN_AUSPEX) || strcasecmp("LIST", cmd)))
 	{
 		command_fail(si, fault_noprivs, _("\2%s\2 is closed."), chan);
+		return;
+	}
+	
+	if (metadata_find(mc, "private:frozen:freezer") && (!has_priv(si, PRIV_CHAN_AUSPEX) || strcasecmp("LIST", cmd)))
+	{
+		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), chan);
 		return;
 	}
 

@@ -1,4 +1,5 @@
 /*
+ * Copyright (c) 2015 Xtheme Development Group (Xtheme.org)
  * Copyright (c) 2003-2004 E. Will et al.
  * Copyright (c) 2006-2009 Atheme Development Group
  * Rights to this code are documented in doc/LICENSE.
@@ -13,7 +14,7 @@ DECLARE_MODULE_V1
 (
 	"chanserv/set_gameserv", false, _modinit, _moddeinit,
 	PACKAGE_STRING,
-	"Atheme Development Group <http://www.atheme.org>"
+	"Xtheme Development Group <http://www.Xtheme.org>"
 );
 
 static void cs_cmd_set_gameserv(sourceinfo_t *si, int parc, char *parv[]);
@@ -46,6 +47,12 @@ static void cs_cmd_set_gameserv(sourceinfo_t *si, int parc, char *parv[])
 		return;
 	}
 
+	if (metadata_find(mc, "private:frozen:freezer"))
+	{
+		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), parv[0]);
+		return;
+	}
+	
 	if (!parv[1])
 	{
 		command_fail(si, fault_needmoreparams, STR_INSUFFICIENT_PARAMS, "SET GAMESERV");

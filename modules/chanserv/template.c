@@ -1,4 +1,5 @@
 /*
+ * Copyright (c) 2015 Xtheme Development Group (Xtheme.org)
  * Copyright (c) 2005-2006 Jilles Tjoelker, et al.
  * Rights to this code are as documented in doc/LICENSE.
  *
@@ -13,7 +14,7 @@ DECLARE_MODULE_V1
 (
 	"chanserv/template", false, _modinit, _moddeinit,
 	PACKAGE_STRING,
-	"Atheme Development Group <http://www.atheme.org>"
+	"Xtheme Development Group <http://www.Xtheme.org>"
 );
 
 static void list_generic_flags(sourceinfo_t *si);
@@ -105,6 +106,12 @@ static void cs_cmd_template(sourceinfo_t *si, int parc, char *parv[])
 			command_fail(si, fault_noprivs, _("\2%s\2 is closed."), channel);
 			return;
 		}
+		
+		if (metadata_find(mc, "private:frozen:freezer") && !has_priv(si, PRIV_CHAN_AUSPEX))
+		{
+			command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), channel);
+			return;
+		}
 
 		md = metadata_find(mc, "private:templates");
 
@@ -164,6 +171,12 @@ static void cs_cmd_template(sourceinfo_t *si, int parc, char *parv[])
 		if (metadata_find(mc, "private:close:closer"))
 		{
 			command_fail(si, fault_noprivs, _("\2%s\2 is closed."), channel);
+			return;
+		}
+		
+		if (metadata_find(mc, "private:frozen:freezer"))
+		{
+			command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), channel);
 			return;
 		}
 

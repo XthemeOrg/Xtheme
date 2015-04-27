@@ -1,4 +1,5 @@
 /*
+ * Copyright (c) 2015 Xtheme Development Group (Xtheme.org)
  * Copyright (c) 2005 William Pitcock, et al.
  * Rights to this code are as documented in doc/LICENSE.
  *
@@ -20,7 +21,7 @@ DECLARE_MODULE_V1
 (
 	"chanserv/akick", false, _modinit, _moddeinit,
 	PACKAGE_STRING,
-	"Atheme Development Group <http://www.atheme.org>"
+	"Xtheme Development Group <http://www.Xtheme.org>"
 );
 
 command_t cs_akick = { "AKICK", N_("Manipulates a channel's AKICK list."),
@@ -189,6 +190,12 @@ void cs_cmd_akick_add(sourceinfo_t *si, int parc, char *parv[])
 	if (!mc)
 	{
 		command_fail(si, fault_nosuch_target, _("Channel \2%s\2 is not registered."), chan);
+		return;
+	}
+	
+	if (metadata_find(mc, "private:frozen:freezer"))
+	{
+		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), chan);
 		return;
 	}
 
@@ -455,6 +462,12 @@ void cs_cmd_akick_del(sourceinfo_t *si, int parc, char *parv[])
 		return;
 	}
 
+	if (metadata_find(mc, "private:frozen:freezer"))
+	{
+		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), chan);
+		return;
+	}
+	
 	if (metadata_find(mc, "private:close:closer"))
 	{
 		command_fail(si, fault_noprivs, _("\2%s\2 is closed."), chan);
@@ -588,6 +601,12 @@ void cs_cmd_akick_list(sourceinfo_t *si, int parc, char *parv[])
 	if (!mc)
 	{
 		command_fail(si, fault_nosuch_target, _("Channel \2%s\2 is not registered."), chan);
+		return;
+	}
+	
+	if (metadata_find(mc, "private:frozen:freezer"))
+	{
+		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), chan);
 		return;
 	}
 

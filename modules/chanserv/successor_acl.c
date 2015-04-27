@@ -1,4 +1,5 @@
 /*
+ * Copyright (c) 2015 Xtheme Development Group (Xtheme.org)
  * Copyright (c) 2010 William Pitcock <nenolod@atheme.org>.
  * Rights to this code are as documented in doc/LICENSE.
  *
@@ -11,7 +12,7 @@ DECLARE_MODULE_V1
 (
 	"chanserv/successor_acl", true, _modinit, NULL,
 	PACKAGE_STRING,
-	"Atheme Development Group <http://www.atheme.org>"
+	"Xtheme Development Group <http://www.Xtheme.org>"
 );
 
 static unsigned int successor_flag = 0;
