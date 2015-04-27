@@ -116,7 +116,7 @@ static void os_cmd_clearchan(sourceinfo_t *si, int parc, char *parv[])
 					kill_user(si->service->me, cu->user, "%s", reason);
 					break;
 				case CLEAR_AKILL:
-					if (is_autokline_exempt(cu->user))
+					if (is_autokline_exempt(cu->user)) {
 						command_success_nodata(si, _("\2CLEARCHAN\2: Not akilling exempt user %s!%s@%s"),
 								cu->user->nick, cu->user->user, cu->user->host);
 					} else {
