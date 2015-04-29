@@ -22,6 +22,7 @@ GUARD        - All channels with the GUARD flag set.
 PRIVATE      - All channels with the PRIVATE flag set.
 
 CLOSED       - All channels closed by network staff.
+FROZEN       - All channels frozen by network staff.
 MARKED       - All channels marked by network staff.
 ACLSIZE      - Channels with an access list larger than a given size.
 REGISTERED   - Channels registered longer ago than a given age.
