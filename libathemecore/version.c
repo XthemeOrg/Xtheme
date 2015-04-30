@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2005-2010 Atheme Development Group
- * Copyright (c) 2014-2015 IRC4Fun Development Group
+ * Copyright (c) 2014-2015 Xtheme Development Group
  * Rights to this code are documented in doc/LICENSE.
  *
  * This file contains version information.
@@ -15,7 +15,7 @@ const char *infotext[] =
 {
   "Xtheme IRC Services --",
   "Xtheme is a fork of Atheme",
-  "Copyright (c) 2014-2015 IRC4Fun Development Group",
+  "Copyright (c) 2014-2015 Xtheme Development Group (http://www.Xtheme.org)",
   "Portions copyright(c) 2005-2015 Atheme Development Group (http://www.atheme.org)",
   "Portions copyright (c) 2004 Shrike Developers (http://www.malkier.net)",
   " ",
@@ -77,6 +77,6 @@ const char *infotext[] =
   "  rintaun, Matt Lanigan <rintaun@projectxero.net>",
   "  sycobuny, Stephen Belcher <sycobuny@malkier.net>",
   " ",
-  "Visit our website at http://www.IRC4Fun.net/xtheme",
+  "Visit our website at http://www.Xtheme.org/Xtheme/",
   0,
 };

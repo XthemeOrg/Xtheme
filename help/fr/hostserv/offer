@@ -15,4 +15,4 @@ Syntaxe : OFFER [!groupe] <vhost>
 Exemples :
     /msg &nick& OFFER may.explode.on.impact
     /msg &nick& OFFER mynetwork.users.$account
-    /msg &nick& OFFER !xtheme-users $account.xtheme-users.IRC4Fun.net
+    /msg &nick& OFFER !xtheme-users $account.xtheme-users.Xtheme.org

@@ -9,5 +9,5 @@ spécifiez le nom et laissez la valeur vide.
 Syntaxe : SET <#salon> PROPERTY <nom> [valeur]
 
 Exemple :
-    /msg &nick& SET #xtheme PROPERTY URL http://www.IRC4Fun.net/xtheme/
+    /msg &nick& SET #xtheme PROPERTY URL http://www.Xtheme.org/
     /msg &nick& SET #meat PROPERTY VEGETABLES

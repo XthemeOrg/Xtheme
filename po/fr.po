@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Xtheme\n"
-"Report-Msgid-Bugs-To: https://github.com/IRC4Fun/Xtheme/issues\n"
+"Report-Msgid-Bugs-To: https://github.com/XthemeOrg/Xtheme/issues\n"
 "POT-Creation-Date: 2011-10-28 15:54-0500\n"
 "PO-Revision-Date: 2013-02-21 22:00+0200\n"
 "Last-Translator: Jessy AMYOT <harakiri@overstack.fr>\n"

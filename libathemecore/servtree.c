@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2005-2006 Atheme Development Group
- * Copyright (c) 2014-2015 IRC4Fun Development Group
+ * Copyright (c) 2014-2015 Xtheme Development Group
  * servtree.c: Services binary tree manipulation. (add_service,
  *    del_service, et al.)
  *

@@ -1,6 +1,6 @@
 /* entities.c - entity tracking
  * Copyright (C) 2010 Atheme Development Group
- * Copyright (c) 2014-2015 IRC4Fun Development Group
+ * Copyright (c) 2014-2015 Xtheme Development Group
  */
 
 #include "atheme.h"

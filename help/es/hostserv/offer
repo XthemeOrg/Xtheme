@@ -14,4 +14,4 @@ Sintaxis: OFFER [!grupo] <vhost>
 Ejemplos:
     /msg &nick& OFFER gaaa.tos
     /msg &nick& OFFER mired.usuarios.$account
-    /msg &nick& OFFER !xtheme-usuarios $account.xtheme-usuarios.IRC4Fun.net
+    /msg &nick& OFFER !xtheme-usuarios $account.xtheme-usuarios.Xtheme.org

@@ -3,7 +3,7 @@
  * Rights to this code are as documented in doc/LICENSE.
  *
  * Module to disable owner (+q) mode.
- * This will stop Atheme setting this mode by itself, but it can still
+ * This will stop Xtheme setting this mode by itself, but it can still
  * be used via OperServ MODE etc.
  *
  */
@@ -14,7 +14,7 @@ DECLARE_MODULE_V1
 (
 	"protocol/mixin_noowner", true, _modinit, _moddeinit,
 	PACKAGE_STRING,
-	"Atheme Development Group <http://www.atheme.org>"
+	"Xtheme Development Group <http://www.Xtheme.org>"
 );
 
 bool oldflag;

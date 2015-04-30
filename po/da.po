@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Xtheme IRC Services\n"
-"Report-Msgid-Bugs-To: https://github.com/IRC4Fun/Xtheme/issues\n"
+"Report-Msgid-Bugs-To: https://github.com/XthemeOrg/Xtheme/issues\n"
 "POT-Creation-Date: 2013-01-16 08:52+0000\n"
 "PO-Revision-Date: 2011-11-17 23:38+0000\n"
 "Last-Translator: mickeyunagee <m@sr.dk>\n"

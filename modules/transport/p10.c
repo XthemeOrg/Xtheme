@@ -1,7 +1,8 @@
 /*
- * atheme-services: A collection of minimalist IRC services
+ * xtheme-services: A collection of minimalist IRC services
  * parse.c: Parsing of IRC messages.
  *
+ * Copyright (c) 2014-2015 Xtheme Development Group (http://www.Xtheme.org)
  * Copyright (c) 2005-2007 Atheme Project (http://www.atheme.org)
  *
  * Permission to use, copy, modify, and/or distribute this software for any
@@ -29,7 +30,7 @@ DECLARE_MODULE_V1
 (
 	"transport/p10", true, _modinit, _moddeinit,
 	PACKAGE_VERSION,
-	"Atheme Development Group <http://www.atheme.org>"
+	"Xtheme Development Group <http://www.Xtheme.org>"
 );
 
 /* parses a P10 IRC stream */

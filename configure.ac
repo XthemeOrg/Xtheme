@@ -1,5 +1,5 @@
 dnl Copyright (c) 2005 Atheme Development Group
-dnl Copyright (c) 2014-2015 IRC4Fun Development Group
+dnl Copyright (c) 2014-2015 Xtheme Development Group
 dnl Rights to this code are documented in doc/LICENSE.
 dnl
 dnl This file is the autoconf stub.
