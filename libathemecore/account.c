@@ -1363,8 +1363,6 @@ static void chanacs_delete(chanacs_t *ca)
 			object_unref(ca->entity);
 	}
 
-	if (ca->setter != NULL)
-		strshare_unref(ca->setter);
 
 	metadata_delete_all(ca);
 
@@ -1416,7 +1414,11 @@ chanacs_t *chanacs_add(mychan_t *mychan, myentity_t *mt, unsigned int level, tim
 	ca->host = NULL;
 	ca->level = level & ca_all;
 	ca->tmodified = ts;
-	ca->setter = setter != NULL ? strshare_ref(setter->name) : NULL;
+
+	if (setter != NULL)
+		mowgli_strlcpy(ca->setter_uid, setter->id, IDLEN);
+	else
+		ca->setter_uid[0] = '\0';
 
 	mowgli_node_add(ca, &ca->cnode, &mychan->chanacs);
 	mowgli_node_add(ca, &ca->unode, &mt->chanacs);
@@ -1466,7 +1468,11 @@ chanacs_t *chanacs_add_host(mychan_t *mychan, const char *host, unsigned int lev
 	ca->host = sstrdup(host);
 	ca->level = level & ca_all;
 	ca->tmodified = ts;
-	ca->setter = setter != NULL ? strshare_ref(setter->name) : NULL;
+
+	if (setter != NULL)
+		mowgli_strlcpy(ca->setter_uid, setter->id, IDLEN);
+	else 
+		ca->setter_uid[0] = '\0';
 
 	mowgli_node_add(ca, &ca->cnode, &mychan->chanacs);
 
@@ -1809,7 +1815,7 @@ chanacs_t *chanacs_open(mychan_t *mychan, myentity_t *mt, const char *hostmask, 
  * these to reflect the actual change. Only allow changes to restrictflags.
  * Returns true if successful, false if an unallowed change was attempted.
  * -- jilles */
-bool chanacs_modify(chanacs_t *ca, unsigned int *addflags, unsigned int *removeflags, unsigned int restrictflags)
+bool chanacs_modify(chanacs_t *ca, unsigned int *addflags, unsigned int *removeflags, unsigned int restrictflags, myuser_t *setter)
 {
 	return_val_if_fail(ca != NULL, false);
 	return_val_if_fail(addflags != NULL && removeflags != NULL, false);
@@ -1831,17 +1837,22 @@ bool chanacs_modify(chanacs_t *ca, unsigned int *addflags, unsigned int *removef
 	ca->level = (ca->level | *addflags) & ~*removeflags;
 	ca->tmodified = CURRTIME;
 
+	if (setter != NULL)
+		mowgli_strlcpy(ca->setter_uid, entity(setter)->id, IDLEN);
+	else
+		ca->setter_uid[0] = '\0';
+
 	return true;
 }
 
 /* version that doesn't return the changes made */
-bool chanacs_modify_simple(chanacs_t *ca, unsigned int addflags, unsigned int removeflags)
+bool chanacs_modify_simple(chanacs_t *ca, unsigned int addflags, unsigned int removeflags, myuser_t *setter)
 {
 	unsigned int a, r;
 
 	a = addflags & ca_all;
 	r = removeflags & ca_all;
-	return chanacs_modify(ca, &a, &r, ca_all);
+	return chanacs_modify(ca, &a, &r, ca_all, setter);
 }
 
 /* Change channel access
@@ -1893,6 +1904,11 @@ bool chanacs_change(mychan_t *mychan, myentity_t *mt, const char *hostmask, unsi
 				return false;
 			ca->level = (ca->level | *addflags) & ~*removeflags;
 			ca->tmodified = CURRTIME;
+			if (setter != NULL)
+				mowgli_strlcpy(ca->setter_uid, setter->id, IDLEN);
+			else
+				ca->setter_uid[0] = '\0';
+
 			if (ca->level == 0)
 				object_unref(ca);
 		}
@@ -1929,6 +1945,11 @@ bool chanacs_change(mychan_t *mychan, myentity_t *mt, const char *hostmask, unsi
 				return false;
 			ca->level = (ca->level | *addflags) & ~*removeflags;
 			ca->tmodified = CURRTIME;
+			if (setter != NULL)
+				mowgli_strlcpy(ca->setter_uid, setter->id, IDLEN);
+			else 
+				ca->setter_uid[0] = '\0';
+
 			if (ca->level == 0)
 				object_unref(ca);
 		}
