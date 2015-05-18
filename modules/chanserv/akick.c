@@ -801,7 +801,7 @@ void akickdel_list_create(void *arg)
 
 			if (CURRTIME > expireson)
 			{
-				chanacs_modify_simple(ca, 0, CA_AKICK, setter);
+				chanacs_modify_simple(ca, 0, CA_AKICK, NULL);
 				chanacs_close(ca);
 			}
 			else
