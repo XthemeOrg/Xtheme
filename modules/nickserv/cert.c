@@ -182,7 +182,7 @@ static void ns_cmd_cert(sourceinfo_t *si, int parc, char *parv[])
 		
 		if (cu->myuser != NULL) // Already logged in.
 		{
-			command_fail(si, fault_nochange, _("You are already logged in as: \2%s\2"), entity(cu->myuser)->name);
+			command_fail(si, fault_nochange, _("You are already logged in as \2%s\2."), entity(cu->myuser)->name);
 			return;
 		}
 		
