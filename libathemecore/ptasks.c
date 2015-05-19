@@ -410,7 +410,7 @@ void handle_motd(user_t *u)
 	if (floodcheck(u, NULL))
 		return;
 
-	f = fopen(SYSCONFDIR "/atheme.motd", "r");
+	f = fopen(SYSCONFDIR "/xtheme.motd", "r");
 	if (!f)
 	{
 		numeric_sts(me.me, 422, u, ":The MOTD file is unavailable.");
