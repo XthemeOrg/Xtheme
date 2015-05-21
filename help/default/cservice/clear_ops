@@ -1,0 +1,11 @@
+Help for CLEAR OPS:
+
+Clear ops will deop all channel operators on the channel,
+except you.
+
+Use of this command requires the +R flag channel flag.
+
+Syntax: CLEAR <#channel> OPS
+
+Examples:
+    /msg &nick& CLEAR #ChatZone OPS
