@@ -21,6 +21,9 @@ general
 * added Help file for FREEZE command
 * added Help file for GroupServ/SET GROUPNAME (reported missing in 
 	#Atheme on Freenode to Atheme group)
+* changed command actions from klines to akill, however core functionality is still
+	mostly the same to maintain compatibility with networks that were using either
+	Atheme or a fork.
 
 chanserv
 --------
