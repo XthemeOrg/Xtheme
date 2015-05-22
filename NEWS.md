@@ -1,28 +1,39 @@
+Xtheme Services 7.3.1 Development Notes
+=====================================
+general
+-------
+* added Xtheme packages for downloading Xtheme instead of using git or GitHub
+* corrected path to xtheme.motd, so /motd services.network.org works
+* update to pbkdf2v2 crypto module saving CPU cycles
+
+chanserv
+--------
+* added ChanServ CLEAR OPS (and Help file)
+* ChanServ now shows WHO last modified a user's flags, as well as how long ago
+
+
 Xtheme Services 7.3.0 Development Notes
 =====================================
 general
 -------
+* Atheme has decided to end development.  The Xtheme Group forked Atheme to 
+	create Xtheme IRC Services!
 * added Help file for FREEZE command
 * added Help file for GroupServ/SET GROUPNAME (reported missing in 
 	#Atheme on Freenode to Atheme group)
 
 chanserv
 --------
-* Make FREEZE command (Similar to CLOSE, but allows a channel to remain
+* added FREEZE command (Similar to CLOSE, but allows a channel to remain
 	open, but all access to it "suspended".
-
-chanserv
---------
-* Make `NOSYNC` show in ChanServ INFO output
-* Atheme has decided to end development.  The Xtheme Group forked Atheme to 
-create Xtheme IRC Services!  
+* Make `NOSYNC` show in ChanServ INFO output  
  
 operserv
 --------
 * Change KLINE messages to AKILL to be more appropriate with todays most
- commonly used IRCds.
+	commonly used IRCds.
 * "Ignoring attempt from..." wallops from OperServ have been turned into a 
- log event instead.
+	log event instead.
  
 help files
 ----------
