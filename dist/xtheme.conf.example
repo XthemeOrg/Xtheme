@@ -290,7 +290,7 @@ loadmodule "modules/nickserv/vhost";
  * DROP command                                 modules/chanserv/drop
  * Forced flags changes                         modules/chanserv/fflags
  * FLAGS command                                modules/chanserv/flags
- * FREEZE command								modules/chanserv/freeze
+ * FREEZE command                               modules/chanserv/freeze
  * Forced foundership transfers                 modules/chanserv/ftransfer
  * GETKEY command                               modules/chanserv/getkey
  * HALFOP/DEHALFOP commands                     modules/chanserv/halfop
