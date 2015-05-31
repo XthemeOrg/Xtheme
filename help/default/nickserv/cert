@@ -2,11 +2,15 @@ Help for CERT:
 
 CERT maintains a list of CertFP fingerprints that will allow
 &nick& to recognize you and authenticate you automatically.
+It also allows you to re-identify yourself using your current
+CertFP fingerprint.
 
 You cannot add the same fingerprint to multiple accounts.
 
 Syntax: CERT LIST
 Syntax: CERT ADD [fingerprint]
+Syntax: CERT ID
+Syntax: CERT IDENTIFY
 Syntax: CERT DEL <fingerprint>
 #if priv user:auspex
 
@@ -17,6 +21,8 @@ Syntax: CERT LIST <nick>
 #endif
 
 Examples:
-    /msg &nick& CERT LIST
     /msg &nick& CERT ADD f3a1aad46ca88e180c25c9c7021a4b3a
     /msg &nick& CERT DEL f3a1aad46ca88e180c25c9c7021a4b3a
+    /msg &nick& CERT ID
+    /msg &nick& CERT IDENTIFY
+    /msg &nick& CERT LIST
