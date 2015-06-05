@@ -1,3 +1,21 @@
+Xtheme Services 7.3.2 Development Notes
+=====================================
+general
+-------
+* bug fixes (this release is generally bug fixes)
+
+nickserv
+--------
+* added CERT IDENTIFY 
+* bug with SENDPASS fixed
+
+chanserv
+--------
+* fixed bug in ChanServ MODERATE where channels ACTIVATEd were not joined by 
+	ChanServ if the Founder gets disconnected or logs out.
+* SET FOUNDER is back (and a bug introduced by it's return is fixed)
+
+
 Xtheme Services 7.3.1 Development Notes
 =====================================
 general
