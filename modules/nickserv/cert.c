@@ -163,35 +163,36 @@ static void ns_cmd_cert(sourceinfo_t *si, int parc, char *parv[])
 		if (cu->certfp == NULL) // No fingerprint
 		{
 			command_fail(si, fault_nochange, _("You don't have a fingerprint."));
+			return;
 		}
-		
+
 		cert = mycertfp_find(cu->certfp);
 		if (cert == NULL) // Fingerprint not in DB
 		{
 			command_fail(si, fault_nochange, _("Your current fingerprint doesn't match any accounts."));
 			return;
 		}
-		
+
 		ns = service_find("nickserv");
 		if (ns == NULL)
 		{
 			return;
 		}
-		
+
 		mu = cert->mu;
-		
+
 		if (cu->myuser != NULL) // Already logged in.
 		{
 			command_fail(si, fault_nochange, _("You are already logged in as \2%s\2."), entity(cu->myuser)->name);
 			return;
 		}
-		
+
 		if (MOWGLI_LIST_LENGTH(&mu->logins) >= me.maxlogins)
 		{
 			command_fail(si, fault_toomany, _("There are already \2%zu\2 sessions logged in to \2%s\2 (maximum allowed: %u)."), MOWGLI_LIST_LENGTH(&mu->logins), entity(mu)->name, me.maxlogins);
 			return;
 		}
-		
+
 		myuser_login(ns, cu, mu, true);
 		logcommand_user(ns, cu, CMDLOG_LOGIN, "LOGIN via CERT IDENTIFY (%s)", cu->certfp);
 		notice(ns->nick, cu->nick, nicksvs.no_nick_ownership ? _("You are now logged in as \2%s\2.") : _("You are now identified for \2%s\2."), entity(mu)->name);
