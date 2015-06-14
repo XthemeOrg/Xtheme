@@ -114,7 +114,7 @@ static void cs_cmd_freeze(sourceinfo_t *si, int parc, char *parv[])
 
 			/* stay for a bit to stop rejoin floods */
 			mc->flags |= MC_INHABIT;
-		
+
 			/* deop everyone */
 			MOWGLI_ITER_FOREACH(n, mc->chan->members.head)
 			{
@@ -148,7 +148,7 @@ static void cs_cmd_freeze(sourceinfo_t *si, int parc, char *parv[])
 						}
 					}
 			}
-		
+
 		}
 
 		wallops("%s froze the channel \2%s\2 (%s).", get_oper_name(si), target, reason);
@@ -171,6 +171,9 @@ static void cs_cmd_freeze(sourceinfo_t *si, int parc, char *parv[])
 		{
 			/* hmm, channel still exists, probably permanent? */
 			check_modes(mc, true);
+			mc->flags &= ~MC_INHABIT;
+			if (!(mc->flags & MC_GUARD) && !(mc->flags & CHAN_LOG) && chanuser_find(c, user_find_named(chansvs.nick)))
+				part(target, chansvs.nick);
 		}
 
 		wallops("%s unfroze the channel \2%s\2.", get_oper_name(si), target);
