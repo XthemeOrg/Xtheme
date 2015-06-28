@@ -1,8 +1,9 @@
 /*
+ * Copyright (c) 2015 Xtheme Development Group (Xtheme.org)
  * Copyright (c) 2006 William Pitcock, et al.
  * Rights to this code are documented in doc/LICENSE.
  *
- * This file contains routines to handle the CService SET command.
+ * This file contains routines to handle the NService SET command.
  *
  */
 
@@ -12,7 +13,7 @@ DECLARE_MODULE_V1
 (
 	"nickserv/set_core", false, _modinit, _moddeinit,
 	PACKAGE_STRING,
-	"Atheme Development Group <http://www.atheme.org>"
+	"Xtheme Development Group <http://www.Xtheme.org>"
 );
 
 static void ns_help_set(sourceinfo_t *si, const char *subcmd);
