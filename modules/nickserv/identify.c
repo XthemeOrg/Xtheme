@@ -39,6 +39,8 @@ void _modinit(module_t *m)
 #else
 	service_named_bind_command("nickserv", &ns_identify);
 #endif
+
+	hook_add_event("user_can_login");
 }
 
 void _moddeinit(module_unload_intent_t intent)
@@ -58,6 +60,7 @@ static void ns_cmd_login(sourceinfo_t *si, int parc, char *parv[])
 	const char *target = parv[0];
 	const char *password = parv[1];
 	char lau[BUFSIZE];
+	hook_user_login_check_t req;
 
 	if (si->su == NULL)
 	{
@@ -87,9 +90,22 @@ static void ns_cmd_login(sourceinfo_t *si, int parc, char *parv[])
 		return;
 	}
 
+	req.si = si;
+	req.mu = mu;
+	req.allowed = true;
+	hook_call_user_can_login(&req);
+	if (!req.allowed)
+	{
+		command_fail(si, fault_authfail, nicksvs.no_nick_ownership ? "You cannot log in as \2%s\2 because the server configuration disallows it."
+									   : "You cannot identify to \2%s\2 because the server configuration disallows it.", entity(mu)->name);
+		logcommand(si, CMDLOG_LOGIN, "failed " COMMAND_UC " to \2%s\2 (denied by hook)", entity(mu)->name);
+		return;
+	}
+
 	if (metadata_find(mu, "private:freeze:freezer"))
 	{
-		command_fail(si, fault_authfail, nicksvs.no_nick_ownership ? "You cannot login as \2%s\2 because the account has been frozen." : "You cannot identify to \2%s\2 because the nickname has been frozen.", entity(mu)->name);
+		command_fail(si, fault_authfail, nicksvs.no_nick_ownership ? "You cannot log in as \2%s\2 because the account has been frozen."
+									   : "You cannot identify to \2%s\2 because the nickname has been frozen.", entity(mu)->name);
 		logcommand(si, CMDLOG_LOGIN, "failed " COMMAND_UC " to \2%s\2 (frozen)", entity(mu)->name);
 		return;
 	}

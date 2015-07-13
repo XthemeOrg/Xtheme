@@ -4,6 +4,10 @@ nickserv
 --------
 * removed CERT IDENTIFY, as SASL REAUTH would be a better solution.
 
+hostserv
+--------
+* added DROP command allowing users to drop their assigned vhosts
+	without the need for Staff Intervention.
 
 Xtheme Services 7.3.2 Development Notes
 =====================================
