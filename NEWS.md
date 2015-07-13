@@ -1,3 +1,10 @@
+Xtheme Services 7.3.3 Development Notes
+=====================================
+nickserv
+--------
+* removed CERT IDENTIFY, as SASL REAUTH would be a better solution.
+
+
 Xtheme Services 7.3.2 Development Notes
 =====================================
 general
