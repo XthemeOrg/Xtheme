@@ -8,7 +8,7 @@
 
 MODULE = hostserv
 
-SRCS = group.c  help.c  main.c  offer.c  onoff.c  request.c  vhost.c  vhostnick.c
+SRCS = drop.c  group.c  help.c  main.c  offer.c  onoff.c  request.c  vhost.c  vhostnick.c
 
 include ../../extra.mk
 include ../../buildsys.mk
