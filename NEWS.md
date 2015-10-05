@@ -1,5 +1,10 @@
 Xtheme Services 7.3.3 Development Notes
 =====================================
+hostserv
+--------
+* added ability to send Group Memos for HostServ requests, allowing
+	proper services staff to be notified via Memo of vHost requests.
+
 nickserv
 --------
 * removed CERT IDENTIFY, as SASL REAUTH would be a better solution.
