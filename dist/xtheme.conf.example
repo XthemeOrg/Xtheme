@@ -1133,8 +1133,9 @@ chanserv {
 	 * The group that will receive Memos about
 	 * channel Registration requests when
 	 * chanserv/moderate is loaded.
+	 * NOTE: Requires GroupServ to be loaded
 	 */
-	#reggroup = "!Services-Team";
+	#reggroup = "!ServicesTeam-ChannelAdmins";
 
 	/* (*)aliases
 	 * Command aliases for ChanServ.
@@ -1706,8 +1707,9 @@ hostserv {
 	/* reggroup 
 	 * The group that will receive Memos about
 	 * vHost requests.
+	 * NOTE: Requires GroupServ to be loaded
 	 */
-	#reggroup = "!Services-Team";
+	#reggroup = "!ServicesTeam-vHostAdmins";
 
 	/* (*)request_per_nick
 	 * Whether the request system should work per nick or per account.
