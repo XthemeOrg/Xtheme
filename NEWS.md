@@ -1,18 +1,43 @@
 Xtheme Services 7.3.3 Development Notes
 =====================================
+chanserv
+--------
+* Add missing HELP files for ACTIVATE and REJECT (for channels using
+	module chanserv/moderate)
+* Add BLOCKBADWORDS help files and reference BLOCKBADWORDSOPS, from
+	upstream.
+* Added REGGROUP option (turned off by default) for Channel Request
+	memo's to be sent to the appropriate services team members to 
+	the Xtheme example config. (For networks using chanserv/moderate)
+* Bug Fix for ChanServ FREEZE which makes ChanServ leave the channel
+	after it is unfrozen (unless GUARD is set)
+
 hostserv
 --------
 * added ability to send Group Memos for HostServ requests, allowing
 	proper services staff to be notified via Memo of vHost requests.
+* Added REGGROUP option (turned off by default) for vHost Request
+	memo's to be sent to the appropriate services team members to 
+	the Xtheme example config. (For all networks allowing requests)
+* added DROP command allowing users to drop their assigned vhosts
+	without the need for Staff Intervention.
+
 
 nickserv
 --------
 * removed CERT IDENTIFY, as SASL REAUTH would be a better solution.
+* ensure upon REGAIN that the nick is valid
 
-hostserv
+saslserv
 --------
-* added DROP command allowing users to drop their assigned vhosts
-	without the need for Staff Intervention.
+* various updates and bug fixes from upstream
+
+config
+------
+* clarification added for various features admins may not have been
+	previously aware of.
+* add +q to default Founder flags (thanks GLolol)
+
 
 Xtheme Services 7.3.2 Development Notes
 =====================================
