@@ -198,7 +198,7 @@ static void can_register(hook_channel_register_check_t *req)
 			       me.netname, cs->name);
 
 	if (groupmemo != NULL)
-		send_group_memo(req->si, "[auto memo] Please review \2%s\2 for me!", req->name);
+		send_group_memo(req->si, "[auto memo] Please review channel \2%s\2 for me!", req->name);
 
 	logcommand(req->si, CMDLOG_REGISTER, "REGISTER: \2%s\2 (pending)", req->name);
 }

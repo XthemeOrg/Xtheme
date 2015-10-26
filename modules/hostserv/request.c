@@ -351,7 +351,7 @@ static void hs_cmd_request(sourceinfo_t *si, int parc, char *parv[])
 			command_success_nodata(si, _("You have requested vhost \2%s\2."), host);
 
 			if (groupmemo != NULL)
-				send_group_memo(si, "[auto memo] Please review \2%s\2 for me!", host);
+				send_group_memo(si, "[auto memo] Please review vHost \2%s\2 for me!", host);
 
 			logcommand(si, CMDLOG_REQUEST, "REQUEST: \2%s\2", host);
 			if (config_options.ratelimit_uses && config_options.ratelimit_period)
@@ -378,7 +378,7 @@ static void hs_cmd_request(sourceinfo_t *si, int parc, char *parv[])
 	command_success_nodata(si, _("You have requested vhost \2%s\2."), host);
 
         if (groupmemo != NULL)
-                send_group_memo(si, "[auto memo] Please review \2%s\2 for me!", host);
+                send_group_memo(si, "[auto memo] Please review vHost \2%s\2 for me!", host);
 
 	logcommand(si, CMDLOG_REQUEST, "REQUEST: \2%s\2", host);
 	if (config_options.ratelimit_uses && config_options.ratelimit_period)
