@@ -27,7 +27,7 @@ ircd_t Charybdis = {
 	.uses_halfops = false,
 	.uses_p10 = false,
 	.uses_vhost = false,
-	.oper_only_modes = CMODE_EXLIMIT | CMODE_PERM,
+	.oper_only_modes = CMODE_EXLIMIT | CMODE_PERM | CMODE_IMMUNE,
 	.owner_mode = 0,
 	.protect_mode = 0,
 	.halfops_mode = 0,
@@ -65,6 +65,8 @@ struct cmode_ charybdis_mode_list[] = {
   { 'A', CMODE_ADMINONLY },
   { 'c', CMODE_NOCOLOR	 },
   { 'C', CMODE_NOCTCP	 },
+  { 'T', CMODE_NONOTICE  },
+  { 'M', CMODE_IMMUNE	 },
 
   { '\0', 0 }
 };
