@@ -76,6 +76,12 @@ static void bs_cmd_set_fantasy(sourceinfo_t *si, int parc, char *parv[])
 		command_fail(si, fault_noprivs, _("You are not authorized to perform this operation."));
 		return;
 	}
+	
+	if (metadata_find(mc, "private:frozen:freezer"))
+	{
+		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), mc->name);
+		return;
+	}
 
 	if (!irccasecmp(option, "ON"))
 	{
