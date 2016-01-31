@@ -1,3 +1,28 @@
+Xtheme Services 7.3.4 Development Notes
+=====================================
+chanserv
+--------
+* Fixed paths to HELP files for ChanServ MODERATE (ACTIVATE, REJECT,
+	WAITING) so that they actually display.
+* Clarify in GROUPMEMO's that a channel is waiting to be reviewed
+
+hostserv
+--------
+* Clarify in GROUPMEMO's that a vhost is waiting to be reviewed
+* Clarify HELP for HostServ DROP (thanks GLolol)
+
+operserv
+--------
+* Added SETTIME to AKILL LIST (shows time AKILL was originally set
+	(closes #27)
+
+protocols
+---------
+* Added support for UnrealIRCd 4
+* Added support for Charybdis channel mode +T (Block Channel Notices)
+* Added support for Charybdis channel mode +M (Oper Immune)
+
+
 Xtheme Services 7.3.3 Development Notes
 =====================================
 chanserv

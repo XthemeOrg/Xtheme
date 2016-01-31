@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2005 Atheme Development Group
+ * Copyright (c) 2014-2016 Xtheme Development Group
  * Rights to this code are documented in doc/LICENSE.
  *
  * This file contains the main() routine.
@@ -13,7 +14,7 @@ DECLARE_MODULE_V1
 (
 	"botserv/main", true, _modinit, _moddeinit,
 	PACKAGE_STRING,
-	"Rizon Development Group <http://www.atheme.org>"
+	"Xtheme Development Group <http://www.Xtheme.org>"
 );
 
 static void bs_join(hook_channel_joinpart_t *hdata);
@@ -877,6 +878,12 @@ static void bs_cmd_assign(sourceinfo_t *si, int parc, char *parv[])
 		command_fail(si, fault_noprivs, _("You cannot assign bots to \2%s\2."), mc->name);
 		return;
 	}
+	
+	if (metadata_find(mc, "private:frozen:freezer"))
+	{
+		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), mc->name);
+		return;
+	}
 
 	if (!chanacs_source_has_flag(mc, si, CA_SET))
 	{
@@ -946,6 +953,12 @@ static void bs_cmd_unassign(sourceinfo_t *si, int parc, char *parv[])
 	if (!chanacs_source_has_flag(mc, si, CA_SET))
 	{
 		command_fail(si, fault_noprivs, _("You are not authorized to unassign a bot on \2%s\2."), mc->name);
+		return;
+	}
+
+	if (metadata_find(mc, "private:frozen:freezer"))
+	{
+		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), mc->name);
 		return;
 	}
 
