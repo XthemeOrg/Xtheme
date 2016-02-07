@@ -1,3 +1,32 @@
+Xtheme Services 7.3.5 Development Notes
+=====================================
+botserv
+-------
+* Added checks for FROZEN channels, disabling botserv commands for
+	frozen channels.
+
+chanfix
+-------
+* Added LIST command (List ChanFix channels matching given pattern)
+* Added NOFIX command (Excludes channels from automated and manual
+	chanfixes.)
+
+chanserv
+--------
+* Fixed bug in chanserv/moderate where Services Operators were opped
+	in ACTIVATE'd channels instead of the actual Founder.
+* Add +e as a defualt flag for Channel Founders to match templates.
+
+operserv
+--------
+* Added CLEARCHAN AKILL hits to AKILL DB for easier management.
+
+contrib
+-------
+* Added contrib/os_akillchan AKILL hits to AKILL DB for easier 
+	management.
+
+
 Xtheme Services 7.3.4 Development Notes
 =====================================
 chanserv
