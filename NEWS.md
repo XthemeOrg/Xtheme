@@ -8,6 +8,8 @@ botserv
 chanfix
 -------
 * Added LIST command (List ChanFix channels matching given pattern)
+* Added checks for NOFIX'd channels in LIST command and will add
+	NOFIX to output for LIST.
 * Added NOFIX command (Excludes channels from automated and manual
 	chanfixes.)
 
@@ -16,6 +18,8 @@ chanserv
 * Fixed bug in chanserv/moderate where Services Operators were opped
 	in ACTIVATE'd channels instead of the actual Founder.
 * Add +e as a defualt flag for Channel Founders to match templates.
+* Small fix to LIST output so that closed channels are not listed 
+	with/as frozen channels.
 
 operserv
 --------
