@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Xtheme Development Group (Xtheme.org)
+ * Copyright (c) 2014-2015 Xtheme Development Group (Xtheme.org)
  * Copyright (c) 2005 Robin Burchell, et al.
  * Copyright (c) 2010 William Pitcock <nenolod@atheme.org>.
  * Rights to this code are as documented in doc/LICENSE.
@@ -146,7 +146,7 @@ static void cs_cmd_list(sourceinfo_t *si, int parc, char *parv[])
 	unsigned int flagset = 0;
 	int aclsize = 0;
 	time_t age = 0, lastused = 0;
-	bool closed = false, frozen = false, marked = false, markmatch, closedmatch;
+	bool closed = false, frozen = false, marked = false, frozenmatch, markmatch, closedmatch;
 	mowgli_patricia_iteration_state_t state;
 	list_option_t optstable[] = {
 		{"pattern",	OPT_STRING,	{.strval = &chanpattern}, 0},
@@ -209,12 +209,12 @@ static void cs_cmd_list(sourceinfo_t *si, int parc, char *parv[])
 		
 		if (frozenpattern)
 		{
-			closedmatch = false;
-			mdclosed = metadata_find(mc, "private:frozen:reason");
-			if (mdclosed != NULL && !match(closedpattern, mdclosed->value))
-				closedmatch = true;
+			frozenmatch = false;
+			md = metadata_find(mc, "private:frozen:reason");
+			if (md != NULL && !match(frozenpattern, md->value))
+				frozenmatch = true;
 
-			if (!closedmatch)
+			if (!frozenmatch)
 				continue;
 		}
 
