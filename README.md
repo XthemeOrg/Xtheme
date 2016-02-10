@@ -13,14 +13,15 @@ how to fully check out the Xtheme tree, as it is spread across many repositories
 ## basic build instructions for the impatient
 
 Whatever you do, make sure you do *not* install Xtheme into the same location as the source.
-Xtheme will default to installing in `$HOME/Xtheme`, so make sure you plan accordingly for this.
+Xtheme will default to installing in `$HOME/xtheme`, so make sure you plan accordingly for this.
 
     $ git submodule update --init
     $ ./configure
     $ make
     $ make install
 
-If you're still lost, read [INSTALL](INSTALL) or [GIT-Access](GIT-Access) for hints. 
+If you're still lost, read [INSTALL](INSTALL) or [GIT-Access](GIT-Access) for hints.
+Help is also available on the [Xtheme IRC Services Wiki](https://github.com/XthemeOrg/Xtheme/wiki)
 
 ## SWI (services web interface) Web Panel for Xtheme
 
@@ -32,5 +33,6 @@ http://www.Xtheme.org/SWI/ or http://github.com/XthemeOrg/SWI/
 
  * [GitHub](http://www.github.com/XthemeOrg/Xtheme)
  * [Website](http://www.Xtheme.org/Xtheme/)
+ * [Xtheme Group Website] (http://www.Xtheme.org/)
  * [IRC](irc://irc.IRC4Fun.net/#Xtheme) irc.IRC4Fun.net #Xtheme
  * [IRC](irc://chat.freenode.net/#Xtheme) chat.Freenode.net #Xtheme
