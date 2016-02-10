@@ -1,3 +1,11 @@
+Xtheme Services 7.3.6 Development Notes
+=====================================
+chanfix
+-------
+* LIST -- Added MARKed channels to ChanFix LIST output. (Now ChanFix 
+	LIST will show channels and indicate if they are NOFIXed or MARKed)
+
+
 Xtheme Services 7.3.5 Development Notes
 =====================================
 botserv
