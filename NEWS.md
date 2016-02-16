@@ -1,3 +1,21 @@
+Xtheme Services 7.4.0alpha-1 Development Notes
+=====================================
+contrib
+-------
+* dnsbl, os_akillnicklist, os_defcon have been updated to add AKILL
+	hits to DB for easier management.
+
+nickserv
+--------
+* LASTLOGIN will now be displayed along with successful authentication
+	notice.
+	
+general
+-------
+* Since this release introduces various fixes and a change to core, 
+	the development version has been bumped to 7.4.0.  Releases of 
+	v7.4.0 will begin in alpha stages. (beginning with 7.4.0-alpha1)
+
 Xtheme Services 7.3.6 Development Notes
 =====================================
 chanfix
@@ -5,6 +23,9 @@ chanfix
 * LIST -- Added MARKed channels to ChanFix LIST output. (Now ChanFix 
 	LIST will show channels and indicate if they are NOFIXed or MARKed)
 
+release
+-------
+* Release skipped, production of v7.4.0 started instead.
 
 Xtheme Services 7.3.5 Development Notes
 =====================================
