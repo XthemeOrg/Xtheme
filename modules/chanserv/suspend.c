@@ -12,7 +12,6 @@
 static void cs_cmd_suspend(sourceinfo_t *si, int parc, char *parv[]);
 static void cs_cmd_suspend_add(sourceinfo_t *si, int parc, char *parv[]);
 static void cs_cmd_suspend_del(sourceinfo_t *si, int parc, char *parv[]);
-static void cs_cmd_suspend_list(sourceinfo_t *si, int parc, char *parv[]);
 
 static void suspend_timeout_check(void *arg);
 static void suspenddel_list_create(void *arg);
@@ -30,8 +29,6 @@ command_t cs_suspend_add = { "ADD", N_("Adds a user to the channel SUSPEND list.
                         AC_NONE, 4, cs_cmd_suspend_add, { .path = "" } };
 command_t cs_suspend_del = { "DEL", N_("Deletes a user from the channel SUSPEND list."),
                         AC_NONE, 3, cs_cmd_suspend_del, { .path = "" } };
-command_t cs_suspend_list = { "LIST", N_("Displays a channel's SUSPEND list."),
-                        AC_NONE, 2, cs_cmd_suspend_list, { .path = "" } };
 
 typedef struct {
 	time_t expiration;
@@ -62,7 +59,6 @@ void _modinit(module_t *m)
 	/* Add sub-commands */
 	command_add(&cs_suspend_add, cs_suspend_cmds);
 	command_add(&cs_suspend_del, cs_suspend_cmds);
-	command_add(&cs_suspend_list, cs_suspend_cmds);
 
         suspend_timeout_heap = mowgli_heap_create(sizeof(suspend_timeout_t), 512, BH_NOW);
 
@@ -82,7 +78,6 @@ void _moddeinit(module_unload_intent_t intent)
 	/* Delete sub-commands */
 	command_delete(&cs_suspend_add, cs_suspend_cmds);
 	command_delete(&cs_suspend_del, cs_suspend_cmds);
-	command_delete(&cs_suspend_list, cs_suspend_cmds);
 
 	mowgli_heap_destroy(suspend_timeout_heap);
 	mowgli_patricia_destroy(cs_suspend_cmds, NULL, NULL);
@@ -97,7 +92,7 @@ static void cs_cmd_suspend(sourceinfo_t *si, int parc, char *parv[])
 	if (parc < 2)
 	{
 		command_fail(si, fault_needmoreparams, STR_INSUFFICIENT_PARAMS, "SUSPEND");
-		command_fail(si, fault_needmoreparams, _("Syntax: SUSPEND <#channel> <ADD|DEL|LIST> [parameters]"));
+		command_fail(si, fault_needmoreparams, _("Syntax: SUSPEND <#channel> <ADD|DEL> [parameters]"));
 		return;
 	}
 
@@ -108,7 +103,7 @@ static void cs_cmd_suspend(sourceinfo_t *si, int parc, char *parv[])
 	else
 	{
 		command_fail(si, fault_badparams, STR_INVALID_PARAMS, "SUSPEND");
-		command_fail(si, fault_badparams, _("Syntax: SUSPEND <#channel> <ADD|DEL|LIST> [parameters]"));
+		command_fail(si, fault_badparams, _("Syntax: SUSPEND <#channel> <ADD|DEL> [parameters]"));
 		return;
 	}
 
@@ -127,6 +122,7 @@ void cs_cmd_suspend_add(sourceinfo_t *si, int parc, char *parv[])
 {
 	myentity_t *mt;
 	mychan_t *mc;
+	user_t *tu;
 	hook_channel_acl_req_t req;
 	chanacs_t *ca, *ca2;
 	char *chan = parv[0];
@@ -357,7 +353,19 @@ void cs_cmd_suspend_add(sourceinfo_t *si, int parc, char *parv[])
 		if ((ca = chanacs_find_literal(mc, mt, 0x0)))
 		{
 			if (ca->level & CA_SUSPENDED)
+			{
 				command_fail(si, fault_nochange, _("\2%s\2 is already on the SUSPEND list for \2%s\2"), mt->name, mc->name);
+				return;
+			}
+		}
+
+		if ((ca = chanacs_find_literal(mc, mt, 0x0)))
+		{
+			if (ca->level & CA_FOUNDER)
+			{
+				command_fail(si, fault_nochange, _("\2%s\2 has Founder access in \2%s\2"), mt->name, mc->name);
+				return;
+			}
 		}
 
 		/* new entry */
@@ -540,126 +548,6 @@ void cs_cmd_suspend_del(sourceinfo_t *si, int parc, char *parv[])
 	verbose(mc, "\2%s\2 removed \2%s\2 from the SUSPEND list.", get_source_name(si), mt->name);
 
 	return;
-}
-
-void cs_cmd_suspend_list(sourceinfo_t *si, int parc, char *parv[])
-{
-	mychan_t *mc;
-	chanacs_t *ca;
-	metadata_t *md, *md2;
-	mowgli_node_t *n, *tn;
-	bool operoverride = false;
-	char *chan = parv[0];
-	char expiry[512];
-
-	if (!chan)
-	{
-		command_fail(si, fault_needmoreparams, STR_INSUFFICIENT_PARAMS, "SUSPEND");
-		command_fail(si, fault_needmoreparams, _("Syntax: SUSPEND <#channel> LIST"));
-		return;
-	}
-
-	/* make sure they're registered, logged in
-	 * and the founder of the channel before
-	 * we go any further.
-	 */
-	if (!si->smu)
-	{
-		/* if they're opers and just want to LIST, they don't have to log in */
-		if (!(has_priv(si, PRIV_CHAN_AUSPEX)))
-		{
-			command_fail(si, fault_noprivs, _("You are not logged in."));
-			return;
-		}
-	}
-
-	mc = mychan_find(chan);
-	if (!mc)
-	{
-		command_fail(si, fault_nosuch_target, _("Channel \2%s\2 is not registered."), chan);
-		return;
-	}
-	
-	if (metadata_find(mc, "private:frozen:freezer"))
-	{
-		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), chan);
-		return;
-	}
-
-	if (metadata_find(mc, "private:close:closer"))
-	{
-		command_fail(si, fault_noprivs, _("\2%s\2 is closed."), chan);
-		return;
-	}
-
-	int i = 0;
-
-	if (!chanacs_source_has_flag(mc, si, CA_ACLVIEW))
-	{
-		if (has_priv(si, PRIV_CHAN_AUSPEX))
-			operoverride = true;
-		else
-		{
-			command_fail(si, fault_noprivs, _("You are not authorized to perform this operation."));
-			return;
-		}
-	}
-	command_success_nodata(si, _("SUSPEND list for \2%s\2:"), mc->name);
-
-	MOWGLI_ITER_FOREACH_SAFE(n, tn, mc->chanacs.head)
-	{
-		time_t expires_on = 0;
-		char *ago;
-		long time_left = 0;
-
-		ca = (chanacs_t *)n->data;
-
-		if (ca->level == CA_SUSPENDED)
-		{
-			char buf[BUFSIZE], *buf_iter;
-			myentity_t *setter = NULL;
-
-			md = metadata_find(ca, "sreason");
-
-			/* check if it's a temporary suspension */
-			if ((md2 = metadata_find(ca, "expires")))
-			{
-				snprintf(expiry, sizeof expiry, "%s", md2->value);
-				expires_on = (time_t)atol(expiry);
-				time_left = difftime(expires_on, CURRTIME);
-			}
-			ago = ca->tmodified ? time_ago(ca->tmodified) : "?";
-
-			buf_iter = buf;
-			buf_iter += snprintf(buf_iter, sizeof(buf) - (buf_iter - buf), _("%d: \2%s\2 (\2%s\2) ["),
-					     ++i, ca->entity != NULL ? ca->entity->name : ca->host,
-					     md != NULL ? md->value : _("no SUSPENSION reason specified"));
-
-			if (*ca->setter_uid != '\0' && (setter = myentity_find_uid(ca->setter_uid)))
-				buf_iter += snprintf(buf_iter, sizeof(buf) - (buf_iter - buf), _("setter: %s"),
-						     setter->name);
-
-			if (expires_on > 0)
-				buf_iter += snprintf(buf_iter, sizeof(buf) - (buf_iter - buf), _("%sexpires: %s"),
-						     setter != NULL ? ", " : "", timediff(time_left));
-
-			if (ca->tmodified)
-				buf_iter += snprintf(buf_iter, sizeof(buf) - (buf_iter - buf), _("%smodified: %s"),
-						     expires_on > 0 || setter != NULL ? ", " : "", ago);
-
-			mowgli_strlcat(buf, "]", sizeof buf);
-
-			command_success_nodata(si, "%s", buf);
-		}
-
-	}
-
-	command_success_nodata(si, _("Total of \2%d\2 %s in \2%s\2's SUSPEND list."), i, (i == 1) ? "entry" : "entries", mc->name);
-
-	if (operoverride)
-		logcommand(si, CMDLOG_ADMIN, "SUSPEND:LIST: \2%s\2 (oper override)", mc->name);
-	else
-		logcommand(si, CMDLOG_GET, "SUSPEND:LIST: \2%s\2", mc->name);
 }
 
 void suspend_timeout_check(void *arg)
