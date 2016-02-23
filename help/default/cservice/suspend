@@ -1,0 +1,26 @@
+Help for SUSPEND:
+
+The SUSPEND command allows you to maintain channel
+access suspension lists.  Suspended users will be
+automatically deoped (if opped) and will be unable
+to use their access or flags until the suspension
+expires or is manually removed.
+
+Syntax: SUSPEND <#channel> ADD <nickname> [!P|!T <minutes>] [reason]
+
+If the !P token is specified, the SUSPENSION will never
+expire (permanent). If the !T token is specified, expire
+time must follow, in minutes, hours ("h"), days ("d")
+or weeks ("w").
+
+Syntax: SUSPEND <#channel> DEL <nickname>
+
+This will remove a SUSPENSION on a user, giving 
+them access to their flags.
+
+* Information about a SUSPENSION can be requested
+by performing WHY on a SUSPENDed user.
+
+Examples:
+    /msg &nick& SUSPEND #foo ADD bar you are annoying | private op info
+    /msg &nick& SUSPEND #foo DEL bar

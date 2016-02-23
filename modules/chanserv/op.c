@@ -106,6 +106,20 @@ static void cmd_op(sourceinfo_t *si, bool opping, int parc, char *parv[])
 			continue;
 		}
 
+		/* Check if the source user is SUSPENDED and if so, deny command */
+		if (chanacs_source_has_flag(mc, si, CA_SUSPENDED))
+		{
+			command_fail(si, fault_noprivs, _("Your access in \2%s\2 is suspended."), mc->name);
+			continue;
+		}
+
+		/* Check if the target is SUSPENDED and deny OP */
+		if (chanacs_user_has_flag(mc, tu, CA_SUSPENDED))
+		{
+			command_fail(si, fault_noprivs, _("\2%s\2 is suspended on \2%s\2."), tu->nick, mc->name);
+			continue;
+		}
+
 		cu = chanuser_find(mc->chan, tu);
 		if (!cu)
 		{

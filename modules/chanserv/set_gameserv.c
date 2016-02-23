@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Xtheme Development Group (Xtheme.org)
+ * Copyright (c) 2014-2016 Xtheme Development Group (Xtheme.org)
  * Copyright (c) 2003-2004 E. Will et al.
  * Copyright (c) 2006-2009 Atheme Development Group
  * Rights to this code are documented in doc/LICENSE.
@@ -62,6 +62,12 @@ static void cs_cmd_set_gameserv(sourceinfo_t *si, int parc, char *parv[])
 	if (!chanacs_source_has_flag(mc, si, CA_SET))
 	{
 		command_fail(si, fault_noprivs, _("You are not authorized to perform this command."));
+		return;
+	}
+
+	if (chanacs_source_has_flag(mc, si, CA_SUSPENDED))
+	{
+		command_fail(si, fault_noprivs, _("Your access in %s is \2suspended\2."), parv[0]);
 		return;
 	}
 

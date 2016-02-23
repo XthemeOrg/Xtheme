@@ -1113,6 +1113,8 @@ myuser_t *mychan_pick_candidate(mychan_t *mc, unsigned int minlevel)
 		ca = n->data;
 		if (ca->level & CA_AKICK)
 			continue;
+		if (ca->level & CA_SUSPENDED)
+			continue;
 		mt = ca->entity;
 		if (mt == NULL || ca->level & CA_FOUNDER)
 			continue;

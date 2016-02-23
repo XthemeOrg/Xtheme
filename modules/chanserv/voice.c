@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Xtheme Development Group (Xtheme.org)
+ * Copyright (c) 2014-2016 Xtheme Development Group (Xtheme.org)
  * Copyright (c) 2005 William Pitcock, et al.
  * Rights to this code are as documented in doc/LICENSE.
  *
@@ -68,6 +68,11 @@ static void cmd_voice(sourceinfo_t *si, bool voicing, int parc, char *parv[])
 		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), chan);
 		return;
 	}
+	if (chanacs_source_has_flag(mc, si, CA_SUSPENDED))
+	{
+		command_fail(si, fault_noprivs, _("Your access in %s is \2suspended\2."), chan);
+		return;
+	}
 
 	nicks = (!nick ? strdup(si->su->nick) : strdup(nick));
 	prefix_action_set_all(&voice_actions, voicing, nicks);
@@ -89,6 +94,20 @@ static void cmd_voice(sourceinfo_t *si, bool voicing, int parc, char *parv[])
 		if (!chanacs_source_has_flag(mc, si, CA_VOICE) && (tu != si->su || !chanacs_source_has_flag(mc, si, CA_AUTOVOICE)))
 		{
 			command_fail(si, fault_noprivs, _("You are not authorized to (de)voice \2%s\2 on \2%s\2."), nick, mc->name);
+			continue;
+		}
+
+		/* Check if the source user is SUSPENDED and if so, deny command */
+		if (chanacs_source_has_flag(mc, si, CA_SUSPENDED))
+		{
+			command_fail(si, fault_noprivs, _("Your access in \2%s\2 is suspended."), mc->name);
+			continue;
+		}
+
+		/* Check if the target is SUSPENDED and deny VOICE */
+		if (chanacs_user_has_flag(mc, tu, CA_SUSPENDED))
+		{
+			command_fail(si, fault_noprivs, _("\2%s\2 is suspended on \2%s\2."), tu->nick, mc->name);
 			continue;
 		}
 

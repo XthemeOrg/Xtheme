@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Xtheme Development Group (Xtheme.org)
+ * Copyright (c) 2014-2016 Xtheme Development Group (Xtheme.org)
  * Copyright (c) 2010 Atheme Development Group
  * Rights to this code are as documented in doc/LICENSE.
  *
@@ -79,6 +79,11 @@ static void cs_cmd_clear_flags(sourceinfo_t *si, int parc, char *parv[])
 		return;
 	}
 
+	if (chanacs_source_has_flag(mc, si, CA_SUSPENDED))
+	{
+		command_fail(si, fault_noprivs, _("Your access in %s is \2suspended\2."), name);
+		return;
+	}
 
 	MOWGLI_ITER_FOREACH_SAFE(n, tn, mc->chanacs.head)
 	{

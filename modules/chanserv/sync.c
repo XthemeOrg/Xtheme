@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Xtheme Development Group (Xtheme.org)
+ * Copyright (c) 2014-2016 Xtheme Development Group (Xtheme.org)
  * Copyright (c) 2006 Atheme Development Group
  * Rights to this code are as documented in doc/LICENSE.
  *
@@ -130,6 +130,26 @@ static void do_chanuser_sync(mychan_t *mc, chanuser_t *cu, chanacs_t *ca,
 
 		try_kick(chansvs.me->me, mc->chan, cu->user, akickreason);
 		return;
+	}
+	/* Check to see if the user is SUSPENDED and if so; remove
+	 * any ops/protected/owner modes from them.
+	 */
+	if (fl & CA_SUSPENDED)
+	{
+		if (ircd->uses_owner)
+		{
+			modestack_mode_param(chansvs.nick, mc->chan, MTYPE_DEL, ircd->owner_mchar[1], CLIENT_NAME(cu->user));
+			cu->modes &= ~ircd->owner_mode;
+		}
+
+		if (ircd->uses_protect)
+		{
+			modestack_mode_param(chansvs.nick, mc->chan, MTYPE_DEL, ircd->protect_mchar[1], CLIENT_NAME(cu->user));
+			cu->modes &= ~ircd->protect_mode;
+		}
+			modestack_mode_param(chansvs.nick, mc->chan, MTYPE_DEL, 'o', CLIENT_NAME(cu->user));
+			cu->modes &= ~CSTATUS_OP;
+			return;
 	}
 	if (ircd->uses_owner)
 	{
@@ -290,7 +310,7 @@ static void sync_channel_acl_change(hook_channel_acl_req_t *hookdata)
 		return;
 
 	if (((hookdata->ca->level ^ hookdata->oldlevel) &
-	    (CA_AKICK | CA_EXEMPT | CA_USEOWNER | CA_USEPROTECT | CA_AUTOOP |
+	    (CA_AKICK | CA_SUSPENDED | CA_EXEMPT | CA_USEOWNER | CA_USEPROTECT | CA_AUTOOP |
 	     CA_OP | CA_AUTOHALFOP | CA_HALFOP | CA_AUTOVOICE | CA_VOICE)) == 0)
 		return;
 
@@ -336,6 +356,12 @@ static void cs_cmd_sync(sourceinfo_t *si, int parc, char *parv[])
 	if (!chanacs_source_has_flag(mc, si, CA_RECOVER))
 	{
 		command_fail(si, fault_noprivs, "You are not authorized to perform this operation.");
+		return;
+	}
+
+	if (chanacs_source_has_flag(mc, si, CA_SUSPENDED))
+	{
+		command_fail(si, fault_noprivs, _("Your access in %s is \2suspended\2."), name);
 		return;
 	}
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Xtheme Development Group (Xtheme.org)
+ * Copyright (c) 2014-2016 Xtheme Development Group (Xtheme.org)
  * Copyright (c) 2005-2006 Patrick Fish, et al.
  * Rights to this code are as documented in doc/LICENSE.
  *
@@ -38,7 +38,7 @@ static void cs_cmd_count(sourceinfo_t *si, int parc, char *parv[])
 	chanacs_t *ca;
 	mychan_t *mc = mychan_find(chan);
 	unsigned int ca_sop, ca_aop, ca_hop, ca_vop;
-	int vopcnt = 0, aopcnt = 0, hopcnt = 0, sopcnt = 0, akickcnt = 0;
+	int vopcnt = 0, aopcnt = 0, hopcnt = 0, sopcnt = 0, akickcnt = 0, suscnt = 0;
 	int othercnt = 0;
 	unsigned int i;
 	mowgli_node_t *n;
@@ -75,6 +75,12 @@ static void cs_cmd_count(sourceinfo_t *si, int parc, char *parv[])
 		}
 	}
 
+	if (chanacs_source_has_flag(mc, si, CA_SUSPENDED))
+	{
+		command_fail(si, fault_noprivs, _("Your access in %s is \2suspended\2."), chan);
+		return;
+	}
+
 	if (metadata_find(mc, "private:close:closer"))
 	{
 		command_fail(si, fault_noprivs, _("\2%s\2 is closed."), chan);
@@ -100,15 +106,17 @@ static void cs_cmd_count(sourceinfo_t *si, int parc, char *parv[])
 			sopcnt++;
 		else if (ca->level == CA_AKICK)
 			akickcnt++;
+		else if (ca->level == CA_SUSPENDED)
+			suscnt++;
 		else
 			othercnt++;
 	}
 	if (ca_hop == ca_vop)
-		command_success_nodata(si, _("%s: VOP: %d, AOP: %d, SOP: %d, AKick: %d, Other: %d"),
-				chan, vopcnt, aopcnt, sopcnt, akickcnt, othercnt);
+		command_success_nodata(si, _("%s: VOP: %d, AOP: %d, SOP: %d, AKick: %d, Suspended: %d, Other: %d"),
+				chan, vopcnt, aopcnt, sopcnt, akickcnt, suscnt, othercnt);
 	else
-		command_success_nodata(si, _("%s: VOP: %d, HOP: %d, AOP: %d, SOP: %d, AKick: %d, Other: %d"),
-				chan, vopcnt, hopcnt, aopcnt, sopcnt, akickcnt, othercnt);
+		command_success_nodata(si, _("%s: VOP: %d, HOP: %d, AOP: %d, SOP: %d, AKick: %d, Suspended: %d, Other: %d"),
+				chan, vopcnt, hopcnt, aopcnt, sopcnt, akickcnt, suscnt, othercnt);
 	snprintf(str, sizeof str, "%s: ", chan);
 	for (i = 0; i < ARRAY_SIZE(chanacs_flags); i++)
 	{

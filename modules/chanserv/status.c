@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Xtheme Development Group (Xtheme.org)
+ * Copyright (c) 2014-2016 Xtheme Development Group (Xtheme.org)
  * Copyright (c) 2005 William Pitcock, et al.
  * Rights to this code are as documented in doc/LICENSE.
  *
@@ -69,6 +69,8 @@ static void cs_cmd_status(sourceinfo_t *si, int parc, char *parv[])
 		flags = chanacs_source_flags(mc, si);
 		if (flags & CA_AKICK && !(flags & CA_EXEMPT))
 			command_success_nodata(si, _("You are banned from \2%s\2."), mc->name);
+		if (flags & CA_SUSPENDED)
+			command_success_nodata(si, _("You are suspended in \2%s\2."), mc->name);
 		else if (flags != 0)
 		{
 			command_success_nodata(si, _("You have access flags \2%s\2 on \2%s\2."), bitmask_to_flags(flags), mc->name);

@@ -35,6 +35,7 @@ struct chansvs_
   unsigned int expiry;		/* expiry time                */
 
   unsigned int akick_time; /* default akick duration */
+  unsigned int suspend_time; /* default suspension duration */
 
   unsigned int maxchans;    /* max channels one can register */
   unsigned int maxchanacs;	/* max entries in chanacs list */

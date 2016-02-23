@@ -66,6 +66,7 @@ SRCS =			\
 	set_verbose.c	\
 	successor_acl.c \
 	status.c	\
+	suspend.c	\
 	sync.c		\
 	taxonomy.c	\
 	template.c	\

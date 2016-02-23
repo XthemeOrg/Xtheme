@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Xtheme Development Group (Xtheme.org)
+ * Copyright (c) 2014-2016 Xtheme Development Group (Xtheme.org)
  * Copyright (c) 2005 William Pitcock, et al.
  * Rights to this code are as documented in doc/LICENSE.
  *
@@ -202,6 +202,12 @@ void cs_cmd_akick_add(sourceinfo_t *si, int parc, char *parv[])
 	if (metadata_find(mc, "private:close:closer"))
 	{
 		command_fail(si, fault_noprivs, _("\2%s\2 is closed."), chan);
+		return;
+	}
+
+	if (chanacs_source_has_flag(mc, si, CA_SUSPENDED))
+	{
+		command_fail(si, fault_noprivs, _("Your access in %s is \2suspended\2."), chan);
 		return;
 	}
 
@@ -474,6 +480,12 @@ void cs_cmd_akick_del(sourceinfo_t *si, int parc, char *parv[])
 		return;
 	}
 
+	if (chanacs_source_has_flag(mc, si, CA_SUSPENDED))
+	{
+		command_fail(si, fault_noprivs, _("Your access in %s is \2suspended\2."), chan);
+		return;
+	}
+
 	akick_timeout_t *timeout;
 	chanban_t *cb;
 
@@ -613,6 +625,12 @@ void cs_cmd_akick_list(sourceinfo_t *si, int parc, char *parv[])
 	if (metadata_find(mc, "private:close:closer"))
 	{
 		command_fail(si, fault_noprivs, _("\2%s\2 is closed."), chan);
+		return;
+	}
+
+	if (chanacs_source_has_flag(mc, si, CA_SUSPENDED))
+	{
+		command_fail(si, fault_noprivs, _("Your access in %s is \2suspended\2."), chan);
 		return;
 	}
 

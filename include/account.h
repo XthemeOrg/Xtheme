@@ -233,7 +233,7 @@ struct chanacs_
 #define CA_USEOWNER	 0x00008000 /* Ability to use /msg X owner */
 #define CA_EXEMPT	 0x00010000 /* Exempt from akick, can use /msg X unban on self */
 
-/*#define CA_SUSPENDED	 0x40000000 * Suspended access entry (not yet implemented) */
+#define CA_SUSPENDED	 0x40000000 /* Suspended access entry */
 #define CA_AKICK         0x80000000 /* Automatic kick */
 
 #define CA_NONE          0x0
@@ -257,7 +257,7 @@ struct chanacs_
 /* "high" privs (for MC_LIMITFLAGS) */
 #define CA_HIGHPRIVS     (CA_SET | CA_RECOVER | CA_FLAGS)
 #define CA_ALLPRIVS      (CA_VOICE | CA_AUTOVOICE | CA_OP | CA_AUTOOP | CA_TOPIC | CA_SET | CA_REMOVE | CA_INVITE | CA_RECOVER | CA_FLAGS | CA_HALFOP | CA_AUTOHALFOP | CA_ACLVIEW | CA_FOUNDER | CA_USEPROTECT | CA_USEOWNER | CA_EXEMPT)
-#define CA_ALL_ALL       (CA_ALLPRIVS | CA_AKICK)
+#define CA_ALL_ALL       (CA_ALLPRIVS | CA_AKICK | CA_SUSPENDED)
 
 /* old CA_ flags */
 #define OLD_CA_AOP           (CA_VOICE | CA_OP | CA_AUTOOP | CA_TOPIC)

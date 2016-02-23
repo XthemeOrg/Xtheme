@@ -400,6 +400,8 @@ static void ns_cmd_info(sourceinfo_t *si, int parc, char *parv[])
 			ca = n->data;
 			if (ca->level & CA_FOUNDER)
 				founder++;
+			else if (ca->level != CA_SUSPENDED)
+				other++;
 			else if (ca->level != CA_AKICK)
 				other++;
 		}

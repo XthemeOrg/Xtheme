@@ -2,7 +2,7 @@
  * xtheme-services: A collection of minimalist IRC services
  * flags.c: Functions to convert a flags table into a bitmask.
  *
- * Copyright (c) 2014-2015 Xtheme Development Group (http://www.Xtheme.org)
+ * Copyright (c) 2014-2016 Xtheme Development Group (http://www.Xtheme.org)
  * Copyright (c) 2005-2010 Atheme Project (http://www.atheme.org)
  *
  * Permission to use, copy, modify, and/or distribute this software for any
@@ -51,6 +51,7 @@ struct flags_table chanacs_flags[256] = {
 	['a'] = {CA_USEPROTECT, 0, true, "protect"},
 	['b'] = {CA_AKICK, 0, false,     "banned"},
 	['e'] = {CA_EXEMPT, 0, true,     "exempt"},
+	['P'] = {CA_SUSPENDED, 0, false, "suspended"},
 };
 
 gflags_t mu_flags[] = {
@@ -330,7 +331,7 @@ unsigned int allow_flags(mychan_t *mc, unsigned int theirflags)
 		if (!(theirflags & (CA_HIGHPRIVS & ~CA_FLAGS)))
 			flags &= CA_AKICK;
 		else if ((theirflags & CA_HIGHPRIVS) != CA_HIGHPRIVS)
-			flags &= ~CA_HIGHPRIVS;
+			flags &= ~(CA_HIGHPRIVS | CA_SUSPENDED);
 	}
 	return flags;
 }

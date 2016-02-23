@@ -313,6 +313,7 @@ void _modinit(module_t *m)
 	add_dupstr_conf_item("FOUNDER_FLAGS", &chansvs.me->conf_table, 0, &chansvs.founder_flags, NULL);
 	add_dupstr_conf_item("DEFTEMPLATES", &chansvs.me->conf_table, 0, &chansvs.deftemplates, NULL);
 	add_duration_conf_item("AKICK_TIME", &chansvs.me->conf_table, 0, &chansvs.akick_time, "m", 0);
+	add_duration_conf_item("SUSPEND_TIME", &chansvs.me->conf_table, 0, &chansvs.suspend_time, "m", 0);
 }
 
 void _moddeinit(module_unload_intent_t intent)
@@ -367,7 +368,7 @@ static void cs_join(hook_channel_joinpart_t *hdata)
 
 	flags = chanacs_user_flags(mc, u);
 	noop = mc->flags & MC_NOOP || (u->myuser != NULL &&
-			u->myuser->flags & MU_NOOP) || metadata_find(mc, "private:frozen:freezer") != NULL;
+			u->myuser->flags & MU_NOOP) || metadata_find(mc, "private:frozen:freezer") != NULL; 
 	/* attempt to deop people recreating channels, if the more
 	 * sophisticated mechanism is disabled */
 	secure = mc->flags & MC_SECURE || (!chansvs.changets &&
@@ -487,6 +488,27 @@ static void cs_join(hook_channel_joinpart_t *hdata)
 		try_kick(chansvs.me->me, chan, u, "Invite only channel");
 		hdata->cu = NULL;
 		return;
+	}
+
+	/* Check to see if the user is SUSPENDED and if so; remove
+	 * any ops/protected/owner modes from them.
+	 */
+	if (flags & CA_SUSPENDED)
+	{
+		if (ircd->uses_owner)
+		{
+			modestack_mode_param(chansvs.nick, chan, MTYPE_DEL, ircd->owner_mchar[1], CLIENT_NAME(u));
+			cu->modes &= ~ircd->owner_mode;
+		}
+
+		if (ircd->uses_protect)
+		{
+			modestack_mode_param(chansvs.nick, chan, MTYPE_DEL, ircd->protect_mchar[1], CLIENT_NAME(u));
+			cu->modes &= ~ircd->protect_mode;
+		}
+			modestack_mode_param(chansvs.nick, chan, MTYPE_DEL, 'o', CLIENT_NAME(u));
+			cu->modes &= ~CSTATUS_OP;
+			return;
 	}
 
 	/* A second user joined and was not kicked; we do not need

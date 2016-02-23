@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Xtheme Development Group (Xtheme.org)
+ * Copyright (c) 2014-2016 Xtheme Development Group (Xtheme.org)
  * Copyright (c) 2005-2006 William Pitcock, et al.
  * Rights to this code are as documented in doc/LICENSE.
  *
@@ -41,9 +41,10 @@ static void cs_cmd_why(sourceinfo_t *si, int parc, char *parv[])
 	mowgli_node_t *n;
 	chanacs_t *ca;
 	entity_chanacs_validation_vtable_t *vt;
-	metadata_t *md;
+	metadata_t *md, *md2;
 	bool operoverride = false;
 	int fl = 0;
+	char expiry[512];
 
 	if (!chan || (!targ && si->su == NULL))
 	{
@@ -97,6 +98,12 @@ static void cs_cmd_why(sourceinfo_t *si, int parc, char *parv[])
 		return;
 	}
 
+	if (chanacs_source_has_flag(mc, si, CA_SUSPENDED))
+	{
+		command_fail(si, fault_noprivs, _("Your access in %s is \2suspended\2."), chan);
+		return;
+	}
+
 	if (operoverride)
 		logcommand(si, CMDLOG_ADMIN, "WHY: \2%s!%s@%s\2 on \2%s\2 (oper override)", u->nick, u->user, u->vhost, mc->name);
 	else
@@ -105,6 +112,8 @@ static void cs_cmd_why(sourceinfo_t *si, int parc, char *parv[])
 	MOWGLI_ITER_FOREACH(n, mc->chanacs.head)
 	{
 		ca = (chanacs_t *)n->data;
+		time_t expires_on = 0;
+		long time_left = 0;
 
 		if (ca->entity == NULL)
 			continue;
@@ -134,6 +143,19 @@ static void cs_cmd_why(sourceinfo_t *si, int parc, char *parv[])
 				if (md != NULL)
 					command_success_nodata(si, "Ban reason: %s", md->value);
 			}
+			if (ca->level & CA_SUSPENDED)
+			{
+				md = metadata_find(ca, "sreason");
+			if ((md2 = metadata_find(ca, "expires")))
+			{
+				snprintf(expiry, sizeof expiry, "%s", md2->value);
+				expires_on = (time_t)atol(expiry);
+				time_left = difftime(expires_on, CURRTIME);
+			}
+
+				if (md != NULL)
+					command_success_nodata(si, "Suspension reason: %s -- Expiration: %s", md->value, timediff(time_left));
+			}
 		}
 	}
 	for (n = next_matching_host_chanacs(mc, u, mc->chanacs.head); n != NULL; n = next_matching_host_chanacs(mc, u, n->next))
@@ -148,6 +170,12 @@ static void cs_cmd_why(sourceinfo_t *si, int parc, char *parv[])
 			md = metadata_find(ca, "reason");
 			if (md != NULL)
 				command_success_nodata(si, "Ban reason: %s", md->value);
+		}
+		if (ca->level & CA_SUSPENDED)
+		{
+			md = metadata_find(ca, "sreason");
+			if (md != NULL)
+				command_success_nodata(si, "Suspension reason: %s", md->value);
 		}
 	}
 

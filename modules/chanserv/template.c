@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Xtheme Development Group (Xtheme.org)
+ * Copyright (c) 2014-2016 Xtheme Development Group (Xtheme.org)
  * Copyright (c) 2005-2006 Jilles Tjoelker, et al.
  * Rights to this code are as documented in doc/LICENSE.
  *
@@ -113,6 +113,12 @@ static void cs_cmd_template(sourceinfo_t *si, int parc, char *parv[])
 			return;
 		}
 
+		if (chanacs_source_has_flag(mc, si, CA_SUSPENDED))
+		{
+			command_fail(si, fault_noprivs, _("Your access in %s is \2suspended\2."), channel);
+			return;
+		}
+
 		md = metadata_find(mc, "private:templates");
 
 		if (md != NULL)
@@ -177,6 +183,12 @@ static void cs_cmd_template(sourceinfo_t *si, int parc, char *parv[])
 		if (metadata_find(mc, "private:frozen:freezer"))
 		{
 			command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), channel);
+			return;
+		}
+
+		if (chanacs_source_has_flag(mc, si, CA_SUSPENDED))
+		{
+			command_fail(si, fault_noprivs, _("Your access in %s is \2suspended\2."), channel);
 			return;
 		}
 
