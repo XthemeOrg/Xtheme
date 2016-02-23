@@ -1,4 +1,5 @@
 /*
+ * Copyright (c) 2014-2016 Xtheme Development Group (Xtheme.org)
  * Copyright (c) 2005 Atheme Development Group
  * Rights to this code are as documented in doc/LICENSE.
  *
@@ -12,7 +13,7 @@ DECLARE_MODULE_V1
 (
 	"chanserv/hold", false, _modinit, _moddeinit,
 	PACKAGE_STRING,
-	"Atheme Development Group <http://www.atheme.org>"
+	"Xtheme Development Group <http://www.Xtheme.org>"
 );
 
 static void cs_cmd_hold(sourceinfo_t *si, int parc, char *parv[]);
