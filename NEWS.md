@@ -1,3 +1,15 @@
+Xtheme Services 7.4.0alpha-2 Development Notes
+=====================================
+chanserv
+--------
+* SUSPEND ADD/DEL (flag +P) added for ability to suspend channel
+	users access or privileges in a channel.  Suspensions can be 
+	timed or permanent. (!T expiry or !P)
+* SUSPEND Help file added
+* SUSPEND (+P) added to HELP FLAGS output (when applicable)
+* A lot of module header updates
+
+
 Xtheme Services 7.4.0alpha-1 Development Notes
 =====================================
 contrib
@@ -15,6 +27,7 @@ general
 * Since this release introduces various fixes and a change to core, 
 	the development version has been bumped to 7.4.0.  Releases of 
 	v7.4.0 will begin in alpha stages. (beginning with 7.4.0-alpha1)
+
 
 Xtheme Services 7.3.6 Development Notes
 =====================================
