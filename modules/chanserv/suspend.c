@@ -300,6 +300,10 @@ void cs_cmd_suspend_add(sourceinfo_t *si, int parc, char *parv[])
 		req.newlevel = ca2->level;
 
 		if (reason[0])
+			if ((metadata_find(ca2, "sreason") != NULL))
+			{
+				metadata_delete(ca2, "sreason");
+			}
 			metadata_add(ca2, "sreason", reason);
 
 		if (duration > 0)
@@ -308,6 +312,11 @@ void cs_cmd_suspend_add(sourceinfo_t *si, int parc, char *parv[])
 			time_t expireson = ca2->tmodified+duration;
 
 			snprintf(expiry, sizeof expiry, "%ld", expireson);
+
+			if ((metadata_find(ca2, "expires") != NULL))
+			{
+				metadata_delete(ca2, "expires");
+			}
 			metadata_add(ca2, "expires", expiry);
 
 			verbose(mc, "\2%s\2 added \2%s\2 to the SUSPEND list, expires in %s.", get_source_name(si), uname,timediff(duration));
@@ -384,6 +393,10 @@ void cs_cmd_suspend_add(sourceinfo_t *si, int parc, char *parv[])
 		req.newlevel = ca2->level;
 
 		if (reason[0])
+			if ((metadata_find(ca2, "sreason") != NULL))
+			{
+				metadata_delete(ca2, "sreason");
+			}
 			metadata_add(ca2, "sreason", reason);
 
 		if (duration > 0)
@@ -392,6 +405,12 @@ void cs_cmd_suspend_add(sourceinfo_t *si, int parc, char *parv[])
 			time_t expireson = ca2->tmodified+duration;
 
 			snprintf(expiry, sizeof expiry, "%ld", expireson);
+
+			if ((metadata_find(ca2, "expires") != NULL))
+			{
+				metadata_delete(ca2, "expires");
+			}
+
 			metadata_add(ca2, "expires", expiry);
 
 			command_success_nodata(si, _("SUSPENSION on \2%s\2 was successfully added for \2%s\2 and will expire in %s."), mt->name, mc->name, timediff(duration));
@@ -411,6 +430,17 @@ void cs_cmd_suspend_add(sourceinfo_t *si, int parc, char *parv[])
 		}
 		else
 		{
+
+			if ((metadata_find(ca2, "sreason") != NULL))
+			{
+				metadata_delete(ca2, "sreason");
+			}
+			
+			if ((metadata_find(ca2, "expires") != NULL))
+			{
+				metadata_delete(ca2, "expires");
+			}
+
 			command_success_nodata(si, _("SUSPENSION on \2%s\2 was successfully added to the SUSPEND list for \2%s\2."), mt->name, mc->name);
 
 			verbose(mc, "\2%s\2 added \2%s\2 to the SUSPEND list.", get_source_name(si), mt->name);
