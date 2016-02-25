@@ -145,9 +145,16 @@ static void cs_cmd_why(sourceinfo_t *si, int parc, char *parv[])
 			}
 			if (ca->level & CA_SUSPENDED)
 			{
-				if (!metadata_find(ca, "sreason"))
+					md = metadata_find(ca, "sreason");
+				if ((!metadata_find(ca, "expires") && metadata_find(ca, "sreason")))
+				{
+					command_success_nodata(si, "Suspension reason: %s -- Expiration: \2None\2", md->value);
+					return;
+				}
+				else if (!metadata_find(ca, "sreason"))
 				{
 					command_success_nodata(si, "Suspension reason: \2No reason given\2 -- Expiration: \2None\2");
+					return;
 				}
 
 				md = metadata_find(ca, "sreason");

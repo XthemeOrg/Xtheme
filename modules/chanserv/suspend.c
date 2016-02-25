@@ -336,6 +336,17 @@ void cs_cmd_suspend_add(sourceinfo_t *si, int parc, char *parv[])
 		}
 		else
 		{
+			if ((metadata_find(ca2, "sreason") != NULL))
+			{
+				metadata_delete(ca2, "sreason");
+			}
+			metadata_add(ca2, "sreason", reason);
+
+			if ((metadata_find(ca2, "expires") != NULL))
+			{
+				metadata_delete(ca2, "sreason");
+			}
+
 			verbose(mc, "\2%s\2 added \2%s\2 to the SUSPEND list.", get_source_name(si), uname);
 			logcommand(si, CMDLOG_SET, "SUSPEND:ADD: \2%s\2 on \2%s\2", uname, mc->name);
 
@@ -435,6 +446,7 @@ void cs_cmd_suspend_add(sourceinfo_t *si, int parc, char *parv[])
 			{
 				metadata_delete(ca2, "sreason");
 			}
+				metadata_add(ca2, "sreason", reason);
 			
 			if ((metadata_find(ca2, "expires") != NULL))
 			{
@@ -496,7 +508,6 @@ void cs_cmd_suspend_del(sourceinfo_t *si, int parc, char *parv[])
 	}
 
 	suspend_timeout_t *timeout;
-	chanban_t *cb;
 
 	if ((chanacs_source_flags(mc, si) & CA_HIGHPRIVS) != CA_HIGHPRIVS)
 	{
@@ -586,7 +597,6 @@ void suspend_timeout_check(void *arg)
 	chanacs_t *ca;
 	mychan_t *mc;
 
-	chanban_t *cb;
 	suspenddel_next = 0;
 
 	MOWGLI_ITER_FOREACH_SAFE(n, tn, suspenddel_list.head)
