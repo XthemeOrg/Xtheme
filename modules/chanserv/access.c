@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Xtheme Development Group (Xtheme.org)
+ * Copyright (c) 2014-2016 Xtheme Development Group (Xtheme.org)
  * Copyright (c) 2010 - 2011 William Pitcock <nenolod@atheme.org>.
  * Rights to this code are as documented in doc/LICENSE.
  *
@@ -579,6 +579,12 @@ static void cs_cmd_access_list(sourceinfo_t *si, int parc, char *parv[])
 		return;
 	}
 
+	if (chanacs_source_has_flag(mc, si, CA_SUSPENDED))
+	{
+		command_fail(si, fault_noprivs, _("Your access in %s is \2suspended\2."), channel);
+		return;
+	}
+
 	if (!(mc->flags & MC_PUBACL) && !chanacs_source_has_flag(mc, si, CA_ACLVIEW))
 	{
 		if (has_priv(si, PRIV_CHAN_AUSPEX))
@@ -667,6 +673,12 @@ static void cs_cmd_access_info(sourceinfo_t *si, int parc, char *parv[])
 		}
 	}
 
+	if (chanacs_source_has_flag(mc, si, CA_SUSPENDED))
+	{
+		command_fail(si, fault_noprivs, _("Your access in %s is \2suspended\2."), channel);
+		return;
+	}
+
 	if (validhostmask(target))
 		ca = chanacs_find_host_literal(mc, target, 0);
 	else
@@ -749,6 +761,12 @@ static void cs_cmd_access_del(sourceinfo_t *si, int parc, char *parv[])
 	if (metadata_find(mc, "private:frozen:freezer"))
 	{
 		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), channel);
+		return;
+	}
+
+	if (chanacs_source_has_flag(mc, si, CA_SUSPENDED))
+	{
+		command_fail(si, fault_noprivs, _("Your access in %s is \2suspended\2."), channel);
 		return;
 	}
 
@@ -862,6 +880,12 @@ static void cs_cmd_access_add(sourceinfo_t *si, int parc, char *parv[])
 	if (metadata_find(mc, "private:frozen:freezer"))
 	{
 		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), channel);
+		return;
+	}
+
+	if (chanacs_source_has_flag(mc, si, CA_SUSPENDED))
+	{
+		command_fail(si, fault_noprivs, _("Your access in %s is \2suspended\2."), channel);
 		return;
 	}
 
@@ -1015,6 +1039,12 @@ static void cs_cmd_access_set(sourceinfo_t *si, int parc, char *parv[])
 	if (metadata_find(mc, "private:frozen:freezer"))
 	{
 		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), channel);
+		return;
+	}
+
+	if (chanacs_source_has_flag(mc, si, CA_SUSPENDED))
+	{
+		command_fail(si, fault_noprivs, _("Your access in %s is \2suspended\2."), channel);
 		return;
 	}
 
@@ -1206,6 +1236,12 @@ static void cs_cmd_role_add(sourceinfo_t *si, int parc, char *parv[])
 		return;
 	}
 
+	if (chanacs_source_has_flag(mc, si, CA_SUSPENDED))
+	{
+		command_fail(si, fault_noprivs, _("Your access in %s is \2suspended\2."), channel);
+		return;
+	}
+
 	if (!role)
 	{
 		command_fail(si, fault_needmoreparams, STR_INSUFFICIENT_PARAMS, "ROLE ADD|SET");
@@ -1300,6 +1336,12 @@ static void cs_cmd_role_set(sourceinfo_t *si, int parc, char *parv[])
 	if (metadata_find(mc, "private:frozen:freezer"))
 	{
 		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), channel);
+		return;
+	}
+
+	if (chanacs_source_has_flag(mc, si, CA_SUSPENDED))
+	{
+		command_fail(si, fault_noprivs, _("Your access in %s is \2suspended\2."), channel);
 		return;
 	}
 
@@ -1402,6 +1444,12 @@ static void cs_cmd_role_del(sourceinfo_t *si, int parc, char *parv[])
 	if (metadata_find(mc, "private:frozen:freezer"))
 	{
 		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), channel);
+		return;
+	}
+
+	if (chanacs_source_has_flag(mc, si, CA_SUSPENDED))
+	{
+		command_fail(si, fault_noprivs, _("Your access in %s is \2suspended\2."), channel);
 		return;
 	}
 
