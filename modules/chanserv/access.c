@@ -579,12 +579,6 @@ static void cs_cmd_access_list(sourceinfo_t *si, int parc, char *parv[])
 		return;
 	}
 
-	if (chanacs_source_has_flag(mc, si, CA_SUSPENDED))
-	{
-		command_fail(si, fault_noprivs, _("Your access in %s is \2suspended\2."), channel);
-		return;
-	}
-
 	if (!(mc->flags & MC_PUBACL) && !chanacs_source_has_flag(mc, si, CA_ACLVIEW))
 	{
 		if (has_priv(si, PRIV_CHAN_AUSPEX))
@@ -646,7 +640,8 @@ static void cs_cmd_access_info(sourceinfo_t *si, int parc, char *parv[])
 	const char *role;
 	struct tm tm;
 	char strfbuf[BUFSIZE];
-	metadata_t *md;
+	char expiry[512];
+	metadata_t *md, *md2;
 
 	mc = mychan_find(channel);
 	if (!mc)
@@ -671,12 +666,6 @@ static void cs_cmd_access_info(sourceinfo_t *si, int parc, char *parv[])
 			command_fail(si, fault_noprivs, _("You are not authorized to perform this operation."));
 			return;
 		}
-	}
-
-	if (chanacs_source_has_flag(mc, si, CA_SUSPENDED))
-	{
-		command_fail(si, fault_noprivs, _("Your access in %s is \2suspended\2."), channel);
-		return;
 	}
 
 	if (validhostmask(target))
@@ -717,6 +706,21 @@ static void cs_cmd_access_info(sourceinfo_t *si, int parc, char *parv[])
 		if (md != NULL)
 			command_success_nodata(si, _("Ban reason : %s"),
 					md->value);
+	}
+		time_t expires_on = 0;
+		long time_left = 0;
+	if (ca->level & CA_SUSPENDED)
+	{
+			md = metadata_find(ca, "sreason");
+		if ((md2 = metadata_find(ca, "expires")))
+		{
+			snprintf(expiry, sizeof expiry, "%s", md2->value);
+			expires_on = (time_t)atol(expiry);
+			time_left = difftime(expires_on, CURRTIME);
+		}
+
+			if (md != NULL)
+				command_success_nodata(si, "Suspension reason: %s -- Expiration: %s", md->value, timediff(time_left));
 	}
 	else if (ca->entity && strcasecmp(target, ca->entity->name))
 		command_success_nodata(si, _("Role       : %s (inherited from \2%s\2)"), role, ca->entity->name);
