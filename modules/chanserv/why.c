@@ -98,12 +98,6 @@ static void cs_cmd_why(sourceinfo_t *si, int parc, char *parv[])
 		return;
 	}
 
-	if (chanacs_source_has_flag(mc, si, CA_SUSPENDED))
-	{
-		command_fail(si, fault_noprivs, _("Your access in %s is \2suspended\2."), chan);
-		return;
-	}
-
 	if (operoverride)
 		logcommand(si, CMDLOG_ADMIN, "WHY: \2%s!%s@%s\2 on \2%s\2 (oper override)", u->nick, u->user, u->vhost, mc->name);
 	else
