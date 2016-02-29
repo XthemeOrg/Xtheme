@@ -1,3 +1,23 @@
+Xtheme Services 7.4.0 Development Notes
+=====================================
+general
+-------
+* A lot of testing, bug fixes and code cleanups.
+
+Xtheme goes sleeper
+-------------------
+! This will be the final release of Xtheme (excluding bug fixes) 
+	since the maintainers of Shalture, Zohlai and Xtheme have 
+	formed the new Atheme Group.  We will now be focusing our
+	efforts to bring the bug fixes from our forks over to Atheme
+	as well as (some) of the new features.  (e.g. There are NO
+	plans to bring the ChanServ FREEZE module to Atheme.)
+
+More information on Atheme can be found at:
+	* http://atheme.github.io/
+	* https://github.com/atheme/atheme/
+	
+
 Xtheme Services 7.4.0alpha-2 Development Notes
 =====================================
 chanserv
@@ -7,7 +27,12 @@ chanserv
 	timed or permanent. (!T expiry or !P)
 * SUSPEND Help file added
 * SUSPEND (+P) added to HELP FLAGS output (when applicable)
+* SUSPEND information added to output in ChanServ WHY and 
+	ChanServ ACCESS INFO.
+* Fixes for WHY and ACCESS INFO output giving incorrect information
+	in output for PERMANENT (or non-expiring) suspensions.
 * A lot of module header updates
+
 
 
 Xtheme Services 7.4.0alpha-1 Development Notes
