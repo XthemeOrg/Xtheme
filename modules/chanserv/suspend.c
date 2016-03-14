@@ -395,7 +395,7 @@ void cs_cmd_suspend_del(sourceinfo_t *si, int parc, char *parv[])
 		return;
 	}
 
-	if (chanacs_source_has_flag(mc, si, CA_SUSPENDED))
+	if ((chanacs_source_has_flag(mc, si, CA_SUSPENDED)) && !(chanacs_source_has_flag(mc, si, CA_FOUNDER)))
 	{
 		command_fail(si, fault_noprivs, _("Your access in %s is \2suspended\2."), chan);
 		return;
