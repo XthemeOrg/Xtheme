@@ -429,6 +429,9 @@ void cs_cmd_suspend_del(sourceinfo_t *si, int parc, char *parv[])
 
 		chanacs_modify_simple(ca, 0, CA_SUSPENDED, si->smu);
 
+		metadata_delete(ca, "sreason");
+		metadata_delete(ca, "expires");
+
 		req.newlevel = ca->level;
 
 		hook_call_channel_acl_change(&req);
@@ -471,6 +474,9 @@ void cs_cmd_suspend_del(sourceinfo_t *si, int parc, char *parv[])
 	req.oldlevel = ca->level;
 
 	chanacs_modify_simple(ca, 0, CA_SUSPENDED, NULL);
+
+	metadata_delete(ca, "sreason");
+	metadata_delete(ca, "expires");
 
 	req.newlevel = ca->level;
 
@@ -524,6 +530,8 @@ void suspend_timeout_check(void *arg)
 		{
 			chanacs_modify_simple(ca, 0, CA_SUSPENDED, NULL);
 			chanacs_close(ca);
+			metadata_delete(ca, "sreason");
+			metadata_delete(ca, "expires");
 		}
 
 		mowgli_node_delete(&timeout->node, &suspenddel_list);
@@ -591,6 +599,8 @@ void suspenddel_list_create(void *arg)
 			{
 				chanacs_modify_simple(ca, 0, CA_SUSPENDED, NULL);
 				chanacs_close(ca);
+				metadata_delete(ca, "sreason");
+				metadata_delete(ca, "expires");
 			}
 			else
 			{
