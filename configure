@@ -8675,16 +8675,16 @@ $as_echo "no" >&6; }
  fi
 
 
- { $as_echo "$as_me:${as_lineno-$LINENO}: checking GCC flag(s) -Wparenthesis" >&5
-$as_echo_n "checking GCC flag(s) -Wparenthesis... " >&6; }
+ { $as_echo "$as_me:${as_lineno-$LINENO}: checking GCC flag(s) -Wparentheses" >&5
+$as_echo_n "checking GCC flag(s) -Wparentheses... " >&6; }
  if test "${GCC-no}" = yes
  then
-  if ${atheme_cv_c_gcc_parenthesis+:} false; then :
+  if ${atheme_cv_c_gcc_parentheses+:} false; then :
   $as_echo_n "(cached) " >&6
 else
 
    oldcflags="${CFLAGS-}"
-   CFLAGS="${CFLAGS-} ${CWARNS} -Wparenthesis -Werror"
+   CFLAGS="${CFLAGS-} ${CWARNS} -Wparentheses -Werror"
    cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
@@ -8703,20 +8703,20 @@ main ()
 }
 _ACEOF
 if ac_fn_c_try_compile "$LINENO"; then :
-  atheme_cv_c_gcc_parenthesis=yes
+  atheme_cv_c_gcc_parentheses=yes
 else
-  atheme_cv_c_gcc_parenthesis=no
+  atheme_cv_c_gcc_parentheses=no
 fi
 rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
    CFLAGS="${oldcflags}"
 fi
 
-  if test "x$atheme_cv_c_gcc_parenthesis" = xyes; then
-   CWARNS="${CWARNS}-Wparenthesis "
+  if test "x$atheme_cv_c_gcc_parentheses" = xyes; then
+   CWARNS="${CWARNS}-Wparentheses "
    { $as_echo "$as_me:${as_lineno-$LINENO}: result: ok" >&5
 $as_echo "ok" >&6; }
   else
-   atheme_cv_c_gcc_parenthesis=''
+   atheme_cv_c_gcc_parentheses=''
    { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
   fi
