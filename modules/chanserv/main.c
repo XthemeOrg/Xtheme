@@ -506,6 +506,12 @@ static void cs_join(hook_channel_joinpart_t *hdata)
 			modestack_mode_param(chansvs.nick, chan, MTYPE_DEL, ircd->protect_mchar[1], CLIENT_NAME(u));
 			cu->modes &= ~ircd->protect_mode;
 		}
+
+		if (ircd->uses_halfops)
+		{
+			modestack_mode_param(chansvs.nick, chan, MTYPE_DEL, 'h', CLIENT_NAME(u));
+			cu->modes &= ~ircd->halfops_mode;
+		}
 			modestack_mode_param(chansvs.nick, chan, MTYPE_DEL, 'o', CLIENT_NAME(u));
 			cu->modes &= ~CSTATUS_OP;
 			return;

@@ -147,6 +147,12 @@ static void do_chanuser_sync(mychan_t *mc, chanuser_t *cu, chanacs_t *ca,
 			modestack_mode_param(chansvs.nick, mc->chan, MTYPE_DEL, ircd->protect_mchar[1], CLIENT_NAME(cu->user));
 			cu->modes &= ~ircd->protect_mode;
 		}
+
+		if (ircd->uses_halfops)
+		{
+			modestack_mode_param(chansvs.nick, mc->chan, MTYPE_DEL, 'h', CLIENT_NAME(cu->user));
+			cu->modes &= ~ircd->halfops_mode;
+		}
 			modestack_mode_param(chansvs.nick, mc->chan, MTYPE_DEL, 'o', CLIENT_NAME(cu->user));
 			cu->modes &= ~CSTATUS_OP;
 			return;

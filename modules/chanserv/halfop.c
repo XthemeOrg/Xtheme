@@ -129,6 +129,13 @@ static void cmd_halfop(sourceinfo_t *si, bool halfopping, int parc, char *parv[]
 			continue;
 		}
 
+		/* Check if the target is SUSPENDED and deny OP */
+		if (chanacs_user_has_flag(mc, tu, CA_SUSPENDED))
+		{
+			command_fail(si, fault_noprivs, _("\2%s\2 is suspended on \2%s\2."), tu->nick, mc->name);
+			continue;
+		}
+
 		modestack_mode_param(chansvs.nick, mc->chan, halfop ? MTYPE_ADD : MTYPE_DEL, 'h', CLIENT_NAME(tu));
 		if (halfop)
 			cu->modes |= ircd->halfops_mode;
