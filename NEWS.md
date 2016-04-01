@@ -1,8 +1,15 @@
-Xtheme Services 7.4.0 Development Notes
+Xtheme Services 7.4.1 Development Notes
 =====================================
-general
--------
-* A lot of testing, bug fixes and code cleanups.
+chanserv
+--------
+* Fix for removing old suspend metadata once a suspension expires.
+* Added ability for channel Founders (+F users) to delete a 
+	suspension affecting them. 
+	* NOTE: Checks are already in place to ensure Founders cannot
+		be suspended.
+* Fix for SUSPEND - Remove halfops status (if applicable) as well,
+	and added checks to ensure another user cannot simply ask 
+	ChanServ to give the suspended user halfop status.
 
 Xtheme goes sleeper
 -------------------
@@ -10,12 +17,20 @@ Xtheme goes sleeper
 	since the maintainers of Shalture, Zohlai and Xtheme have 
 	formed the new Atheme Group.  We will now be focusing our
 	efforts to bring the bug fixes from our forks over to Atheme
-	as well as (some) of the new features.  (e.g. There are NO
-	plans to bring the ChanServ FREEZE module to Atheme.)
+	as well as (some) of the new features.  Feel free to request
+	new Xtheme features that you enjoyed on the atheme GitHub
+	Issue tracker.
 
 More information on Atheme can be found at:
-	* http://atheme.github.io/
+	* https://atheme.github.io/
 	* https://github.com/atheme/atheme/
+
+
+Xtheme Services 7.4.0 Development Notes
+=====================================
+general
+-------
+* A lot of testing, bug fixes and code cleanups.
 	
 
 Xtheme Services 7.4.0alpha-2 Development Notes
@@ -32,7 +47,6 @@ chanserv
 * Fixes for WHY and ACCESS INFO output giving incorrect information
 	in output for PERMANENT (or non-expiring) suspensions.
 * A lot of module header updates
-
 
 
 Xtheme Services 7.4.0alpha-1 Development Notes
