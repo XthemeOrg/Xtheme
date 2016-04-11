@@ -2,7 +2,7 @@
  * xtheme-services: A collection of minimalist IRC services
  * services.c: Routines commonly used by various services.
  *
- * Copyright (c) 2014-2015 Xtheme Development Group (http://www.Xtheme.org)
+ * Copyright (c) 2014-2016 Xtheme Development Group (http://www.Xtheme.org)
  * Copyright (c) 2005-2007 Atheme Project (http://www.atheme.org)
  *
  * Permission to use, copy, modify, and/or distribute this software for any
@@ -787,7 +787,8 @@ void change_notify(const char *from, user_t *to, const char *fmt, ...)
  *       - opers warned if necessary
  *
  * Note:
- *       - kills are currently not done
+ *       - akills are added after 10 failed attempts 
+ *         on a user, for one hour (3600 seconds)
  */
 bool bad_password(sourceinfo_t *si, myuser_t *mu)
 {
@@ -797,6 +798,7 @@ bool bad_password(sourceinfo_t *si, myuser_t *mu)
 	int count;
 	metadata_t *md_failnum;
 	service_t *svs;
+	kline_t *k;
 
 	/* If the user is already logged in, no paranoia is needed,
 	 * as they could /ns set password anyway.
@@ -833,7 +835,8 @@ bool bad_password(sourceinfo_t *si, myuser_t *mu)
 		time_t ts = CURRTIME;
 		tm = *localtime(&ts);
 		strftime(strfbuf, sizeof strfbuf, TIME_FORMAT, &tm);
-		wallops("Warning: \2%d\2 failed login attempts to \2%s\2. Last attempt received from \2%s\2 on %s.", count, entity(mu)->name, mask, strfbuf);
+		wallops("Warning: \2%d\2 failed login attempts to \2%s\2. Last attempt received from \2%s\2 on %s. AKILLing for 1 hour", count, entity(mu)->name, mask, strfbuf);
+		k = kline_add("*", si->su->host, "Too many failed login attempts", 3600, "Services");
 	}
 
 	return false;
