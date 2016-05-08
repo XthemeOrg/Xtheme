@@ -117,6 +117,7 @@ static void cs_cmd_clone(sourceinfo_t *si, int parc, char *parv[])
 	{
 		command_fail(si, fault_noprivs, _("Your access in %s is \2suspended\2."), source);
 		return;
+	}
 
 	/* Delete almost all chanacs of the target first */
 	MOWGLI_ITER_FOREACH_SAFE(n, tn, mc2->chanacs.head)
