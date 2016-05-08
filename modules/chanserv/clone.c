@@ -113,6 +113,11 @@ static void cs_cmd_clone(sourceinfo_t *si, int parc, char *parv[])
 		return;
 	}
 
+	if (chanacs_source_has_flag(mc, si, CA_SUSPENDED))
+	{
+		command_fail(si, fault_noprivs, _("Your access in %s is \2suspended\2."), source);
+		return;
+
 	/* Delete almost all chanacs of the target first */
 	MOWGLI_ITER_FOREACH_SAFE(n, tn, mc2->chanacs.head)
 	{
@@ -130,9 +135,9 @@ static void cs_cmd_clone(sourceinfo_t *si, int parc, char *parv[])
 		ca = n->data;
 
 		if (!ca->host)
-			chanacs_change_simple(mc2, ca->entity, NULL, ca->level, 0, ca->setter ? myentity_find(ca->setter) : NULL);
+			chanacs_change_simple(mc2, ca->entity, NULL, ca->level, 0, *ca->setter_uid != '\0' ? myentity_find_uid(ca->setter_uid) : NULL);
 		else if (ca->host != NULL)
-			chanacs_change_simple(mc2, NULL, ca->host, ca->level, 0, ca->setter ? myentity_find(ca->setter) : NULL);
+			chanacs_change_simple(mc2, NULL, ca->host, ca->level, 0, *ca->setter_uid != '\0' ? myentity_find_uid(ca->setter_uid) : NULL);
 	}
 
 	/* Copy ze metadata! */
