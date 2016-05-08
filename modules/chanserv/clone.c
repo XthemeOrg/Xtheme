@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2014-2016 Xtheme Development Group (Xtheme.org)
- * Copyright (c) 2010 Atheme Development Group
+ * Copyright (c) 2010-2016 Atheme Development Group
  * Rights to this code are as documented in doc/LICENSE.
  *
  * This file contains code for the CService CLONE functions.
@@ -64,19 +64,19 @@ static void cs_cmd_clone(sourceinfo_t *si, int parc, char *parv[])
 		command_fail(si, fault_nochange, "Cannot clone a channel to itself.");
 		return;
 	}
-	
+
 	if (metadata_find(mc, "private:frozen:freezer"))
 	{
-		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), source);
+		command_fail(si, fault_noprivs, "\2%s\2 is frozen.", source);
 		return;
 	}
 
 	if (metadata_find(mc2, "private:frozen:freezer"))
 	{
-		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), target);
+		command_fail(si, fault_noprivs, "\2%s\2 is frozen.", target);
 		return;
 	}
-	
+
 	if (metadata_find(mc, "private:close:closer"))
 	{
 		command_fail(si, fault_noprivs, "\2%s\2 is closed.", source);
@@ -113,12 +113,6 @@ static void cs_cmd_clone(sourceinfo_t *si, int parc, char *parv[])
 		return;
 	}
 
-	if (chanacs_source_has_flag(mc, si, CA_SUSPENDED))
-	{
-		command_fail(si, fault_noprivs, _("Your access in %s is \2suspended\2."), source);
-		return;
-	}
-
 	/* Delete almost all chanacs of the target first */
 	MOWGLI_ITER_FOREACH_SAFE(n, tn, mc2->chanacs.head)
 	{
@@ -136,22 +130,35 @@ static void cs_cmd_clone(sourceinfo_t *si, int parc, char *parv[])
 		ca = n->data;
 
 		if (!ca->host)
-			chanacs_change_simple(mc2, ca->entity, NULL, ca->level, 0, *ca->setter_uid != '\0' ? myentity_find_uid(ca->setter_uid) : NULL);
+			chanacs_change_simple(mc2, ca->entity, NULL, ca->level, 0, ca->setter ? myentity_find(ca->setter) : NULL);
 		else if (ca->host != NULL)
-			chanacs_change_simple(mc2, NULL, ca->host, ca->level, 0, *ca->setter_uid != '\0' ? myentity_find_uid(ca->setter_uid) : NULL);
+			chanacs_change_simple(mc2, NULL, ca->host, ca->level, 0, ca->setter ? myentity_find(ca->setter) : NULL);
 	}
 
 	/* Copy ze metadata! */
 	MOWGLI_PATRICIA_FOREACH(md, &state, object(mc)->metadata)
 	{
 		if(!strncmp(md->name, "private:topic:", 14))
-				continue;
+		{
+			continue;
+		}
+
+		/* Replace ANTIFLOOD AKILL with QUIET if it exists --shaynejellesma */
+		if((strcasecmp(md->name, "private:antiflood:enforce-method") == 0) && (strcasecmp(md->value, "AKILL") == 0))
+		{
+			metadata_add(mc2, md->name, "QUIET");
+			continue;
+		}
 
 		metadata_add(mc2, md->name, md->value);
 	}
 
 	/* Copy channel flags */
 	mc2->flags = mc->flags;
+
+	/* Remove HOLD flag if it exists --shaynejellesma */
+	if (mc2->flags & MC_HOLD)
+		mc2->flags &= ~MC_HOLD;
 
 	command_add_flood(si, FLOOD_MODERATE);
 
