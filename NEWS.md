@@ -1,3 +1,62 @@
+Xtheme Services 7.4.2 Development Notes
+=====================================
+chanserv
+--------
+* flags: Make Anope FLAGS compatibility an option
+* set_*: announce changes via verbose()
+* antiflood: Change antiflood_msg_count to size_t
+* ftransfer: call myentity_allow_foundership
+* clone: Do not copy certain metadata such as HOLDs or
+	ANTIFLOOD AKILL, but copy MARKs to avoid evasion.
+
+memoserv
+--------
+* Remove an extra 'from' from email notices about memos
+
+nickserv
+--------
+* enforce: Prevent REGAINing reserved nicknames
+* cert: Add CLEAR command for users who want to clear all certs
+	or cannot clear their own certs.
+
+core
+----
+* After 10 failed logins to a nickname, further attempts will result
+	in a 1 hour AKILL. (Prevents brute-force style attacks with the
+	IDENTIFY command)
+* Fix issue where pretty_mask would return host!*@*
+* flags: update_chanacs_flags(): do not assume that a protocol module
+	is loaded
+
+general
+-------
+* General Bug Fixes from upstream were the primary reason for this
+	release.
+* xmlrpc: Do not copy more bytes than were allocated
+* automake: Fix typo in compiler flag
+* Move away from BSD data types
+
+protocol
+--------
+* ts6-generic: add support for sending mechlists
+* inspircd: Only set hideoper mode on oper pseudoclients
+
+
+Xtheme goes sleeper
+-------------------
+! This will be the final release of Xtheme (excluding bug fixes) 
+	since the maintainers of Shalture, Zohlai and Xtheme have 
+	formed the new Atheme Group.  We will now be focusing our
+	efforts to bring the bug fixes from our forks over to Atheme
+	as well as (some) of the new features.  Feel free to request
+	new Xtheme features that you enjoyed on the atheme GitHub
+	Issue tracker.
+
+More information on Atheme can be found at:
+	* https://atheme.github.io/
+	* https://github.com/atheme/atheme/
+
+
 Xtheme Services 7.4.1 Development Notes
 =====================================
 chanserv
