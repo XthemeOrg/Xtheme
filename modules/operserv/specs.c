@@ -14,7 +14,7 @@ DECLARE_MODULE_V1
 (
 	"operserv/specs", false, _modinit, _moddeinit,
 	PACKAGE_STRING,
-	"Atheme Development Group <http://www.atheme.org>"
+	"Xtheme Development Group <http://www.xtheme.org>"
 );
 
 static void os_cmd_specs(sourceinfo_t *si, int parc, char *parv[]);
@@ -64,8 +64,8 @@ static struct priv_category chanserv_privs = {
 		{ PRIV_CHAN_ADMIN, N_("drop channels, close channels, transfer ownership") },
 		{ PRIV_CHAN_CMODES, N_("mlock operator modes") },
 		{ PRIV_JOIN_STAFFONLY, N_("join staff channels") },
-		{ PRIV_MARK, N_("mark accounts") },
-		{ PRIV_HOLD, N_("hold accounts") },
+		{ PRIV_MARK, N_("mark channels") },
+		{ PRIV_HOLD, N_("hold channels") },
 		{ PRIV_REG_NOLIMIT, N_("bypass channel registration limits") },
 		{ NULL, NULL },
 	}
