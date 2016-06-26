@@ -36,25 +36,19 @@ general
 * automake: Fix typo in compiler flag
 * Move away from BSD data types
 
+operserv
+--------
+* OUTPUT of SPECS has been clarified better
+
 protocol
 --------
 * ts6-generic: add support for sending mechlists
 * inspircd: Only set hideoper mode on oper pseudoclients
 
 
-Xtheme goes sleeper
--------------------
-! This will be the final release of Xtheme (excluding bug fixes) 
-	since the maintainers of Shalture, Zohlai and Xtheme have 
-	formed the new Atheme Group.  We will now be focusing our
-	efforts to bring the bug fixes from our forks over to Atheme
-	as well as (some) of the new features.  Feel free to request
-	new Xtheme features that you enjoyed on the atheme GitHub
-	Issue tracker.
-
-More information on Atheme can be found at:
-	* https://atheme.github.io/
-	* https://github.com/atheme/atheme/
+! Atheme Development has resumed.  Xtheme development will continue up until
+	Atheme has caught up as far as bug fixes and new features.  For more info:
+	http://www.Xtheme.org/
 
 
 Xtheme Services 7.4.1 Development Notes
