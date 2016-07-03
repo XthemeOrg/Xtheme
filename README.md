@@ -27,7 +27,7 @@ Help is also available on the [Xtheme IRC Services Wiki](https://github.com/Xthe
 
 If you are interested in having a Services Web Interface (or Services Web Panel), SWI
 *IS* compatible with Xtheme and other Atheme forks, and is available at:
-http://atheme.github.io/swi.html or https://github.com/atheme/SWI/
+http://www.Xtheme.org/SWI/ or https://github.com/XthemeOrg/SWI/
 
 ## links / contact
 
