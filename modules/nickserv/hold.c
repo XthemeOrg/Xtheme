@@ -81,6 +81,9 @@ static void ns_cmd_hold(sourceinfo_t *si, int parc, char *parv[])
 
 		mu->flags |= MU_HOLD;
 
+		metadata_add(mu, "private:held:holder", get_oper_name(si));
+		metadata_add(mu, "private:held:timestamp", number_to_string(CURRTIME));
+
 		wallops("%s set the HOLD option for the account \2%s\2.", get_oper_name(si), entity(mu)->name);
 		logcommand(si, CMDLOG_ADMIN, "HOLD:ON: \2%s\2", entity(mu)->name);
 		command_success_nodata(si, _("\2%s\2 is now held."), entity(mu)->name);
@@ -94,6 +97,9 @@ static void ns_cmd_hold(sourceinfo_t *si, int parc, char *parv[])
 		}
 
 		mu->flags &= ~MU_HOLD;
+
+		metadata_delete(mu, "private:held:holder");
+		metadata_delete(mu, "private:held:timestamp");
 
 		wallops("%s removed the HOLD option on the account \2%s\2.", get_oper_name(si), entity(mu)->name);
 		logcommand(si, CMDLOG_ADMIN, "HOLD:OFF: \2%s\2", entity(mu)->name);

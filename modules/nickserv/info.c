@@ -446,6 +446,23 @@ static void ns_cmd_info(sourceinfo_t *si, int parc, char *parv[])
 		command_success_nodata(si, _("%s was \2MARKED\2 by %s on %s (%s)"), entity(mu)->name, setter, strfbuf, reason);
 	}
 
+	if (has_user_auspex && (md = metadata_find(mu, "private:held:holder")))
+	{
+		const char *setter = md->value;
+		time_t ts;
+
+		md = metadata_find(mu, "private:held:timestamp");
+		ts = md != NULL ? atoi(md->value) : 0;
+
+		tm = *localtime(&ts);
+		strftime(strfbuf, sizeof strfbuf, TIME_FORMAT, &tm);
+
+		command_success_nodata(si, _("%s was \2HELD\2 by %s on %s"), entity(mu)->name, setter, strfbuf);
+	}
+	else if (metadata_find(mu, "private:held:holder"))
+		command_success_nodata(si, _("%s has been HELD by the %s administration."), entity(mu)->name, me.netname);
+
+
 	if (MU_WAITAUTH & mu->flags)
 		command_success_nodata(si, _("%s has \2NOT COMPLETED\2 registration verification"), entity(mu)->name);
 

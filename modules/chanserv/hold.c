@@ -66,6 +66,9 @@ static void cs_cmd_hold(sourceinfo_t *si, int parc, char *parv[])
 
 		mc->flags |= MC_HOLD;
 
+		metadata_add(mc, "private:held:holder", get_oper_name(si));
+		metadata_add(mc, "private:held:timestamp", number_to_string(CURRTIME));
+
 		wallops("%s set the HOLD option for the channel \2%s\2.", get_oper_name(si), target);
 		logcommand(si, CMDLOG_ADMIN, "HOLD:ON: \2%s\2", mc->name);
 		command_success_nodata(si, _("\2%s\2 is now held."), target);
@@ -79,6 +82,9 @@ static void cs_cmd_hold(sourceinfo_t *si, int parc, char *parv[])
 		}
 
 		mc->flags &= ~MC_HOLD;
+
+		metadata_delete(mc, "private:held:holder");
+		metadata_delete(mc, "private:held:timestamp");
 
 		wallops("%s removed the HOLD option on the channel \2%s\2.", get_oper_name(si), target);
 		logcommand(si, CMDLOG_ADMIN, "HOLD:OFF: \2%s\2", mc->name);
