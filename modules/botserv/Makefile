@@ -18,6 +18,7 @@ SRCS =			\
 	set_fantasy.c	\
 	set_nobot.c	\
 	set_private.c	\
+	set_saycaller.c \
 
 include ../../extra.mk
 include ../../buildsys.mk
