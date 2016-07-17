@@ -179,6 +179,10 @@ static bool chanfix_fix_channel(chanfix_channel_t *chan)
 	/* now report the damage */
 	msg(chanfix->me->nick, chan->name, "\2%d\2 client%s should have been opped.", opped, opped != 1 ? "s" : "");
 
+	/* if this is the services log channel, continue to occupy it after the fix */
+	if (ch->flags & CHAN_LOG)
+	return true;
+
 	/* fix done, leave. */
 	part(chan->name, chanfix->me->nick);
 
