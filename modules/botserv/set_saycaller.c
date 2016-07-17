@@ -30,15 +30,12 @@ void _modinit(module_t *m)
 
 	command_add(&bs_set_saycaller, *bs_set_cmdtree);
 
-	hook_add_event("config_ready");
-	hook_add_config_ready(bs_set_saycaller_config_ready);
 }
 
 void _moddeinit(module_unload_intent_t intent)
 {
-	command_delete(&bs_set_fantasy, *bs_set_cmdtree);
+	command_delete(&bs_set_saycaller, *bs_set_cmdtree);
 
-	hook_del_config_ready(bs_set_saycaller_config_ready);
 }
 
 static void bs_cmd_set_saycaller(sourceinfo_t *si, int parc, char *parv[])
