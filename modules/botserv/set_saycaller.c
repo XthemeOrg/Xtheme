@@ -18,8 +18,6 @@ DECLARE_MODULE_V1
 
 mowgli_patricia_t **bs_set_cmdtree;
 
-static void bs_set_saycaller_config_ready(void *unused);
-
 static void bs_cmd_set_saycaller(sourceinfo_t *si, int parc, char *parv[]);
 
 command_t bs_set_saycaller = { "SAYCALLER", N_("Enable Caller-ID on BotServ actions or messages."), AC_AUTHENTICATED, 2, bs_cmd_set_saycaller, { .path = "botserv/set_saycaller" } };
