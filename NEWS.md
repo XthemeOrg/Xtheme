@@ -1,3 +1,58 @@
+Xtheme Services 7.4.3 Development Notes
+=====================================
+botserv
+-------
+* botserv/bottalk: (Optionally) give the command caller's nickname.
+* botserv/set_saycaller: Command and Helpfile added for optionally
+	giving the command caller's nickname in the message. (Requested upstream
+	in atheme/atheme#487)
+
+chanfix
+-------
+* chanfix/fix: Stay in channel after the fix if the channel being fixed
+	is the Services log channel. (Bug reported upstream in atheme/atheme#486)
+
+chanserv
+--------
+* hold: record services operator that held channel 
+* info: reveal services operator that held channel (*NOTE: Previous HOLDs
+	will not reveal services operator that set the HOLD as it was not 
+	recorded until Xtheme 7.4.3)
+
+core
+----
+* Libmowgli-2 updated to most recent code 
+
+memoserv
+--------
+* Remove an extra 'from' from email notices about memos
+
+nickserv
+--------
+* hold: record services operator that held channel 
+* info: reveal services operator that held channel (*NOTE: Previous HOLDs
+	will not reveal services operator that set the HOLD as it was not 
+	recorded until Xtheme 7.4.3)
+
+general
+-------
+* Move vendor field to a compile time macro
+* README was updated as SWI has moved back to XthemeOrg
+
+operserv
+--------
+* OUTPUT of SPECS has been clarified better
+
+protocols
+---------
+* protocols/unreal*: Fix wrong source for SVSNICK
+
+
+! Atheme Development has resumed.  Xtheme development will continue up until
+	Atheme has caught up as far as bug fixes and new features.  For more info:
+	http://www.Xtheme.org/
+
+
 Xtheme Services 7.4.2 Development Notes
 =====================================
 chanserv
