@@ -4832,6 +4832,10 @@ VERSION=7.4.2
 
 
 
+$as_echo "#define VENDOR_STRING \"Xtheme Development Group <http://www.Xtheme.org>\"" >>confdefs.h
+
+
+
 cat >>confdefs.h <<_ACEOF
 #define PACKAGE "$PACKAGE"
 _ACEOF

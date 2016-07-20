@@ -14,7 +14,7 @@ DECLARE_MODULE_V1
 (
 	"chanserv/set", false, _modinit, _moddeinit,
 	PACKAGE_STRING,
-	"Xtheme Development Group <http://www.Xtheme.org>"
+	VENDOR_STRING
 );
 
 void _modinit(module_t *m)

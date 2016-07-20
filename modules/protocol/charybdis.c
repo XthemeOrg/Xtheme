@@ -13,7 +13,7 @@
 #include "pmodule.h"
 #include "protocol/charybdis.h"
 
-DECLARE_MODULE_V1("protocol/charybdis", true, _modinit, NULL, PACKAGE_STRING, "Xtheme Development Group <http://www.Xtheme.org>");
+DECLARE_MODULE_V1("protocol/charybdis", true, _modinit, NULL, PACKAGE_STRING, VENDOR_STRING);
 
 /* *INDENT-OFF* */
 

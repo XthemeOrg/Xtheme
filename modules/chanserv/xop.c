@@ -15,7 +15,7 @@ DECLARE_MODULE_V1
 (
 	"chanserv/xop", false, _modinit, _moddeinit,
 	PACKAGE_STRING,
-	"Xtheme Development Group <http://www.Xtheme.org>"
+	VENDOR_STRING
 );
 
 /* the individual command stuff, now that we've reworked, hardcode ;) --w00t */

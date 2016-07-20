@@ -1,4 +1,5 @@
 /*
+ * Copyright (c) 2014-2016 Xtheme Development Group
  * Copyright (c) 2005 Atheme Development Group
  * Rights to this code are documented in doc/LICENSE.
  *
@@ -12,7 +13,7 @@ DECLARE_MODULE_V1
 (
 	"botserv/help", false, _modinit, _moddeinit,
 	PACKAGE_STRING,
-	"Atheme Development Group <http://www.atheme.org>"
+	VENDOR_STRING
 );
 
 static void bs_cmd_help(sourceinfo_t *si, int parc, char *parv[]);

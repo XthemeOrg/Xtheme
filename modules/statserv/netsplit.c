@@ -9,7 +9,7 @@
 #include "atheme.h"
 
 DECLARE_MODULE_V1("statserv/netsplit", false, _modinit, _moddeinit,
-        PACKAGE_STRING, "Alexandria Wolcott <alyx@sporksmoo.net>");
+        PACKAGE_STRING, VENDOR_STRING);
 
 static void ss_cmd_netsplit(sourceinfo_t * si, int parc, char *parv[]);
 static void ss_cmd_netsplit_list(sourceinfo_t * si, int parc, char *parv[]);

@@ -13,7 +13,7 @@ DECLARE_MODULE_V1
 (
 	"nickserv/set_core", false, _modinit, _moddeinit,
 	PACKAGE_STRING,
-	"Xtheme Development Group <http://www.Xtheme.org>"
+	VENDOR_STRING
 );
 
 static void ns_help_set(sourceinfo_t *si, const char *subcmd);

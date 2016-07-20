@@ -30,7 +30,7 @@ DECLARE_MODULE_V1
 (
 	"transport/rfc1459", true, _modinit, _moddeinit,
 	PACKAGE_VERSION,
-	"Xtheme Development Group <http://www.Xtheme.org>"
+	VENDOR_STRING
 );
 
 void _modinit(module_t *m)

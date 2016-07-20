@@ -23,7 +23,7 @@
 #ifdef HAVE_OPENSSL
 
 DECLARE_MODULE_V1("crypto/pbkdf2v2", false, _modinit, _moddeinit,
-                  PACKAGE_VERSION, "Aaron Jones <aaronmdjones@gmail.com>");
+                  PACKAGE_VERSION, VENDOR_STRING);
 
 #include <openssl/evp.h>
 

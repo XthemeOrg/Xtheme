@@ -1,4 +1,5 @@
 /*
+ * Copyright (c) 2014-2016 Xtheme Development Group
  * Copyright (c) 2005-2006 Atheme Development Group
  * Rights to this code are as documented in doc/LICENSE.
  *
@@ -14,7 +15,7 @@ DECLARE_MODULE_V1
 (
 	"backend/opensex", true, _modinit, NULL,
 	PACKAGE_STRING,
-	"Atheme Development Group <http://www.atheme.org>"
+	VENDOR_STRING
 );
 
 typedef struct opensex_ {

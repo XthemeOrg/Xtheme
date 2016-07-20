@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2015 Xtheme Development Group (Xtheme.org)
+ * Copyright (c) 2014-2016 Xtheme Development Group (Xtheme.org)
  * Copyright (c) 2012 William Pitcock <nenolod@dereferenced.org>.
  *
  * Permission to use, copy, modify, and/or distribute this software for any
@@ -26,7 +26,7 @@ DECLARE_MODULE_V1
 (
 	"chanserv/moderate", false, _modinit, _moddeinit,
 	PACKAGE_STRING,
-	"Xtheme Development Group <http://www.Xtheme.org>"
+	VENDOR_STRING
 );
 
 static void cs_cmd_activate(sourceinfo_t *si, int parc, char *parv[]);

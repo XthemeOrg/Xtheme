@@ -1,8 +1,9 @@
 /*
+ * Copyright (c) 2014-2016 Xtheme Development Group
  * Copyright (c) 2005-2006 Atheme Development Group
  * Rights to this code are as documented in doc/LICENSE.
  *
- * This file contains the implementation of the Atheme 0.1
+ * This file contains the implementation of the Xtheme 0.1
  * flatfile database format, with metadata extensions.
  *
  */
@@ -14,7 +15,7 @@ DECLARE_MODULE_V1
 (
 	"backend/flatfile", true, _modinit, NULL,
 	PACKAGE_STRING,
-	"Atheme Development Group <http://www.atheme.org>"
+	VENDOR_STRING
 );
 
 /* database versions */

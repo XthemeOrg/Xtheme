@@ -11,7 +11,7 @@ DECLARE_MODULE_V1
 (
 	"protocol/mixin_noholdnick", false, _modinit, _moddeinit,
 	PACKAGE_STRING,
-	"Xtheme Development Group <http://www.Xtheme.org>"
+	VENDOR_STRING
 );
 
 int oldflag;

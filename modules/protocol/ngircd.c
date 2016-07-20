@@ -10,7 +10,7 @@
 #include "pmodule.h"
 #include "protocol/ngircd.h"
 
-DECLARE_MODULE_V1("protocol/ngircd", true, _modinit, NULL, PACKAGE_STRING, "Xtheme Development Group <http://www.Xtheme.org>");
+DECLARE_MODULE_V1("protocol/ngircd", true, _modinit, NULL, PACKAGE_STRING, VENDOR_STRING);
 
 /* *INDENT-OFF* */
 

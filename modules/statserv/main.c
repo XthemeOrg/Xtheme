@@ -10,7 +10,7 @@
 
 DECLARE_MODULE_V1
 ("statserv/main", false, _modinit, _moddeinit,
- PACKAGE_STRING, "Alexandria Wolcott <alyx@sporksmoo.net>");
+ PACKAGE_STRING, VENDOR_STRING);
 
 service_t *statsvs;
 

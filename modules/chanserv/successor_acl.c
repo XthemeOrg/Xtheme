@@ -12,7 +12,7 @@ DECLARE_MODULE_V1
 (
 	"chanserv/successor_acl", true, _modinit, NULL,
 	PACKAGE_STRING,
-	"Xtheme Development Group <http://www.Xtheme.org>"
+	VENDOR_STRING
 );
 
 static unsigned int successor_flag = 0;

@@ -15,7 +15,7 @@ DECLARE_MODULE_V1
 (
 	"operserv/clearchan", false, _modinit, _moddeinit,
 	PACKAGE_STRING,
-	"Xtheme Group <www.Xtheme.org>"
+	VENDOR_STRING
 );
 
 #define CLEAR_KICK 1

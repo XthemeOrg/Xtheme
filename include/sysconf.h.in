@@ -227,6 +227,8 @@
 # undef __EXTENSIONS__
 #endif
 
+/* Vendor and URL for modules' "vendor" field */
+#undef VENDOR_STRING
 
 /* Version number of package */
 #undef VERSION

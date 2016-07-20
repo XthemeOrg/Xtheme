@@ -15,7 +15,7 @@ DECLARE_MODULE_V1
 (
 	"botserv/set_nobot", false, _modinit, _moddeinit,
 	PACKAGE_STRING,
-	"Xtheme Development Group <http://www.Xtheme.org>"
+	VENDOR_STRING
 );
 
 mowgli_patricia_t **bs_set_cmdtree;

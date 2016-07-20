@@ -14,7 +14,7 @@ DECLARE_MODULE_V1
 (
 	"chanserv/set_gameserv", false, _modinit, _moddeinit,
 	PACKAGE_STRING,
-	"Xtheme Development Group <http://www.Xtheme.org>"
+	VENDOR_STRING
 );
 
 static void cs_cmd_set_gameserv(sourceinfo_t *si, int parc, char *parv[]);

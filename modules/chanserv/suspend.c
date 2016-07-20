@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2016 Xtheme Development Group (Xtheme.org)
+ * Copyright (c) 2016 Xtheme Development Group (Xtheme.org)
  * Rights to this code are as documented in doc/LICENSE.
  *
  * This file contains code for the CService SUSPEND functions.
@@ -19,7 +19,7 @@ DECLARE_MODULE_V1
 (
 	"chanserv/suspend", false, _modinit, _moddeinit,
 	PACKAGE_STRING,
-	"Xtheme Development Group <http://www.Xtheme.org>"
+	VENDOR_STRING
 );
 
 command_t cs_suspend = { "SUSPEND", N_("Manipulates a channel's SUSPEND list."),

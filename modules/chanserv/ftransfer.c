@@ -1,4 +1,5 @@
 /*
+ * Copyright (c) 2014-2016 Xtheme Development Group
  * Copyright (c) 2005 William Pitcock, et al.
  * Rights to this code are as documented in doc/LICENSE.
  *
@@ -12,7 +13,7 @@ DECLARE_MODULE_V1
 (
 	"chanserv/ftransfer", false, _modinit, _moddeinit,
 	PACKAGE_STRING,
-	"Atheme Development Group <http://www.atheme.org>"
+	VENDOR_STRING
 );
 
 static void cs_cmd_ftransfer(sourceinfo_t *si, int parc, char *parv[]);

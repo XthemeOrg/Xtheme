@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Xtheme Development Group (Xtheme.org)
+ * Copyright (c) 2015-2016 Xtheme Development Group (Xtheme.org)
  * Copyright (c) 2003-2004 E. Will et al.
  * Copyright (c) 2006-2010 Atheme Development Group
  * Rights to this code are documented in doc/LICENSE.
@@ -14,7 +14,7 @@ DECLARE_MODULE_V1
 (
 	"chanserv/set_property", false, _modinit, _moddeinit,
 	PACKAGE_STRING,
-	"Xtheme Development Group <http://www.Xtheme.org>"
+	VENDOR_STRING
 );
 
 static void cs_cmd_set_property(sourceinfo_t *si, int parc, char *parv[]);

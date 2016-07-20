@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Xtheme Development Group <Xtheme.org>
+ * Copyright (c) 2015-2016 Xtheme Development Group <Xtheme.org>
  * Copyright (c) 2005 William Pitcock <nenolod -at- nenolod.net>
  * Rights to this code are as documented in doc/LICENSE.
  *
@@ -14,7 +14,7 @@ DECLARE_MODULE_V1
 (
 	"hostserv/request", true, _modinit, _moddeinit,
 	PACKAGE_STRING,
-	"Xtheme Development Group <http://www.Xtheme.org>"
+	VENDOR_STRING
 );
 
 bool request_per_nick;

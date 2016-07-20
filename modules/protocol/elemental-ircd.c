@@ -15,7 +15,7 @@
 #include "pmodule.h"
 #include "protocol/shadowircd.h"
 
-DECLARE_MODULE_V1("protocol/elemental-ircd", true, _modinit, NULL, PACKAGE_STRING, "PonyChat Development Group <http://www.ponychat.net>");
+DECLARE_MODULE_V1("protocol/elemental-ircd", true, _modinit, NULL, PACKAGE_STRING, VENDOR_STRING);
 
 /* *INDENT-OFF* */
 

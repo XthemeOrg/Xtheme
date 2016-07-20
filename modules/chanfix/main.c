@@ -10,7 +10,7 @@ DECLARE_MODULE_V1
 (
 	"chanfix/main", false, _modinit, _moddeinit,
 	PACKAGE_STRING,
-	"Xtheme Development Group <http://www.Xtheme.org>"
+	VENDOR_STRING
 );
 
 service_t *chanfix;

@@ -14,7 +14,7 @@ DECLARE_MODULE_V1
 (
 	"operserv/specs", false, _modinit, _moddeinit,
 	PACKAGE_STRING,
-	"Xtheme Development Group <http://www.xtheme.org>"
+	VENDOR_STRING
 );
 
 static void os_cmd_specs(sourceinfo_t *si, int parc, char *parv[]);

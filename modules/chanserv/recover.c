@@ -13,7 +13,7 @@ DECLARE_MODULE_V1
 (
 	"chanserv/recover", false, _modinit, _moddeinit,
 	PACKAGE_STRING,
-	"Xtheme Development Group <http://www.Xtheme.org>"
+	VENDOR_STRING
 );
 
 static void cs_cmd_recover(sourceinfo_t *si, int parc, char *parv[]);

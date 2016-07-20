@@ -13,7 +13,7 @@ DECLARE_MODULE_V1
 (
 	"chanserv/help", false, _modinit, _moddeinit,
 	PACKAGE_STRING,
-	"Xtheme Development Group <http://www.Xtheme.org>"
+	VENDOR_STRING
 );
 
 static void cs_cmd_help(sourceinfo_t *si, int parc, char *parv[]);

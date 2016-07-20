@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2015 Xtheme Development Group (Xtheme.org)
+ * Copyright (c) 2014-2016 Xtheme Development Group (Xtheme.org)
  * Copyright (c) 2013 William Pitcock <nenolod@dereferenced.org>.
  *
  * Permission to use, copy, modify, and/or distribute this software for any
@@ -25,7 +25,7 @@ DECLARE_MODULE_V1
 (
 	"chanserv/antiflood", false, _modinit, _moddeinit,
 	PACKAGE_STRING,
-	"Xtheme Development Group <http://www.Xtheme.org/>"
+	VENDOR_STRING
 );
 
 static time_t antiflood_msg_time = 60;

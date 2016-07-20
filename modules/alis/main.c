@@ -40,7 +40,7 @@ DECLARE_MODULE_V1
 (
 	"alis/main", false, _modinit, _moddeinit,
 	"$Revision$",
-	"William Pitcock <nenolod -at- nenolod.net>"
+	VENDOR_STRING
 );
 
 #define ALIS_MAX_PARC	10
