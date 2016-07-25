@@ -29,8 +29,8 @@ memoserv
 
 nickserv
 --------
-* hold: record services operator that held channel 
-* info: reveal services operator that held channel (*NOTE: Previous HOLDs
+* hold: record services operator that held account 
+* info: reveal services operator that held account (*NOTE: Previous HOLDs
 	will not reveal services operator that set the HOLD as it was not 
 	recorded until Xtheme 7.4.3)
 
