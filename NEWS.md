@@ -6,6 +6,7 @@ botserv
 * botserv/set_saycaller: Command and Helpfile added for optionally
 	giving the command caller's nickname in the message. (Requested upstream
 	in atheme/atheme#487)
+* botserv/info: Show whether channels have SAYCALLER set or not
 
 chanfix
 -------
@@ -38,6 +39,7 @@ general
 -------
 * Move vendor field to a compile time macro
 * README was updated as SWI has moved back to XthemeOrg
+* botserv/set_saycaller was added to the xtheme.conf.example module list
 
 operserv
 --------
@@ -48,6 +50,11 @@ protocols
 * protocols/unreal*: Fix wrong source for SVSNICK
 
 
+## STAY UP TO DATE WITH XthemeOrg NEWS, UPDATES & SECURITY ADVISORIES
+Subscribe to the XthemeOrg News (hosted by IRC4Fun) at:
+https://www.irc4fun.net/xtheme-news/
+
+## NOTE
 ! Atheme Development has resumed.  Xtheme development will continue up until
 	Atheme has caught up as far as bug fixes and new features.  For more info:
 	http://www.Xtheme.org/
