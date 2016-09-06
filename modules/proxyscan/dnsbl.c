@@ -578,7 +578,7 @@ static void write_dnsbl_exempt_db(database_handle_t *db)
 	{
 		dnsbl_exempt_t *de = n->data;
 
-		db_start_row(db, "DNBLE");
+		db_start_row(db, "BLE");
 		db_write_word(db, de->ip);
 		db_write_time(db, de->exempt_ts);
 		db_write_word(db, de->creator);
