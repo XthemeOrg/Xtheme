@@ -1,3 +1,30 @@
+Xtheme Services git-master Development Notes
+============================================
+chanfix
+-------
+* Fixed a bug where certain channels were not being fixed (even without
+	NOFIX set) and if attempted to be manually fixed, would run into a 
+	mode removal loop instead of fixing the channel.
+
+core
+----
+* SOPER and SOPER:AF (Authentication Failure) will now report the operclass 
+	names in messages.  This helps increase visibility for network staff.
+
+proxyscan
+---------
+* The DNSBL module has been fixed (so that it is working and stable) by 
+	ilbelkyr (shalture/shalture)  Additional reviews and fixes were made
+	to the module after extensive testing.
+* Example config for Proxyscan/dnsbl added to xtheme.conf.example
+
+
+
+
+## STAY UP TO DATE WITH XthemeOrg NEWS, UPDATES & SECURITY ADVISORIES
+Subscribe to the XthemeOrg News (hosted by IRC4Fun) at:
+https://www.irc4fun.net/xtheme-news/
+
 Xtheme Services 7.4.3 Development Notes
 =====================================
 botserv
