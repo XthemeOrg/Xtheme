@@ -16,6 +16,10 @@ proxyscan
 * The DNSBL module has been fixed (so that it is working and stable) by 
 	ilbelkyr (shalture/shalture)  Additional reviews and fixes were made
 	to the module after extensive testing.
+* DNSBL exemptions are now properly saved and do not cause issues with startup
+	as of latest git.
+* DNSBL Hits (with KLINE option) will be set for 14 Days for more effectiveness.
+	(This may be changed to the xtheme.conf default in time.)
 * Example config for Proxyscan/dnsbl added to xtheme.conf.example
 
 
