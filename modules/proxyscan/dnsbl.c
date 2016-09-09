@@ -56,6 +56,7 @@
  * module.  It was then tested and further modified by siniStar.
  * An example of the configuration needed will be added to the 
  * xtheme.conf.example, however it will be commented out by default.
+ * NOTE: Default KLINE (AKILL) time is 14 days (or 1209600 seconds)
  */
 
 #include "atheme.h"
@@ -523,7 +524,7 @@ static void dnsbl_hit(user_t *u, struct Blacklist *blptr)
 		case DNSBL_ACT_KLINE:
 			slog(LG_INFO, "DNSBL: akilling \2%s\2!%s@%s [%s] who is listed in DNS Blacklist %s.", u->nick, u->user, u->host, u->gecos, blptr->host);
 			notice(svs->nick, u->nick, "Your IP address %s is listed in DNS Blacklist %s", u->ip, blptr->host);
-			k = kline_add("*", u->ip, "Banned (DNS Blacklist)", 111600, "Proxyscan");
+			k = kline_add("*", u->ip, "Banned (DNS Blacklist)", 1209600, "Proxyscan");
 			break;
 
 		case DNSBL_ACT_NOTIFY:
