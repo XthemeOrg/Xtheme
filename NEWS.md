@@ -6,10 +6,20 @@ chanfix
 	NOFIX set) and if attempted to be manually fixed, would run into a 
 	mode removal loop instead of fixing the channel.
 
+chanserv
+--------
+* INFO command will now indicate (if the channel is not private) the ANTIFLOOD 
+	response or reaction. (if enabled)
+
 core
 ----
 * SOPER and SOPER:AF (Authentication Failure) will now report the operclass 
 	names in messages.  This helps increase visibility for network staff.
+
+operserv
+--------
+* CLEARCHAN with AKILL option will now show the Services Operator performing
+	the command in the AKILL list instead of "*"
 
 proxyscan
 ---------
