@@ -1,0 +1,13 @@
+Help for MASS PROTECT:
+
+This command will Protect all users in a channel, 
+including the user issuing the command.  This 
+command should be used with discretion.
+
+Use of this command requires the +R flag channel flag 
+and +a flag.
+
+Syntax: MASS <#channel> PROTECT
+
+Examples:
+    /msg &nick& MASS #ChatZone PROTECT

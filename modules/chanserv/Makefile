@@ -37,6 +37,12 @@ SRCS =			\
 	kick.c	\
 	list.c	\
 	mark.c	\
+	mass.c	\
+	mass_halfop.c	\
+	mass_op.c	\
+	mass_owner.c	\
+	mass_protect.c	\
+	mass_voice.c	\
 	moderate.c \
 	op.c		\
 	owner.c	\

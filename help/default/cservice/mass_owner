@@ -1,0 +1,13 @@
+Help for MASS OWNER:
+
+This command will give Owner to all users in 
+a channel, including the user issuing the command. 
+This command should be used with discretion.
+
+Use of this command requires the +R flag channel flag 
+and +q flag.
+
+Syntax: MASS <#channel> OWNER
+
+Examples:
+    /msg &nick& MASS #ChatZone OWNER

@@ -1,0 +1,12 @@
+Help for MASS HALFOP:
+
+This command will HalfOp all users in a channel, including 
+the user issuing the command.  This command should be 
+used with discretion.
+
+Use of this command requires the +R flag channel flag.
+
+Syntax: MASS <#channel> HALFOP
+
+Examples:
+    /msg &nick& MASS #ChatZone HALFOP

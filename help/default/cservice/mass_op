@@ -1,0 +1,13 @@
+Help for MASS OP:
+
+This command will Op all users in a channel, including 
+the user issuing the command.  This command should be 
+used with discretion.
+
+Use of this command requires the +R flag channel flag 
+and +o flag.
+
+Syntax: MASS <#channel> OP
+
+Examples:
+    /msg &nick& MASS #ChatZone OP
