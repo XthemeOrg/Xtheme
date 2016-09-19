@@ -10,6 +10,19 @@ chanserv
 --------
 * INFO command will now indicate (if the channel is not private) the ANTIFLOOD 
 	response or reaction. (if enabled)
+* MASS command and functions added. (Halfop, Op, Owner, Protect, Voice)
+	(Closes XthemeOrg/Xtheme#11)
+
+contrib
+-------
+* dnsbl removed - it was broken and networks should be using the core proxyscan/dnsbl
+	module instead.
+* os_akillchan: updated to include the service bot issuing the automated AKILL instead
+	of "*".
+* os_akillnicklist: updated to include the service bot issuing the automated AKILL 
+	instead of "*".
+* os_defcon: updated to include the service bot issuing the automated AKILL instead of
+	"*".
 
 core
 ----
