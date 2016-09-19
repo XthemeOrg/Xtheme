@@ -1,4 +1,4 @@
-Xtheme Services git-master Development Notes
+Xtheme Services 7.5.0-dev Development Notes
 ============================================
 chanfix
 -------
