@@ -33,6 +33,8 @@ operserv
 --------
 * CLEARCHAN with AKILL option will now show the Services Operator performing
 	the command in the AKILL list instead of "*"
+* AKILL now shows the number of matching users affected by the set AKILL as 
+	well as any matches to the operator issuing the command.
 
 proxyscan
 ---------
@@ -43,8 +45,9 @@ proxyscan
 	as of latest git.
 * DNSBL Hits (with KLINE option) will be set for 14 Days for more effectiveness.
 	(This may be changed to the xtheme.conf default in time.)
-* Example config for Proxyscan/dnsbl added to xtheme.conf.example
-
+* Example config for Proxyscan/dnsbl added to xtheme.conf.example [Requires xtheme.conf update]
+* DNSBL Hits (with KLINE option) will now show the DNSBL the user was listed in as the 
+	AKILLer in AKILL LIST FULL.
 
 
 

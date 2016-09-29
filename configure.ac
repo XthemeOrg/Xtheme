@@ -8,7 +8,7 @@ dnl Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.59)
 
-AC_INIT(xtheme, 7.5.0-dev.0916d, xtheme-bugs@IRC4Fun.net)
+AC_INIT(xtheme, 7.5.0-dev0916e, xtheme-bugs@IRC4Fun.net)
 
 AC_CONFIG_AUX_DIR(autoconf)
 
