@@ -119,6 +119,9 @@ static void os_cmd_akill(sourceinfo_t *si, int parc, char *parv[])
 static void os_cmd_akill_add(sourceinfo_t *si, int parc, char *parv[])
 {
 	user_t *u;
+	char usermask[512];
+	unsigned int matches = 0;
+	mowgli_patricia_iteration_state_t state;
 	char *target = parv[0];
 	char *token = strtok(parv[1], " ");
 	char star[] = "*";
@@ -214,6 +217,20 @@ static void os_cmd_akill_add(sourceinfo_t *si, int parc, char *parv[])
 
 		kuser = star;
 		khost = u->host;
+
+	MOWGLI_PATRICIA_FOREACH(u, &state, userlist)
+	{		
+		sprintf(usermask, "%s", u->host);
+
+		if (!match(khost, usermask))
+		{
+			/* match */
+			command_success_nodata(si, _("AKILL MATCH activated for %s!%s@%s"), u->nick, u->user, u->host);
+			matches++;
+		}
+	}
+
+
 	}
 	else
 	{
@@ -282,20 +299,41 @@ static void os_cmd_akill_add(sourceinfo_t *si, int parc, char *parv[])
 		return;
 	}
 
+	if (matches <= 0)
+
+	MOWGLI_PATRICIA_FOREACH(u, &state, userlist)
+	{		
+		sprintf(usermask, "%s", u->host);
+
+		if (!match(khost, usermask))
+		{
+			if (!match(kuser, usermask))
+			{
+			/* match */
+			command_success_nodata(si, _("AKILL MATCH activated for %s!%s@%s"), u->nick, u->user, u->host);
+			matches++;
+			}
+		}
+	}
+
 	k = kline_add(kuser, khost, reason, duration, get_storage_oper_name(si));
 
 	if (duration)
-		command_success_nodata(si, _("Timed AKILL on \2%s@%s\2 was successfully added and will expire in %s."), k->user, k->host, timediff(duration));
-	else
-		command_success_nodata(si, _("AKILL on \2%s@%s\2 was successfully added."), k->user, k->host);
+		command_success_nodata(si, _("Timed AKILL on \2%s@%s\2 was successfully added and will expire in %s. [affects %d user(s)]"), k->user, k->host,
+	timediff(duration), matches);
 
-	verbose_wallops("\2%s\2 is \2adding\2 an \2AKILL\2 for \2%s@%s\2 -- reason: \2%s\2", get_oper_name(si), k->user, k->host,
-		k->reason);
+	else
+		command_success_nodata(si, _("AKILL on \2%s@%s\2 was successfully added. [affects %d user(s)]"), k->user, k->host, matches);
+
+	verbose_wallops("\2%s\2 is \2adding\2 an \2AKILL\2 for \2%s@%s\2 -- reason: \2%s\2 [affects %d user(s)]", get_oper_name(si), k->user, k->host,
+		k->reason, matches);
 
 	if (duration)
-		logcommand(si, CMDLOG_ADMIN, "AKILL:ADD: \2%s@%s\2 (reason: \2%s\2) (duration: \2%s\2)", k->user, k->host, k->reason, timediff(k->duration));
+		logcommand(si, CMDLOG_ADMIN, "AKILL:ADD: \2%s@%s\2 (reason: \2%s\2) (duration: \2%s\2) [affects %d user(s)]", k->user, k->host, k->reason,
+	timediff(k->duration), matches);
 	else
-		logcommand(si, CMDLOG_ADMIN, "AKILL:ADD: \2%s@%s\2 (reason: \2%s\2) (duration: \2Permanent\2)", k->user, k->host, k->reason);
+		logcommand(si, CMDLOG_ADMIN, "AKILL:ADD: \2%s@%s\2 (reason: \2%s\2) (duration: \2Permanent\2) [affects %d user(s)]", k->user, k->host, k->reason,
+	matches);
 }
 
 static void os_cmd_akill_del(sourceinfo_t *si, int parc, char *parv[])
