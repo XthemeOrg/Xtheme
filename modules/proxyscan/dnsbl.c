@@ -524,7 +524,7 @@ static void dnsbl_hit(user_t *u, struct Blacklist *blptr)
 		case DNSBL_ACT_KLINE:
 			slog(LG_INFO, "DNSBL: akilling \2%s\2!%s@%s [%s] who is listed in DNS Blacklist %s.", u->nick, u->user, u->host, u->gecos, blptr->host);
 			notice(svs->nick, u->nick, "Your IP address %s is listed in DNS Blacklist %s", u->ip, blptr->host);
-			k = kline_add("*", u->ip, "Banned (DNS Blacklist)", 1209600, "Proxyscan");
+			k = kline_add("*", u->ip, "Banned (DNS Blacklist)", 1209600, blptr->host);
 			break;
 
 		case DNSBL_ACT_NOTIFY:
