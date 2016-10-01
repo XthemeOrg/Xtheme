@@ -292,6 +292,7 @@ loadmodule "modules/nickserv/vhost";
  * Forced flags changes                         modules/chanserv/fflags
  * FLAGS command                                modules/chanserv/flags
  * FREEZE command                               modules/chanserv/freeze
+ * FSUSPEND command                             modules/chanserv/fsuspend   
  * Forced foundership transfers                 modules/chanserv/ftransfer
  * GETKEY command                               modules/chanserv/getkey
  * HALFOP/DEHALFOP commands                     modules/chanserv/halfop
@@ -369,6 +370,7 @@ loadmodule "modules/chanserv/drop";
 #loadmodule "modules/chanserv/fflags";
 loadmodule "modules/chanserv/flags";
 loadmodule "modules/chanserv/freeze";
+#loadmodule "modules/chanserv/fsuspend"
 loadmodule "modules/chanserv/ftransfer";
 loadmodule "modules/chanserv/getkey";
 #loadmodule "modules/chanserv/halfop";

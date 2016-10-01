@@ -1,0 +1,27 @@
+Help for FSUSPEND:
+
+The FSUSPEND command allows Services Operators to 
+manipulate channel access suspension lists.  
+Suspended users will be automatically deoped 
+(if opped) and will be unable to use their access 
+or flags until the suspension expires or is 
+manually removed.  This can affect Founders as well!
+
+Syntax: FSUSPEND <#channel> ADD <nickname> [!P|!T <minutes>] [reason]
+
+If the !P token is specified, the SUSPENSION will never
+expire (permanent). If the !T token is specified, expire
+time must follow, in minutes, hours ("h"), days ("d")
+or weeks ("w").
+
+Syntax: FSUSPEND <#channel> DEL <nickname>
+
+This will remove a SUSPENSION on a user, giving 
+them access to their flags.
+
+* Information about a SUSPENSION can be requested
+by performing WHY on a SUSPENDed user.
+
+Examples:
+    /msg &nick& FSUSPEND #foo ADD bar you are annoying | private op info
+    /msg &nick& FSUSPEND #foo DEL bar
