@@ -14,6 +14,9 @@ static void cs_cmd_fsuspend(sourceinfo_t *si, int parc, char *parv[]);
 static void cs_cmd_fsuspend_add(sourceinfo_t *si, int parc, char *parv[]);
 static void cs_cmd_fsuspend_del(sourceinfo_t *si, int parc, char *parv[]);
 
+static void fsuspend_timeout_check(void *arg);
+static void fsuspenddel_list_create(void *arg);
+
 DECLARE_MODULE_V1
 (
 	"chanserv/fsuspend", false, _modinit, _moddeinit,
@@ -28,7 +31,25 @@ command_t cs_fsuspend_add = { "ADD", N_("Adds a user to the channel SUSPEND list
 command_t cs_fsuspend_del = { "DEL", N_("Deletes a user from the channel SUSPEND list."),
                         PRIV_CHAN_ADMIN, 3, cs_cmd_fsuspend_del, { .path = "" } };
 
+typedef struct {
+	time_t expiration;
+
+	myentity_t *entity;
+	mychan_t *chan;
+
+	char host[NICKLEN + USERLEN + HOSTLEN + 4];
+
+	mowgli_node_t node;
+} fsuspend_timeout_t;
+
+time_t fsuspenddel_next;
+mowgli_list_t fsuspenddel_list;
 mowgli_patricia_t *cs_fsuspend_cmds;
+mowgli_eventloop_timer_t *fsuspend_timeout_check_timer = NULL;
+
+static fsuspend_timeout_t *fsuspend_add_timeout(mychan_t *mc, myentity_t *mt, const char *host, time_t expireson);
+
+mowgli_heap_t *fsuspend_timeout_heap;
 
 void _modinit(module_t *m)
 {
@@ -40,6 +61,16 @@ void _modinit(module_t *m)
 	command_add(&cs_fsuspend_add, cs_fsuspend_cmds);
 	command_add(&cs_fsuspend_del, cs_fsuspend_cmds);
 
+        fsuspend_timeout_heap = mowgli_heap_create(sizeof(fsuspend_timeout_t), 512, BH_NOW);
+
+    	if (fsuspend_timeout_heap == NULL)
+    	{
+    		m->mflags = MODTYPE_FAIL;
+    		return;
+    	}
+
+	mowgli_timer_add_once(base_eventloop, "fsuspenddel_list_create", fsuspenddel_list_create, NULL, 0);
+
 }
 
 void _moddeinit(module_unload_intent_t intent)
@@ -50,6 +81,7 @@ void _moddeinit(module_unload_intent_t intent)
 	command_delete(&cs_fsuspend_add, cs_fsuspend_cmds);
 	command_delete(&cs_fsuspend_del, cs_fsuspend_cmds);
 
+	mowgli_heap_destroy(fsuspend_timeout_heap);
 	mowgli_patricia_destroy(cs_fsuspend_cmds, NULL, NULL);
 }
 
@@ -256,6 +288,7 @@ void cs_cmd_fsuspend_add(sourceinfo_t *si, int parc, char *parv[])
 
 		if (duration > 0)
 		{
+			fsuspend_timeout_t *timeout;
 			time_t expireson = ca2->tmodified+duration;
 
 			snprintf(expiry, sizeof expiry, "%ld", expireson);
@@ -271,6 +304,16 @@ void cs_cmd_fsuspend_add(sourceinfo_t *si, int parc, char *parv[])
 			verbose(mc, "\2%s\2 added \2%s\2 to the SUSPEND list by FORCE, expires in %s.", get_source_name(si), mt->name, timediff(duration));
 			logcommand(si, CMDLOG_SET, "FSUSPEND:ADD: \2%s\2 on \2%s\2, expires in %s", mt->name, mc->name, timediff(duration));
 
+			timeout = fsuspend_add_timeout(mc, mt, mt->name, expireson);
+
+			if (fsuspenddel_next == 0 || fsuspenddel_next > timeout->expiration)
+			{
+				if (fsuspenddel_next != 0)
+					mowgli_timer_destroy(base_eventloop, fsuspend_timeout_check_timer);
+
+				fsuspenddel_next = timeout->expiration;
+				fsuspend_timeout_check_timer = mowgli_timer_add_once(base_eventloop, "fsuspend_timeout_check", fsuspend_timeout_check, NULL, fsuspenddel_next - CURRTIME);
+			}
 		}
 		else
 		{
@@ -393,6 +436,130 @@ void cs_cmd_fsuspend_del(sourceinfo_t *si, int parc, char *parv[])
 	verbose(mc, "\2%s\2 removed \2%s\2 from the SUSPEND list by FORCE.", get_source_name(si), mt->name);
 
 	return;
+}
+
+void fsuspend_timeout_check(void *arg)
+{
+	mowgli_node_t *n, *tn;
+	fsuspend_timeout_t *timeout;
+	chanacs_t *ca;
+	mychan_t *mc;
+
+	fsuspenddel_next = 0;
+
+	MOWGLI_ITER_FOREACH_SAFE(n, tn, fsuspenddel_list.head)
+	{
+		timeout = n->data;
+		mc = timeout->chan;
+
+		if (timeout->expiration > CURRTIME)
+		{
+			fsuspenddel_next = timeout->expiration;
+			fsuspend_timeout_check_timer = mowgli_timer_add_once(base_eventloop, "fsuspend_timeout_check", fsuspend_timeout_check, NULL, fsuspenddel_next - CURRTIME);
+			break;
+		}
+
+		ca = NULL;
+
+		{
+			ca = chanacs_find_literal(mc, timeout->entity, CA_SUSPENDED);
+			if (ca == NULL)
+			{
+				mowgli_node_delete(&timeout->node, &fsuspenddel_list);
+				mowgli_heap_free(fsuspend_timeout_heap, timeout);
+
+				continue;
+			}
+
+
+		}
+
+		if (ca)
+		{
+			chanacs_modify_simple(ca, 0, CA_SUSPENDED, NULL);
+			chanacs_close(ca);
+			metadata_delete(ca, "sreason");
+			metadata_delete(ca, "expires");
+		}
+
+		mowgli_node_delete(&timeout->node, &fsuspenddel_list);
+		mowgli_heap_free(fsuspend_timeout_heap, timeout);
+	}
+}
+
+static fsuspend_timeout_t *fsuspend_add_timeout(mychan_t *mc, myentity_t *mt, const char *host, time_t expireson)
+{
+	mowgli_node_t *n;
+	fsuspend_timeout_t *timeout, *timeout2;
+
+	timeout = mowgli_heap_alloc(fsuspend_timeout_heap);
+
+	timeout->entity = mt;
+	timeout->chan = mc;
+	timeout->expiration = expireson;
+
+	mowgli_strlcpy(timeout->host, host, sizeof timeout->host);
+
+	MOWGLI_ITER_FOREACH_PREV(n, fsuspenddel_list.tail)
+	{
+		timeout2 = n->data;
+		if (timeout2->expiration <= timeout->expiration)
+			break;
+	}
+	if (n == NULL)
+		mowgli_node_add_head(timeout, &timeout->node, &fsuspenddel_list);
+	else if (n->next == NULL)
+		mowgli_node_add(timeout, &timeout->node, &fsuspenddel_list);
+	else
+		mowgli_node_add_before(timeout, &timeout->node, &fsuspenddel_list, n->next);
+
+	return timeout;
+}
+
+void fsuspenddel_list_create(void *arg)
+{
+	mychan_t *mc;
+	mowgli_node_t *n, *tn;
+	chanacs_t *ca;
+	metadata_t *md;
+	time_t expireson;
+
+	mowgli_patricia_iteration_state_t state;
+
+	MOWGLI_PATRICIA_FOREACH(mc, &state, mclist)
+	{
+		MOWGLI_ITER_FOREACH_SAFE(n, tn, mc->chanacs.head)
+		{
+			ca = (chanacs_t *)n->data;
+			myentity_t *setter = NULL;
+
+			if (!(ca->level & CA_SUSPENDED))
+				continue;
+
+			md = metadata_find(ca, "expires");
+
+			if (!md)
+				continue;
+
+			expireson = atol(md->value);
+
+			if (CURRTIME > expireson)
+			{
+				chanacs_modify_simple(ca, 0, CA_SUSPENDED, NULL);
+				chanacs_close(ca);
+				metadata_delete(ca, "sreason");
+				metadata_delete(ca, "expires");
+			}
+			else
+			{
+				/* overcomplicate the logic here a tiny bit */
+				if (ca->host == NULL && ca->entity != NULL)
+					fsuspend_add_timeout(mc, ca->entity, entity(ca->entity)->name, expireson);
+				else if (ca->host != NULL && ca->entity == NULL)
+					fsuspend_add_timeout(mc, NULL, ca->host, expireson);
+			}
+		}
+	}
 }
 
 
