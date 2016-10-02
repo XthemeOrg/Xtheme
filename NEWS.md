@@ -12,6 +12,8 @@ chanserv
 	response or reaction. (if enabled)
 * MASS command and functions added. (Halfop, Op, Owner, Protect, Voice)
 	(Closes XthemeOrg/Xtheme#11)
+* Introducing FSUSPEND (not enabled by default) which allows Services Operators
+	to suspend any user's channel access (even Founders)
 
 contrib
 -------
