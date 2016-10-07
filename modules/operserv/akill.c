@@ -120,6 +120,8 @@ static void os_cmd_akill_add(sourceinfo_t *si, int parc, char *parv[])
 {
 	user_t *u;
 	char usermask[512];
+	char usersmask[512];
+	char usershost[512];
 	unsigned int matches = 0;
 	mowgli_patricia_iteration_state_t state;
 	char *target = parv[0];
@@ -302,28 +304,23 @@ static void os_cmd_akill_add(sourceinfo_t *si, int parc, char *parv[])
 	if (matches <= 0)
 	MOWGLI_PATRICIA_FOREACH(u, &state, userlist)
 	{
-		sprintf(usermask, "%s", u->host);
+		sprintf(usershost, "%s", u->host);
+		sprintf(usersmask, "%s", u->user);
 
-		if (!match(khost, usermask))
+		if (!match(khost, usershost))
 		{
-			if (!match(kuser, usermask))
+			if (kuser == star)
 			{
 			/* match */
 			command_success_nodata(si, _("AKILL MATCH activated for %s!%s@%s"), u->nick, u->user, u->host);
 			matches++;
 			}
-		}
-	}
-	if (matches <= 0)
-	MOWGLI_PATRICIA_FOREACH(u, &state, userlist)
-	{
-		sprintf(usermask, "%s", u->user);
-
-		if (!match(kuser, usermask))
-		{
+			else if (!match(kuser, usersmask))
+			{
 			/* match */
 			command_success_nodata(si, _("AKILL MATCH activated for %s!%s@%s"), u->nick, u->user, u->host);
 			matches++;
+			}
 		}
 	}
 
