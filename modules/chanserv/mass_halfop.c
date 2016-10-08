@@ -66,6 +66,18 @@ static void cs_cmd_mass_halfop(sourceinfo_t *si, int parc, char *parv[])
 		command_fail(si, fault_nosuch_target, _("\2%s\2 is currently empty."), channel);
 		return;
 	}
+	
+	if (!chanacs_source_has_flag(mc, si, CA_HALFOP))
+	{
+		command_fail(si, fault_noprivs, _("You are not authorized to perform this operation."));
+		return;
+	}
+
+	if (mc->flags & MC_SECURE)
+	{
+		command_fail(si, fault_noprivs, _("%s has SECURE enabled."));
+		return;
+	}
 
 	if (!chanacs_source_has_flag(mc, si, CA_RECOVER))
 	{
@@ -100,7 +112,7 @@ static void cs_cmd_mass_halfop(sourceinfo_t *si, int parc, char *parv[])
 
 	logcommand(si, CMDLOG_DO, "MASS:HALFOP: \2%s\2", mc->name);
 
-	command_success_nodata(si, _("Halfoped all channel users in \2%s\2."), channel);
+	command_success_nodata(si, _("Half-opped all channel users in \2%s\2."), channel);
 }
 
 

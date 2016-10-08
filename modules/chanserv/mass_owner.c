@@ -79,6 +79,12 @@ static void cs_cmd_mass_owner(sourceinfo_t *si, int parc, char *parv[])
 		return;
 	}
 
+	if (mc->flags & MC_SECURE)
+	{
+		command_fail(si, fault_noprivs, _("%s has SECURE enabled."));
+		return;
+	}
+
 	if (chanacs_source_has_flag(mc, si, CA_SUSPENDED))
 	{
 		command_fail(si, fault_noprivs, _("Your access in %s is \2suspended\2."), channel);
