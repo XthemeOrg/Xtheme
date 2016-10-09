@@ -57,6 +57,9 @@ NOPASSWORD    - All users with the NOPASSWORD flag set.
 REGNOLIMIT    - All users with the REGNOLIMIT flag set.
 #endif
 
+#if module nickserv/ns_forbid
+FORBIDDEN     - All nicks forbidden by network staff.
+#endif
 #if module nickserv/freeze
 FROZEN        - All users frozen by network staff.
 #endif

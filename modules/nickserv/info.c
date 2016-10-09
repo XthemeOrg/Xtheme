@@ -429,6 +429,26 @@ static void ns_cmd_info(sourceinfo_t *si, int parc, char *parv[])
 	else if (metadata_find(mu, "private:freeze:freezer"))
 		command_success_nodata(si, _("%s has been frozen by the %s administration."), entity(mu)->name, me.netname);
 
+	if (has_user_auspex && (md = metadata_find(mu, "private:forbid:forbidder")))
+	{
+		const char *setter = md->value;
+		const char *reason;
+		time_t ts;
+
+		md = metadata_find(mu, "private:forbid:reason");
+		reason = md != NULL ? md->value : "unknown";
+
+		md = metadata_find(mu, "private:forbid:timestamp");
+		ts = md != NULL ? atoi(md->value) : 0;
+
+		tm = *localtime(&ts);
+		strftime(strfbuf, sizeof strfbuf, TIME_FORMAT, &tm);
+
+		command_success_nodata(si, _("%s was \2FORBIDDEN\2 by %s on %s (%s)"), entity(mu)->name, setter, strfbuf, reason);
+	}
+	else if (metadata_find(mu, "private:forbid:forbidder"))
+		command_success_nodata(si, _("%s has been forbidden by the %s administration."), entity(mu)->name, me.netname);
+
 	if (has_user_auspex && (md = metadata_find(mu, "private:mark:setter")))
 	{
 		const char *setter = md->value;

@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2005-2007 Robin Burchell, et al.
  * Copyright (c) 2010 William Pitcock <nenolod@atheme.org>.
+ * Copyright (c) 2016 Austin Ellis <siniStar@IRC4Fun.net>.
  * Rights to this code are as documented in doc/LICENSE.
  *
  * This file contains code for the NickServ LIST function.
@@ -213,6 +214,12 @@ static void list_one(sourceinfo_t *si, myuser_t *mu, mynick_t *mn)
 			mowgli_strlcat(buf, " ", BUFSIZE);
 
 		mowgli_strlcat(buf, "\2[frozen]\2", BUFSIZE);
+	}
+	if (metadata_find(mu, "private:forbid:forbidder")) {
+		if (*buf)
+			mowgli_strlcat(buf, " ", BUFSIZE);
+
+		mowgli_strlcat(buf, "\2[forbidden]\2", BUFSIZE);
 	}
 	if (metadata_find(mu, "private:restrict:setter")) {
 		if (*buf)
