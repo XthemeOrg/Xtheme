@@ -68,7 +68,7 @@ static void cs_cmd_mass_op(sourceinfo_t *si, int parc, char *parv[])
 
 	if (mc->flags & MC_SECURE)
 	{
-		command_fail(si, fault_noprivs, _("%s has SECURE enabled."));
+		command_fail(si, fault_noprivs, _("%s has SECURE enabled."), channel);
 		return;
 	}
 
