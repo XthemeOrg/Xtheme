@@ -17,6 +17,8 @@ chanserv
 
 contrib
 -------
+* cs_fregister now accepts a optional Founder, otherwise will register to the
+	Services Operator using the ChanServ FREGISTER command.
 * dnsbl removed - it was broken and networks should be using the core proxyscan/dnsbl
 	module instead.
 * os_akillchan: updated to include the service bot issuing the automated AKILL instead
@@ -30,6 +32,10 @@ core
 ----
 * SOPER and SOPER:AF (Authentication Failure) will now report the operclass 
 	names in messages.  This helps increase visibility for network staff.
+
+nickserv
+--------
+* Added FORBIDDEN to NickServ LIST criteria and output
 
 operserv
 --------
