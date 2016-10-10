@@ -1,4 +1,4 @@
-Xtheme Services 7.5.0-dev Development Notes
+Xtheme Services 7.5.0-rc1 Development Notes
 ============================================
 chanfix
 -------
@@ -18,7 +18,7 @@ chanserv
 contrib
 -------
 * cs_fregister now accepts a optional Founder, otherwise will register to the
-	Services Operator using the ChanServ FREGISTER command.
+	Services Operator using the ChanServ FREGISTER command as it did before.
 * dnsbl removed - it was broken and networks should be using the core proxyscan/dnsbl
 	module instead.
 * os_akillchan: updated to include the service bot issuing the automated AKILL instead
@@ -27,22 +27,41 @@ contrib
 	instead of "*".
 * os_defcon: updated to include the service bot issuing the automated AKILL instead of
 	"*".
+* AdminServ removed from contrib, but still available on XthemeOrg GitHub for users 
+	that desire to use it.
+* ns_forbid: Fix so forbidden nicks show up as forbidden in NickServ LIST instead of 
+	frozen.
 
 core
 ----
 * SOPER and SOPER:AF (Authentication Failure) will now report the operclass 
 	names in messages.  This helps increase visibility for network staff.
 
+general
+-------
+* move stray memory calls to memory wrapper
+
+helpserv
+--------
+* helpserv/ticket: integration of close reason
+
+hostserv
+--------
+* hostserv/request: Will no longer allow duplicate vhosts to be requested.  User will
+	be told to request a different vhost or seek network staff.
+
 nickserv
 --------
 * Added FORBIDDEN to NickServ LIST criteria and output
+* Added mention of CERT CLEAR in help file
+* nickserv/multimark: Fixes for assertion failure and patricia warning
 
 operserv
 --------
 * CLEARCHAN with AKILL option will now show the Services Operator performing
 	the command in the AKILL list instead of "*"
 * AKILL now shows the number of matching users affected by the set AKILL as 
-	well as any matches to the operator issuing the command.
+	well as any matches/hits to the operator issuing the command.
 
 proxyscan
 ---------
