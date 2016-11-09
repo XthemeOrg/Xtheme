@@ -1,3 +1,26 @@
+Xtheme Services 7.5.0 Development Notes
+============================================
+chanfix
+-------
+* Fix from a previous commit (minor)
+
+general
+-------
+* Added needoper clarification and set as default for ircop operclass.  This
+	can optionally be commented out or removed from oper classes if you wish.
+	(Such as if you have a Helper operclass with limited privs, etc)
+
+nickserv
+--------
+* LASTLOGIN will now be displayed along with successful authentication
+	notice can now be optionally disabled per user with SET HIDELASTLOGIN
+
+
+
+## STAY UP TO DATE WITH XthemeOrg NEWS, UPDATES & SECURITY ADVISORIES
+Subscribe to the XthemeOrg News (hosted by IRC4Fun) at:
+https://www.irc4fun.net/xtheme-news/
+
 Xtheme Services 7.5.0-rc1 Development Notes
 ============================================
 chanfix
