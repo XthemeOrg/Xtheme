@@ -2277,6 +2277,13 @@ operclass "ircop" {
 		group:auspex;
 		group:admin;
 	};
+
+	/* needoper
+	 * Only grant privileges to IRC users in this oper class if they
+	 * are opered; other use of privilege (channel succession, XMLRPC,
+	 * etc.) is unaffected by this.  It can also optionally be removed.
+	 */
+	needoper;
 };
 
 operclass "sra" {
@@ -2304,7 +2311,7 @@ operclass "sra" {
 	/* needoper
 	 * Only grant privileges to IRC users in this oper class if they
 	 * are opered; other use of privilege (channel succession, XMLRPC,
-	 * etc.) is unaffected by this.
+	 * etc.) is unaffected by this.  It can also optionally be removed.
 	 */
 	needoper;
 };
@@ -2313,7 +2320,7 @@ operclass "sra" {
 /* (*) Operator blocks specify accounts with certain privileges
  * Oper classes must be defined before they are used in operator blocks.
  */
-operator "jilles" {
+operator "siniStar" {
 	/* operclass */
 	operclass = "sra";
 	/* password
