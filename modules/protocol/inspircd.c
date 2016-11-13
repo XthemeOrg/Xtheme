@@ -41,6 +41,8 @@ ircd_t InspIRCd = {
 	.flags = IRCD_CIDR_BANS | IRCD_HOLDNICK,
 };
 
+#define CMODE_OPMOD	0x00004000	/* hyperion +z or InspIRCd +U */
+
 struct cmode_ inspircd_mode_list[] = {
   { 'i', CMODE_INVITE	},
   { 'm', CMODE_MOD	},
