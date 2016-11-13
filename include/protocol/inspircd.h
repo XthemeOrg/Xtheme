@@ -11,6 +11,7 @@
 
 
 /* Extended channel modes will eventually go here. */
+#define CMODE_OPMOD	0x00000900	/* (hyperion +z) InspIRCd +U */
 #define CMODE_NOCOLOR	0x00001000	/* bahamut +c */
 #define CMODE_MODREG	0x00002000	/* bahamut +M */
 #define CMODE_REGONLY	0x00004000	/* bahamut +R */
