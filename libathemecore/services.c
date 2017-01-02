@@ -843,12 +843,14 @@ bool bad_password(sourceinfo_t *si, myuser_t *mu)
 		time_t ts = CURRTIME;
 		tm = *localtime(&ts);
 		strftime(strfbuf, sizeof strfbuf, TIME_FORMAT, &tm);
-		wallops("Warning: \2%d\2 failed login attempts to \2%s\2. Last attempt received from \2%s\2 on %s. AKILLing for 1 hour.", count, entity(mu)->name, mask, strfbuf);
-		k = kline_add("*", si->su->host, "Too many failed login attempts", 3600, "Services");
+		wallops("Warning: \2%d\2 failed login attempts to \2%s\2. Last attempt received from \2%s\2 on %s.", count, entity(mu)->name, mask, strfbuf);
 	}
 	if (count >= 10)
 	{
-		k = kline_add("*", si->su->host, "Too many failed login attempts", 3600, "Services");
+		time_t ts = CURRTIME;
+		tm = *localtime(&ts);
+		strftime(strfbuf, sizeof strfbuf, TIME_FORMAT, &tm);
+		wallops("Warning: \2%d\2 failed login attempts to \2%s\2. Last attempt received from \2%s\2 on %s.", count, entity(mu)->name, mask, strfbuf);
 	}
 
 	return false;
