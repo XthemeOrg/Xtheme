@@ -1,3 +1,48 @@
+Xtheme Services 7.5.1 Development Notes
+============================================
+contrib
+-------
+* backtrace updated with Xtheme information and where to report issues
+	to, etc.
+
+core
+----
+* After 10 failed logins to a nickname, further attempts will result
+	in WALLOPS warnings to network Staff. (No longer attempts automated
+	AKILLs)  This fixes a crash in certain situations.  
+
+crypto
+------
+* pbkdf2: remove obsolete compatibility function
+* pbkdf2v2: remove obsolete compatibility function
+
+general
+-------
+* A crash bug has been fixed as of the latest git.  Networks are advised to
+	update immediately!
+
+memoserv
+--------
+* Let users know (on return from AWAY or as they authenticate) that their
+	MemoServ inbox is full.
+* fix: unregister hooks when unloading MemoServ
+
+nickserv
+--------
+* LASTLOGIN will now be displayed along with successful authentication
+	notice can now be optionally disabled per user with SET HIDELASTLOGIN
+
+protocol
+--------
+* inspircd: Added support for +U (inspircd-extras/m_opmoderated.cpp) 
+	(Similar to Charybdis/ircd-seven's +z moderation mode)
+
+
+
+## STAY UP TO DATE WITH XthemeOrg NEWS, UPDATES & SECURITY ADVISORIES
+Subscribe to the XthemeOrg News (hosted by IRC4Fun) at:
+https://www.irc4fun.net/xtheme-news/
+
 Xtheme Services 7.5.0 Development Notes
 ============================================
 chanfix
