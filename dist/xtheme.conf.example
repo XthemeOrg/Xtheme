@@ -475,6 +475,7 @@ loadmodule "modules/chanserv/antiflood";
  * SQLINE system                                modules/operserv/sqline
  * UPDATE command                               modules/operserv/update
  * UPTIME command                               modules/operserv/uptime
+ * ZLINE system (DLINEs on some IRCds)			modules/operserv/zline
  */
 loadmodule "modules/operserv/main";
 loadmodule "modules/operserv/akill";
@@ -510,6 +511,7 @@ loadmodule "modules/operserv/specs";
 loadmodule "modules/operserv/sqline";
 loadmodule "modules/operserv/update";
 loadmodule "modules/operserv/uptime";
+loadmodule "modules/operserv/zline";
 
 /* MemoServ modules.
  *
@@ -2113,6 +2115,12 @@ general {
 	 * irrespective of the value of kline_with_ident.
 	 * /
 	#kline_verified_ident;
+
+	/* (*)zline_time
+	 * The default expire time for ZLINE/DLINE's in days.
+	 * Setting this to 0 makes all ZLINE/DLINE's permanent.
+	 */
+	zline_time = 7;
 
 	/* (*)clone_time
 	 * This is the default expiry time for CLONE exemptions in minutes.
