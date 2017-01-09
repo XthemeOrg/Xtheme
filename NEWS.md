@@ -1,3 +1,15 @@
+Xtheme Services git Development Notes
+============================================
+operserv
+--------
+ * Added a ZLINE system (DLINEs on some IRCds) allowing better 
+	management (Services-side) for Z/D:lines. (Add, Del, List, Sync)
+
+
+## STAY UP TO DATE WITH XthemeOrg NEWS, UPDATES & SECURITY ADVISORIES
+Subscribe to the XthemeOrg News (hosted by IRC4Fun) at:
+https://www.irc4fun.net/xtheme-news/
+
 Xtheme Services 7.5.1 Development Notes
 ============================================
 contrib
@@ -26,11 +38,6 @@ memoserv
 * Let users know (on return from AWAY or as they authenticate) that their
 	MemoServ inbox is full.
 * fix: unregister hooks when unloading MemoServ
-
-nickserv
---------
-* LASTLOGIN will now be displayed along with successful authentication
-	notice can now be optionally disabled per user with SET HIDELASTLOGIN
 
 protocol
 --------
