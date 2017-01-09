@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2016 Xtheme Development Group
+ * Copyright (c) 2014-2017 Xtheme Development Group
  * Copyright (c) 2005-2006 Atheme Development Group
  * Rights to this code are as documented in doc/LICENSE.
  *
@@ -29,11 +29,12 @@ static void flatfile_db_load(const char *filename)
 	myuser_name_t *mun;
 	mychan_t *mc;
 	kline_t *k;
+	zline_t *z;
 	xline_t *x;
 	qline_t *q;
 	svsignore_t *svsignore;
 	unsigned int versn = 0, i;
-	unsigned int linecnt = 0, muin = 0, mcin = 0, cain = 0, kin = 0, xin = 0, qin = 0;
+	unsigned int linecnt = 0, muin = 0, mcin = 0, cain = 0, zin = 0, kin = 0, xin = 0, qin = 0;
 	FILE *f;
 	char *item, *s, *buf;
 	size_t bufsize = BUFSIZE, n;
@@ -630,6 +631,36 @@ static void flatfile_db_load(const char *filename)
 			k->expires = k->settime + k->duration;
 
 			kin++;
+		}
+		else if (!strcmp("ZID", item))
+		{
+			/* unique zline id */
+			char *id = strtok(NULL, " ");
+			me.zline_id = atol(id);
+		}
+		else if (!strcmp("ZL", item))
+		{
+			/* zlines */
+			char *host, *reason, *setby, *tmp;
+			time_t settime;
+			long duration;
+
+			host = strtok(NULL, " ");
+			tmp = strtok(NULL, " ");
+			duration = atol(tmp);
+			tmp = strtok(NULL, " ");
+			settime = atol(tmp);
+			setby = strtok(NULL, " ");
+			reason = strtok(NULL, "");
+
+			strip(reason);
+
+			z = zline_add(host, reason, duration, setby);
+			z->settime = settime;
+			/* XXX this is not nice, oh well -- jilles */
+			z->expires = z->settime + z->duration;
+
+			zin++;
 		}
 		else if (!strcmp("XID", item))
 		{

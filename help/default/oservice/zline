@@ -1,0 +1,53 @@
+Help for ZLINE:
+
+ZLINE allows you to maintain network-wide IP bans.
+Services will keep your ZLINES stored and allow for easy management.
+
+Syntax: ZLINE ADD <IP> [!P|!T <minutes>] <reason>
+
+If the !P token is specified the ZLINE will never expire (permanent).
+If the !T token is specified expire time must follow, in minutes,
+hours ("h"), days ("d") or weeks ("w").
+
+Examples:
+    /msg &nick& ZLINE ADD 127.0.0.1 !T 5 bar reason
+    /msg &nick& ZLINE ADD 127.0.0.1 !P bar reason
+
+The first example adds a 5 minute ZLINE/DLINE for "bar reason."
+
+The second example is similar but adds the ZLINE permanently instead of
+5 minutes.
+
+
+Syntax: ZLINE DEL <IP|number>
+
+If number is specified it correlates with the number on ZLINE LIST.
+You may specify multiple numbers by separating with commas.
+You may specify a range by using a colon.
+
+Examples:
+    /msg &nick& ZLINE DEL 127.0.0.1
+    /msg &nick& ZLINE DEL 5
+    /msg &nick& ZLINE DEL 1,2,5,10
+    /msg &nick& ZLINE DEL 1:5,7,9:11
+
+Syntax: ZLINE LIST [FULL]
+
+If FULL is specified the ZLINE reasons will be shown.
+
+Examples:
+    /msg &nick& ZLINE LIST
+    /msg &nick& ZLINE LIST FULL
+
+Syntax: ZLINE LIST <IP>
+
+Shows any ZLINEs or DLINEs matching the given IP, with reasons.
+
+Syntax: ZLINE LIST <number>
+
+Shows the given ZLINE, with reason.
+
+Syntax: ZLINE SYNC
+
+Sends all zlines or dlines to all servers. This can be useful in case
+services will be down or do not see a user as matching a certain zline.

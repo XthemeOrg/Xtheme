@@ -46,6 +46,7 @@ struct me
   unsigned int emailtime;           /* ... in this amount of time         */
 
   unsigned long kline_id;	/* unique ID for AKILLs			*/
+  unsigned long zline_id;	/* unique ID for ZLINEs			*/
   unsigned long xline_id;	/* unique ID for AKILLs			*/
   unsigned long qline_id;	/* unique ID for AKILLs			*/
 
@@ -78,6 +79,7 @@ struct ConfOption
   unsigned int ratelimit_uses;	    /* uses of a ratelimited command */
   unsigned int ratelimit_period;    /* period in which ratelimit_uses are done */
   unsigned int kline_time;          /* default expire for klines  */
+  unsigned int zline_time;          /* default expire for zlines  */
   unsigned int clone_time;          /* default expire for clone exemptions */
   unsigned int commit_interval;     /* interval between commits   */
 
@@ -125,6 +127,7 @@ struct cnt
   unsigned int svsignore;
   unsigned int tld;
   unsigned int kline;
+  unsigned int zline;
   unsigned int xline;
   unsigned int qline;
   unsigned int server;

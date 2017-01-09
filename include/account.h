@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2005-2009 Atheme Development Group
+ * Copyright (c) 2015-2017 Xtheme Development Group <www.Xtheme.org>
  * Rights to this code are as documented in doc/LICENSE.
  *
  * Data structures for account information.
@@ -15,6 +16,7 @@ typedef struct mycertfp_ mycertfp_t;
 typedef struct myuser_name_ myuser_name_t;
 typedef struct chanacs_ chanacs_t;
 typedef struct kline_ kline_t;
+typedef struct zline_ zline_t;
 typedef struct xline_ xline_t;
 typedef struct qline_ qline_t;
 typedef struct mymemo_ mymemo_t;
@@ -23,6 +25,18 @@ typedef struct svsignore_ svsignore_t;
 /* kline list struct */
 struct kline_ {
   char *user;
+  char *host;
+  char *reason;
+  char *setby;
+
+  unsigned long number;
+  long duration;
+  time_t settime;
+  time_t expires;
+};
+
+/* zline list struct */
+struct zline_ {
   char *host;
   char *reason;
   char *setby;
@@ -385,6 +399,17 @@ E kline_t *kline_find(const char *user, const char *host);
 E kline_t *kline_find_num(unsigned long number);
 E kline_t *kline_find_user(user_t *u);
 E void kline_expire(void *arg);
+
+E mowgli_list_t zlnlist;
+
+E zline_t *zline_add_with_id(const char *host, const char *reason, long duration, const char *setby, unsigned long id);
+E zline_t *zline_add(const char *host, const char *reason, long duration, const char *setby);
+E zline_t *zline_add_user(user_t *user, const char *reason, long duration, const char *setby);
+E void zline_delete(zline_t *z);
+E zline_t *zline_find(const char *host);
+E zline_t *zline_find_num(unsigned long number);
+E zline_t *zline_find_user(user_t *u);
+E void zline_expire(void *arg);
 
 E mowgli_list_t xlnlist;
 

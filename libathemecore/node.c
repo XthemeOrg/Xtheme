@@ -2,7 +2,7 @@
  * xtheme-services: A collection of minimalist IRC services
  * node.c: Data structure management.
  *
- * Copyright (c) 2014-2015 Xtheme Development Group (http://www.Xtheme.org)
+ * Copyright (c) 2014-2017 Xtheme Development Group (http://www.Xtheme.org)
  * Copyright (c) 2005-2007 Atheme Project (http://www.atheme.org)
  *
  * Permission to use, copy, modify, and/or distribute this software for any
@@ -27,10 +27,12 @@
 #include "privs.h"
 
 mowgli_list_t klnlist;
+mowgli_list_t zlnlist;
 mowgli_list_t xlnlist;
 mowgli_list_t qlnlist;
 
 mowgli_heap_t *kline_heap;	/* 16 */
+mowgli_heap_t *zline_heap;	/* 16 */
 mowgli_heap_t *xline_heap;	/* 16 */
 mowgli_heap_t *qline_heap;	/* 16 */
 
@@ -41,10 +43,11 @@ mowgli_heap_t *qline_heap;	/* 16 */
 void init_nodes(void)
 {
 	kline_heap = sharedheap_get(sizeof(kline_t));
+	zline_heap = sharedheap_get(sizeof(zline_t));
 	xline_heap = sharedheap_get(sizeof(xline_t));
 	qline_heap = sharedheap_get(sizeof(qline_t));
 
-	if (kline_heap == NULL || xline_heap == NULL || qline_heap == NULL)
+	if (kline_heap == NULL || zline_heap == NULL || xline_heap == NULL || qline_heap == NULL)
 	{
 		slog(LG_INFO, "init_nodes(): block allocator failed.");
 		exit(EXIT_FAILURE);
@@ -144,7 +147,7 @@ kline_t *kline_add_with_id(const char *user, const char *host, const char *reaso
 
 
 	char treason[BUFSIZE];
-	snprintf(treason, sizeof(treason), "[#%lu] %s", k->number, k->reason);
+	snprintf(treason, sizeof(treason), "[AK#%lu] %s", k->number, k->reason);
 
 	if (me.connected)
 		kline_sts("*", user, host, duration, treason);
@@ -265,6 +268,155 @@ void kline_expire(void *arg)
 				k->user, k->host, k->setby, reason);
 
 			kline_delete(k);
+		}
+	}
+}
+
+/*************
+ * Z L I N E *
+ *************/
+
+zline_t *zline_add_with_id(const char *host, const char *reason, long duration, const char *setby, unsigned long id)
+{
+	zline_t *z;
+	mowgli_node_t *n = mowgli_node_create();
+
+	slog(LG_DEBUG, "zline_add(): %s -> %s (%ld)", host, reason, duration);
+
+	z = mowgli_heap_alloc(zline_heap);
+
+	mowgli_node_add(z, n, &zlnlist);
+
+	z->host = sstrdup(host);
+	z->reason = sstrdup(reason);
+	z->setby = sstrdup(setby);
+	z->duration = duration;
+	z->settime = CURRTIME;
+	z->expires = CURRTIME + duration;
+	z->number = id;
+
+	cnt.zline++;
+
+
+	char treason[BUFSIZE];
+	snprintf(treason, sizeof(treason), "[Z#%lu] %s", z->number, z->reason);
+
+	if (me.connected)
+		dline_sts("*", host, duration, treason);
+
+	return z;
+}
+
+zline_t *zline_add(const char *host, const char *reason, long duration, const char *setby)
+{
+	return zline_add_with_id(host, reason, duration, setby, ++me.zline_id);
+}
+
+zline_t *zline_add_user(user_t *u, const char *reason, long duration, const char *setby)
+{
+	return zline_add (u->ip ? u->ip : u->host, reason, duration, setby);
+}
+
+void zline_delete(zline_t *z)
+{
+	mowgli_node_t *n;
+
+	return_if_fail(z != NULL);
+
+	slog(LG_DEBUG, "zline_delete(): %s -> %s", z->host, z->reason);
+
+	/* only unzline if ircd has not already removed this -- jilles */
+	if (me.connected && (z->duration == 0 || z->expires > CURRTIME))
+		undline_sts("*", z->host);
+
+	n = mowgli_node_find(z, &zlnlist);
+	mowgli_node_delete(n, &zlnlist);
+	mowgli_node_free(n);
+
+	free(z->host);
+	free(z->reason);
+	free(z->setby);
+
+	mowgli_heap_free(zline_heap, z);
+
+	cnt.zline--;
+}
+
+zline_t *zline_find(const char *host)
+{
+	zline_t *z;
+	mowgli_node_t *n;
+
+	MOWGLI_ITER_FOREACH(n, zlnlist.head)
+	{
+		z = (zline_t *)n->data;
+
+		if (!match(z->host, host))
+			return z;
+	}
+
+	return NULL;
+}
+
+zline_t *zline_find_num(unsigned long number)
+{
+	zline_t *z;
+	mowgli_node_t *n;
+
+	MOWGLI_ITER_FOREACH(n, zlnlist.head)
+	{
+		z = (zline_t *)n->data;
+
+		if (z->number == number)
+			return z;
+	}
+
+	return NULL;
+}
+
+zline_t *zline_find_user(user_t *u)
+{
+	zline_t *z;
+	mowgli_node_t *n;
+
+	MOWGLI_ITER_FOREACH(n, zlnlist.head)
+	{
+		z = (zline_t *)n->data;
+
+		if (z->duration != 0 && z->expires <= CURRTIME)
+			continue;
+		if (!match(z->host, u->host) || !match(z->host, u->ip) || !match_ips(z->host, u->ip))
+			return z;
+	}
+
+	return NULL;
+}
+
+void zline_expire(void *arg)
+{
+	zline_t *z;
+	char *reason;
+	mowgli_node_t *n, *tn;
+
+	MOWGLI_ITER_FOREACH_SAFE(n, tn, zlnlist.head)
+	{
+		z = (zline_t *)n->data;
+
+		if (z->duration == 0)
+			continue;
+
+		if (z->expires <= CURRTIME)
+		{
+			/* TODO: determine validity of z->reason */
+			reason = z->reason ? z->reason : "(none)";
+
+			slog(LG_INFO, _("ZLINE:EXPIRE: \2%s\2 set \2%s\2 ago by \2%s\2 (reason: %s)"),
+				z->host, time_ago(z->settime), z->setby, reason);
+
+			verbose_wallops(_("ZLINE expired on \2%s\2, set by \2%s\2 (reason: %s)"),
+				z->host, z->setby, reason);
+
+			zline_delete(z);
 		}
 	}
 }

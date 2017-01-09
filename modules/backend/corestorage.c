@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2016 Xtheme Development Group
+ * Copyright (c) 2014-2017 Xtheme Development Group
  * Copyright (c) 2005-2012 Atheme Development Group
  * Rights to this code are as documented in doc/LICENSE.
  *
@@ -42,6 +42,7 @@ corestorage_db_save(database_handle_t *db)
 	mychan_t *mc;
 	chanacs_t *ca;
 	kline_t *k;
+	zline_t *z;
 	xline_t *x;
 	qline_t *q;
 	svsignore_t *svsignore;
@@ -318,6 +319,27 @@ corestorage_db_save(database_handle_t *db)
 		db_write_time(db, k->settime);
 		db_write_word(db, k->setby);
 		db_write_str(db, k->reason);
+		db_commit_row(db);
+	}
+
+	slog(LG_DEBUG, "db_save(): saving zlines");
+
+	db_start_row(db, "ZID");
+	db_write_uint(db, me.zline_id);
+	db_commit_row(db);
+
+	MOWGLI_ITER_FOREACH(n, zlnlist.head)
+	{
+		z = (zline_t *)n->data;
+
+		/* ZL <host> <duration> <settime> <setby> <reason> */
+		db_start_row(db, "ZL");
+		db_write_uint(db, z->number);
+		db_write_word(db, z->host);
+		db_write_uint(db, z->duration);
+		db_write_time(db, z->settime);
+		db_write_word(db, z->setby);
+		db_write_str(db, z->reason);
 		db_commit_row(db);
 	}
 
@@ -846,6 +868,37 @@ static void corestorage_h_kl(database_handle_t *db, const char *type)
 	k->expires = k->settime + k->duration;
 }
 
+static void corestorage_h_zid(database_handle_t *db, const char *type)
+{
+	me.zline_id = db_sread_int(db);
+}
+
+static void corestorage_h_zl(database_handle_t *db, const char *type)
+{
+	char buf[4096];
+	const char *host, *reason, *setby;
+	unsigned int id = 0;
+	time_t settime;
+	long duration;
+	zline_t *z;
+
+	if (dbv > 10)
+		id = db_sread_uint(db);
+
+	host = db_sread_word(db);
+	duration = db_sread_uint(db);
+	settime = db_sread_time(db);
+	setby = db_sread_word(db);
+	reason = db_sread_str(db);
+
+	mowgli_strlcpy(buf, reason, sizeof buf);
+	strip(buf);
+
+	z = zline_add_with_id(host, buf, duration, setby, id ? id : ++me.zline_id);
+	z->settime = settime;
+	z->expires = z->settime + z->duration;
+}
+
 static void corestorage_h_xid(database_handle_t *db, const char *type)
 {
 	me.xline_id = db_sread_int(db);
@@ -973,6 +1026,8 @@ void _modinit(module_t *m)
 
 	db_register_type_handler("KID", corestorage_h_kid);
 	db_register_type_handler("KL", corestorage_h_kl);
+	db_register_type_handler("ZID", corestorage_h_zid);
+	db_register_type_handler("ZL", corestorage_h_zl);
 	db_register_type_handler("XID", corestorage_h_xid);
 	db_register_type_handler("XL", corestorage_h_xl);
 	db_register_type_handler("QID", corestorage_h_qid);

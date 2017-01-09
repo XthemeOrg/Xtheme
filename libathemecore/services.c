@@ -2,7 +2,7 @@
  * xtheme-services: A collection of minimalist IRC services
  * services.c: Routines commonly used by various services.
  *
- * Copyright (c) 2014-2016 Xtheme Development Group (http://www.Xtheme.org)
+ * Copyright (c) 2014-2017 Xtheme Development Group (http://www.Xtheme.org)
  * Copyright (c) 2005-2007 Atheme Project (http://www.atheme.org)
  *
  * Permission to use, copy, modify, and/or distribute this software for any
@@ -806,7 +806,6 @@ bool bad_password(sourceinfo_t *si, myuser_t *mu)
 	int count;
 	metadata_t *md_failnum;
 	service_t *svs;
-	kline_t *k;
 
 	/* If the user is already logged in, no paranoia is needed,
 	 * as they could /ns set password anyway.

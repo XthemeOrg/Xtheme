@@ -11,7 +11,7 @@
 int main(int argc, char *argv[])
 {
 	unsigned int usercount = 0, channelcount = 0, membercount = 0,
-		klinecount = 0, qlinecount = 0, xlinecount = 0, regchannelcount = 0,
+		klinecount = 0, zlinecount = 0, qlinecount = 0, xlinecount = 0, regchannelcount = 0,
 		servercount = 0, regusercount = 0;
 	unsigned int i;
 
@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
 	regusercount = usercount * 0.65;
 
 	/* 5% of users are probably misbehaving in some way... */
-	klinecount = xlinecount = qlinecount = (usercount * 0.05);
+	klinecount = zlinecount = xlinecount = qlinecount = (usercount * 0.05);
 
 	printf("footprint for atheme %s (%s)\n", PACKAGE_VERSION, SERNO);
 
@@ -63,6 +63,7 @@ int main(int argc, char *argv[])
 	printf("\n* * *\n\n");
 
 	printf("sizeof kline_t: %zu B --> %zu KB\n", sizeof(kline_t), (klinecount * sizeof(kline_t)) / 1024);
+	printf("sizeof zline_t: %zu B --> %zu KB\n", sizeof(zline_t), (zlinecount * sizeof(zline_t)) / 1024);
 	printf("sizeof xline_t: %zu B --> %zu KB\n", sizeof(xline_t), (xlinecount * sizeof(xline_t)) / 1024);
 	printf("sizeof qline_t: %zu B --> %zu KB\n", sizeof(qline_t), (qlinecount * sizeof(qline_t)) / 1024);
 

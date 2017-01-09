@@ -44,7 +44,8 @@ SRCS = \
 	specs.c	\
 	sqline.c	\
 	uptime.c	\
-	update.c
+	update.c	\
+	zline.c	
 
 include ../../extra.mk
 include ../../buildsys.mk

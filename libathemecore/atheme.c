@@ -2,7 +2,7 @@
  * xtheme-services: A collection of minimalist IRC services
  * atheme.c: Initialization and startup of the services system
  *
- * Copyright (c) 2014-2015 Xtheme Development Group (http://www.Xtheme.org)
+ * Copyright (c) 2014-2017 Xtheme Development Group (http://www.Xtheme.org)
  * Copyright (c) 2005-2007 Atheme Project (http://www.atheme.org)
  *
  * Permission to use, copy, modify, and/or distribute this software for any
@@ -206,6 +206,7 @@ void atheme_init(char *execname, char *log_p)
 {
 	me.execname = execname;
 	me.kline_id = 0;
+	me.zline_id = 0;
 	me.start = time(NULL);
 	CURRTIME = me.start;
 	srand(arc4random());
@@ -422,8 +423,9 @@ int atheme_main(int argc, char *argv[])
 	/* check expires every hour */
 	mowgli_timer_add(base_eventloop, "expire_check", expire_check, NULL, 3600);
 
-	/* check k/x/q line expires every minute */
+	/* check k/z/x/q line expires every minute */
 	mowgli_timer_add(base_eventloop, "kline_expire", kline_expire, NULL, 60);
+	mowgli_timer_add(base_eventloop, "zline_expire", zline_expire, NULL, 60);
 	mowgli_timer_add(base_eventloop, "xline_expire", xline_expire, NULL, 60);
 	mowgli_timer_add(base_eventloop, "qline_expire", qline_expire, NULL, 60);
 
