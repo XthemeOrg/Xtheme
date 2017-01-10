@@ -2,8 +2,13 @@ Xtheme Services git Development Notes
 ============================================
 operserv
 --------
- * Added a ZLINE system (DLINEs on some IRCds) allowing better 
+* Added a ZLINE system (DLINEs on some IRCds) allowing better 
 	management (Services-side) for Z/D:lines. (Add, Del, List, Sync)
+* operserv/clearchan: ZLINE action (option) added.
+
+proxyscan
+---------
+* Added ability to use ZLINE as a action for DNSBL hits
 
 
 ## STAY UP TO DATE WITH XthemeOrg NEWS, UPDATES & SECURITY ADVISORIES
