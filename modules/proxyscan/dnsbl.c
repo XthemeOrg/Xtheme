@@ -1,4 +1,5 @@
 /*
+ * Copyright (c) 2015-2017 Xtheme Development Group <www.xtheme.org>
  * Copyright (c) 2015-2016 Shalture / ilbelkyr 
  * Copyright (c) 2012 William Pitcock <nenolod@dereferenced.org>.
  *
@@ -77,6 +78,7 @@ enum dnsbl_action {
 	DNSBL_ACT_NOTIFY,
 	DNSBL_ACT_SNOOP,
 	DNSBL_ACT_KLINE,
+	DNSBL_ACT_ZLINE,
 } action;
 
 #define ITEM_DESC(x) [DNSBL_ACT_ ## x] = #x
@@ -86,6 +88,7 @@ const char *action_names[] = {
 	ITEM_DESC(NOTIFY),
 	ITEM_DESC(SNOOP),
 	ITEM_DESC(KLINE),
+	ITEM_DESC(ZLINE),
 	NULL
 };
 
@@ -514,6 +517,7 @@ static void dnsbl_hit(user_t *u, struct Blacklist *blptr)
 {
 	service_t *svs;
 	kline_t *k;
+	zline_t *z;
 
 	svs = service_find("operserv");
 
@@ -525,6 +529,12 @@ static void dnsbl_hit(user_t *u, struct Blacklist *blptr)
 			slog(LG_INFO, "DNSBL: akilling \2%s\2!%s@%s [%s] who is listed in DNS Blacklist %s.", u->nick, u->user, u->host, u->gecos, blptr->host);
 			notice(svs->nick, u->nick, "Your IP address %s is listed in DNS Blacklist %s", u->ip, blptr->host);
 			k = kline_add("*", u->ip, "Banned (DNS Blacklist)", 1209600, blptr->host);
+			break;
+
+		case DNSBL_ACT_ZLINE:
+			slog(LG_INFO, "DNSBL: zlining \2%s\2!%s@%s [%s] who is listed in DNS Blacklist %s.", u->nick, u->user, u->host, u->gecos, blptr->host);
+			notice(svs->nick, u->nick, "Your IP address %s is listed in DNS Blacklist %s", u->ip, blptr->host);
+			z = zline_add("*", u->ip, "Banned (DNS Blacklist)", 1209600, blptr->host);
 			break;
 
 		case DNSBL_ACT_NOTIFY:
