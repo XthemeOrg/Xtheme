@@ -1,19 +1,33 @@
-Xtheme Services git Development Notes
+Xtheme Services 7.5.2 Development Notes
 ============================================
-operserv
---------
-* Added a ZLINE system (DLINEs on some IRCds) allowing better 
-	management (Services-side) for Z/D:lines. (Add, Del, List, Sync)
-* operserv/clearchan: ZLINE action (option) added.
+
+* This release addresses a CVE and is highly recommended to upgrade.
+	!! All previous versions are affected by the CVE which is fixed
+	in this release.  !!
 
 proxyscan
 ---------
-* Added ability to use ZLINE as a action for DNSBL hits
+* dnsbl can now add a ZLINE on DNS Blacklist Hits and maintain it in
+	OperServ.
+
+operserv
+--------
+* Added a new ZLINE management system similar to the AKILL management
+	system.  ZLINEs can now be organized and easily managed via 
+	Services
+* ZLINEs placed through OperServ will be numbered [Z#1]
+* AKILLs placed through OperServ will be numbered [AK#1]
+
+
+sasl
+----
+* CVE FIXED sasl/main: free sasl_sourceinfo_t after use (thanks mniip)
 
 
 ## STAY UP TO DATE WITH XthemeOrg NEWS, UPDATES & SECURITY ADVISORIES
 Subscribe to the XthemeOrg News (hosted by IRC4Fun) at:
 https://www.irc4fun.net/xtheme-news/
+
 
 Xtheme Services 7.5.1 Development Notes
 ============================================
