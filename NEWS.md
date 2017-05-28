@@ -1,3 +1,17 @@
+Xtheme IRC Services git (7.5.5) Development Notes
+==================================================
+contrib
+-------
+* os_akillnicklist: Updated so that when a user matches the AKILL
+	criteria that the AKILL is sent using *@IP to be more effective
+	against bots/drones.
+
+
+## STAY UP TO DATE WITH XthemeOrg NEWS, UPDATES & SECURITY ADVISORIES
+Subscribe to the XthemeOrg News (hosted by IRC4Fun) at:
+https://www.irc4fun.net/xtheme-news/
+
+
 Xtheme Services 7.5.2 Development Notes
 ============================================
 
