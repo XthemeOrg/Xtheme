@@ -62,7 +62,7 @@ bool strict_mode = true;
 bool offline_mode = false;
 bool permissive_mode = false;
 
-void (*db_save) (void *arg) = NULL;
+void (*db_save) (void *arg, db_save_strategy_t strategy) = NULL;
 void (*db_load) (const char *name) = NULL;
 
 /* *INDENT-OFF* */
@@ -250,6 +250,12 @@ void atheme_setup(void)
 	common_ctcp_init();
 }
 
+static void db_save_periodic(void *unused)
+{
+	slog(LG_DEBUG, "db_save_periodic(): initiating periodic database write");
+	db_save(unused, DB_SAVE_BG_REGULAR);
+}
+
 int atheme_main(int argc, char *argv[])
 {
 	int daemonize_pipe[2];
@@ -418,7 +424,7 @@ int atheme_main(int argc, char *argv[])
 
 	/* DB commit interval is configurable */
 	if (db_save && !readonly)
-		mowgli_timer_add(base_eventloop, "db_save", db_save, NULL, config_options.commit_interval);
+		mowgli_timer_add(base_eventloop, "db_save", db_save_periodic, NULL, config_options.commit_interval);
 
 	/* check expires every hour */
 	mowgli_timer_add(base_eventloop, "expire_check", expire_check, NULL, 3600);
@@ -442,7 +448,7 @@ int atheme_main(int argc, char *argv[])
 	hook_call_shutdown();
 
 	if (db_save && !readonly)
-		db_save(NULL);
+		db_save(NULL, DB_SAVE_BLOCKING);
 
 	remove(pidfilename);
 	errno = 0;
