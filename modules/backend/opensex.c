@@ -10,6 +10,10 @@
  */
 
 #include "atheme.h"
+#ifdef HAVE_FLOCK
+# include <unistd.h>
+# include <sys/file.h>
+#endif
 
 DECLARE_MODULE_V1
 (
@@ -28,6 +32,10 @@ typedef struct opensex_ {
 	/* Interpreting state */
 	unsigned int grver;
 } opensex_t;
+
+#ifdef HAVE_FLOCK
+static int lockfd;
+#endif
 
 static void opensex_db_parse(database_handle_t *db)
 {
@@ -296,11 +304,23 @@ static database_handle_t *opensex_db_open_write(const char *filename)
 	FILE *f;
 	int errno1;
 	char bpath[BUFSIZE], path[BUFSIZE];
+#ifdef HAVE_FLOCK
+	char lpath[BUFSIZE];
+#endif
 
 	snprintf(bpath, BUFSIZE, "%s/%s", datadir, filename != NULL ? filename : "services.db");
 
 	mowgli_strlcpy(path, bpath, sizeof path);
 	mowgli_strlcat(path, ".new", sizeof path);
+
+#ifdef HAVE_FLOCK
+	mowgli_strlcpy(lpath, bpath, sizeof lpath);
+	mowgli_strlcat(lpath, ".lock", sizeof lpath);
+
+	lockfd = open(lpath, O_RDONLY | O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP);
+
+	flock(lockfd, LOCK_EX);
+#endif
 
 	fd = open(path, O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP);
 	if (fd < 0 || ! (f = fdopen(fd, "w")))
@@ -364,6 +384,9 @@ static void opensex_db_close(database_handle_t *db)
 		}
 
 		hook_call_db_saved();
+#ifdef HAVE_FLOCK
+		close(lockfd);
+#endif
 	}
 
 	free(rs->buf);
