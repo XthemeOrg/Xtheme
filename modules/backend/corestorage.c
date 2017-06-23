@@ -1028,7 +1028,6 @@ static void corestorage_db_write(void *filename, db_save_strategy_t strategy)
 
 		if (strategy == DB_SAVE_BLOCKING)
 		{
-blocking:
 			corestorage_db_write_blocking(filename);
 		}
 		else
@@ -1038,7 +1037,8 @@ blocking:
 			{
 				case -1:
 					slog(LG_ERROR, "db_save(): fork() failed; writing database synchronously");
-					goto blocking;
+					corestorage_db_write_blocking(filename);
+					break;
 
 				case 0:
 					corestorage_db_write_blocking(filename);
