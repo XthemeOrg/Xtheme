@@ -702,6 +702,10 @@ void myuser_login(service_t *svs, user_t *u, myuser_t *mu, bool sendaccount)
 	if (mn != NULL && mn->owner == mu)
 		mn->lastseen = CURRTIME;
 
+	if (MU_WAITAUTH & mu->flags)
+		notice(svs->me->nick, u->nick, "\2WARNING:\2 You have \2NOT COMPLETED\2 registration verification.");
+		notice(svs->me->nick, u->nick, "\2Unverified\2 accounts expire within \224 Hours\2 of registration.");
+
 	/* XXX: ircd_on_login supports hostmasking, we just dont have it yet. */
 	/* don't allow them to join regonly chans until their
 	 * email is verified */
