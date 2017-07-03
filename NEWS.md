@@ -2,9 +2,24 @@ Xtheme IRC Services git (7.5.5) Development Notes
 ==================================================
 contrib
 -------
+* ns_ajoin: Fixed a bug in the NickServ AJOIN module that would 
+	allow adding erroneous channels to AJOIN. (instead of 
+	ensuring it is a valid channel name)
+* os_akillchan: Updated so that when a user joins an AKILLCHAN the 
+	user is AKILLed using @IP, making less redundant akills for 
+	the user@host and going with @IP instead.  (Previously would 
+	AKILL all user@hosts joining, which in the case of a botnet 
+	can result in many duplicate AKILLs that could have been solved 
+	with just 1 AKILL on the IP address.
 * os_akillnicklist: Updated so that when a user matches the AKILL
 	criteria that the AKILL is sent using *@IP to be more effective
 	against bots/drones.
+
+core
+----
+* Added a VERIFICATION warning for un-verified users (when applicable) 
+	that reminds un-verified users that their account will expire 
+	within 24 hours of registration.  
 
 
 ## STAY UP TO DATE WITH XthemeOrg NEWS, UPDATES & SECURITY ADVISORIES
