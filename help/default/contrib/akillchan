@@ -1,0 +1,9 @@
+Help for AKILLCHAN:
+
+AKILLCHAN G:lines all users joining a channel. Useful for unwanted 
+channels and the like.
+
+Syntax: AKILLCHAN <#channel> <ON|OFF> [reason]
+
+Examples:
+    /msg &nick& AKILLCHAN #lamers ON Channel of Lamers.

@@ -1,0 +1,9 @@
+Help for LISTAKILLCHAN
+
+LISTAKILLCHAN lists all (or a pattern of) channels with an active AKILLCHAN on them.
+
+Syntax: LISTAKILLCHAN [pattern]
+
+Examples:
+    /msg &nick& LISTAKILLCHAN
+    /msg &nick& LISTAKILLCHAN #lame*

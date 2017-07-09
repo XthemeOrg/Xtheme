@@ -1,0 +1,9 @@
+Help for LISTZLINECHAN
+
+LISTZLINECHAN lists all (or a pattern of) channels with an active ZLINECHAN on them.
+
+Syntax: LISTZLINECHAN [pattern]
+
+Examples:
+    /msg &nick& LISTZLINECHAN
+    /msg &nick& LISTZLINECHAN #bot*

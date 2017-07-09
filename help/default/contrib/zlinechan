@@ -1,0 +1,9 @@
+Help for ZLINECHAN:
+
+ZLINECHAN z:lines all users joining a channel. Useful for unwanted Botnet
+channels and the like.
+
+Syntax: ZLINECHAN <#channel> <ON|OFF> [reason]
+
+Examples:
+    /msg &nick& ZLINECHAN #botnet ON Channel of Drones/Botnet.
