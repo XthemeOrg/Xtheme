@@ -130,8 +130,71 @@ static void do_list(sourceinfo_t *si, mychan_t *mc, unsigned int flags)
 		}
 	}
 
-	command_success_nodata(si, _("Entry Nickname/Host          Flags"));
-	command_success_nodata(si, "----- ---------------------- -----");
+	/* Set entrywidth, flagswidth, and nickhostwidth to the length of the
+	 * longest entries.
+	 * - Ben
+	 */
+	MOWGLI_ITER_FOREACH(m, mc->chanacs.head)
+	{
+		ca = m->data;
+
+		if (strlen(ca->entity ? ca->entity->name : ca->host) > nickhostwidth)
+			nickhostwidth = strlen(ca->entity ? ca->entity->name : ca->host);
+
+		if (strlen(bitmask_to_flags(ca->level)) > flagswidth)
+			flagswidth = strlen(bitmask_to_flags(ca->level));
+
+		i++;
+	}
+
+	while (i != 0)
+	{
+		i =  i/10;
+		if (i > 5)
+			entrywidth++;
+	}
+
+	mowgli_strlcpy(entryspacing, " ", BUFSIZE);
+	mowgli_strlcpy(entryborder, "-", BUFSIZE);
+	mowgli_strlcpy(nickhostspacing, " ", BUFSIZE);
+	mowgli_strlcpy(nickhostborder, "-", BUFSIZE);
+	mowgli_strlcpy(flagsborder, "-", BUFSIZE);
+
+	i = 1;
+
+	for (i; i < entrywidth; i++)
+	{
+		mowgli_strlcat(entryborder, "-", BUFSIZE);
+		if (i > 4)
+			mowgli_strlcat(entryspacing, " ", BUFSIZE);
+	}
+
+	i = 1;
+
+	for (i; i < nickhostwidth; i++)
+	{
+		mowgli_strlcat(nickhostborder, "-", BUFSIZE);
+		if (i > 12)
+			mowgli_strlcat(nickhostspacing, " ", BUFSIZE);
+	}
+
+	i = 1;
+
+	for (i; i < flagswidth; i++)
+	{
+		mowgli_strlcat(flagsborder, "-", BUFSIZE);
+	}
+
+	command_success_nodata(si, _("FLAGS list for: \2%s\2"), mc->name);
+
+	command_success_nodata(si, _("Entry%sNickname/Host%sFlags"), entryspacing, nickhostspacing);
+	command_success_nodata(si, "%s %s %s", entryborder, nickhostborder, flagsborder);
+
+	i = 1;
+
+	/* Make dynamic format string. */
+	snprintf(fmtstring, BUFSIZE, "%%%ud %%-%us %%-%us (%%s) (%%s) [modified %%s ago, on %%s]",
+		entrywidth, nickhostwidth, flagswidth);
 
 	MOWGLI_ITER_FOREACH(n, mc->chanacs.head)
 	{
@@ -215,7 +278,7 @@ static void cs_cmd_flags(sourceinfo_t *si, int parc, char *parv[])
 		command_fail(si, fault_nosuch_target, _("Channel \2%s\2 is not registered."), channel);
 		return;
 	}
-	
+
 	if (metadata_find(mc, "private:frozen:freezer"))
 	{
 		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), channel);

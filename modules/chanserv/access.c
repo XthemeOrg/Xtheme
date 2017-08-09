@@ -662,6 +662,8 @@ static void cs_cmd_access_list(sourceinfo_t *si, int parc, char *parv[])
 			mowgli_strlcat(rolespacing, " ", BUFSIZE);
 	}
 
+	command_success_nodata(si, _("ACCESS list for: \2%s\2"), mc->name);
+
 	command_success_nodata(si, _("Entry%sNickname/Host%sRole%sModified Time"), entryspacing, nickhostspacing, rolespacing);
 	command_success_nodata(si, "%s %s %s ---------------", entryborder, nickhostborder, roleborder);
 
