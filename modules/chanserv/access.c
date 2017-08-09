@@ -496,7 +496,7 @@ static void update_role_entry(sourceinfo_t *si, mychan_t *mc, const char *role, 
 		command_fail(si, fault_badparams, _("Invalid template name \2%s\2."), role);
 		return;
 	}
-	
+
 	if (strlen(newstr) >= 300)
 	{
 		command_fail(si, fault_toomany, _("Sorry, too many templates on \2%s\2."), mc->name);
@@ -570,7 +570,9 @@ static void cs_cmd_access_list(sourceinfo_t *si, int parc, char *parv[])
 	mychan_t *mc;
 	const char *channel = parv[0];
 	bool operoverride = false;
-	unsigned int i = 1;
+	unsigned int i = 0;
+	unsigned int entrywidth = 5, nickhostwidth = 13, rolewidth = 4; /* "Nickname/Host" is 13 chars long, "Role" is 4. */
+	char fmtstring[BUFSIZE], entryspacing[BUFSIZE], entryborder[BUFSIZE], nickhostspacing[BUFSIZE], nickhostborder[BUFSIZE], rolespacing[BUFSIZE], roleborder[BUFSIZE];
 
 	mc = mychan_find(channel);
 	if (!mc)
@@ -590,12 +592,90 @@ static void cs_cmd_access_list(sourceinfo_t *si, int parc, char *parv[])
 		}
 	}
 
-	command_success_nodata(si, _("Entry Nickname/Host          Role"));
-	command_success_nodata(si, "----- ---------------------- ----");
+	/* Set entrywidth, flagswidth, and nickhostwidth to the length of the
+	 * longest entries.
+	 * - Ben
+	 */
+	MOWGLI_ITER_FOREACH(m, mc->chanacs.head)
+	{
+		const char *template;
+		ca = m->data;
+
+		if (strlen(ca->entity ? ca->entity->name : ca->host) > nickhostwidth)
+			nickhostwidth = strlen(ca->entity ? ca->entity->name : ca->host);
+
+		template = get_template_name(mc, ca->level);
+
+		if (template == NULL)
+		{
+			/* "<Custom> is 8 chars long." */
+			if (rolewidth < 8)
+				rolewidth = 8;
+		}
+		else
+		{
+			if (strlen(get_template_name(mc, ca->level)) > rolewidth)
+				rolewidth = strlen(get_template_name(mc, ca->level));
+		}
+
+		i++;
+	}
+
+	while (i != 0)
+	{
+		i =  i/10;
+		if (i > 5)
+			entrywidth++;
+	}
+
+	mowgli_strlcpy(entryspacing, " ", BUFSIZE);
+	mowgli_strlcpy(entryborder, "-", BUFSIZE);
+	mowgli_strlcpy(nickhostspacing, " ", BUFSIZE);
+	mowgli_strlcpy(nickhostborder, "-", BUFSIZE);
+	mowgli_strlcpy(rolespacing, " ", BUFSIZE);
+	mowgli_strlcpy(roleborder, "-", BUFSIZE);
+
+	i = 1;
+
+	for (i; i < entrywidth; i++)
+	{
+		mowgli_strlcat(entryborder, "-", BUFSIZE);
+		if (i > 4)
+			mowgli_strlcat(entryspacing, " ", BUFSIZE);
+	}
+
+	i = 1;
+
+	for (i; i < nickhostwidth; i++)
+	{
+		mowgli_strlcat(nickhostborder, "-", BUFSIZE);
+		if (i > 12)
+			mowgli_strlcat(nickhostspacing, " ", BUFSIZE);
+	}
+
+	i = 1;
+
+	for (i; i < rolewidth; i++)
+	{
+		mowgli_strlcat(roleborder, "-", BUFSIZE);
+		if (i > 3)
+			mowgli_strlcat(rolespacing, " ", BUFSIZE);
+	}
+
+	command_success_nodata(si, _("Entry%sNickname/Host%sRole%sModified Time"), entryspacing, nickhostspacing, rolespacing);
+	command_success_nodata(si, "%s %s %s ---------------", entryborder, nickhostborder, roleborder);
+
+	/* Make dynamic format string. */
+	snprintf(fmtstring, BUFSIZE, "%%%ud %%-%us %%-%us %%s ago, on %%s",
+		entrywidth, nickhostwidth, rolewidth);
+
+	i = 1;
 
 	MOWGLI_ITER_FOREACH(n, mc->chanacs.head)
 	{
-		const char *role;
+		const char *role, *mod_ago;
+		struct tm tm;
+		char mod_date[64];
 
 		ca = n->data;
 
@@ -603,13 +683,18 @@ static void cs_cmd_access_list(sourceinfo_t *si, int parc, char *parv[])
 			continue;
 
 		role = get_template_name(mc, ca->level);
+		mod_ago = ca->tmodified ? time_ago(ca->tmodified) : "?";
 
-		command_success_nodata(si, _("%-5d %-22s %s"), i, ca->entity ? ca->entity->name : ca->host, role);
+		tm = *localtime(&ca->tmodified);
+		strftime(mod_date, sizeof mod_date, TIME_FORMAT, &tm);
+
+		command_success_nodata(si, _(fmtstring), i, ca->entity ? ca->entity->name : ca->host,
+			role == NULL ? "<Custom>" : role, mod_ago, mod_date);
 
 		i++;
 	}
 
-	command_success_nodata(si, "----- ---------------------- ----");
+	command_success_nodata(si, "%s %s %s ---------------", entryborder, nickhostborder, roleborder);
 	command_success_nodata(si, _("End of \2%s\2 ACCESS listing."), channel);
 
 	if (operoverride)
@@ -761,7 +846,7 @@ static void cs_cmd_access_del(sourceinfo_t *si, int parc, char *parv[])
 		command_fail(si, fault_nosuch_target, _("Channel \2%s\2 is not registered."), channel);
 		return;
 	}
-	
+
 	if (metadata_find(mc, "private:frozen:freezer"))
 	{
 		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), channel);
@@ -880,7 +965,7 @@ static void cs_cmd_access_add(sourceinfo_t *si, int parc, char *parv[])
 		command_fail(si, fault_nosuch_target, _("Channel \2%s\2 is not registered."), channel);
 		return;
 	}
-	
+
 	if (metadata_find(mc, "private:frozen:freezer"))
 	{
 		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), channel);
@@ -1039,7 +1124,7 @@ static void cs_cmd_access_set(sourceinfo_t *si, int parc, char *parv[])
 		command_fail(si, fault_nosuch_target, _("Channel \2%s\2 is not registered."), channel);
 		return;
 	}
-	
+
 	if (metadata_find(mc, "private:frozen:freezer"))
 	{
 		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), channel);
@@ -1233,7 +1318,7 @@ static void cs_cmd_role_add(sourceinfo_t *si, int parc, char *parv[])
 		command_fail(si, fault_nosuch_target, _("Channel \2%s\2 is not registered."), channel);
 		return;
 	}
-	
+
 	if (metadata_find(mc, "private:frozen:freezer"))
 	{
 		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), channel);
@@ -1336,7 +1421,7 @@ static void cs_cmd_role_set(sourceinfo_t *si, int parc, char *parv[])
 		command_fail(si, fault_nosuch_target, _("Channel \2%s\2 is not registered."), channel);
 		return;
 	}
-	
+
 	if (metadata_find(mc, "private:frozen:freezer"))
 	{
 		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), channel);
@@ -1444,7 +1529,7 @@ static void cs_cmd_role_del(sourceinfo_t *si, int parc, char *parv[])
 		command_fail(si, fault_nosuch_target, _("Channel \2%s\2 is not registered."), channel);
 		return;
 	}
-	
+
 	if (metadata_find(mc, "private:frozen:freezer"))
 	{
 		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), channel);
