@@ -229,8 +229,9 @@ static void do_list(sourceinfo_t *si, mychan_t *mc, unsigned int flags)
 		i++;
 	}
 
-	command_success_nodata(si, "----- ---------------------- -----");
-	command_success_nodata(si, _("End of \2%s\2 FLAGS listing."), mc->name);
+	command_success_nodata(si, "%s %s %s", entryborder, nickhostborder, flagsborder);
+	command_success_nodata(si, _("End of \2%s\2 FLAGS listing.  Total of %u %s."),
+		mc->name, i - 1, i - 1 == 1 ? "entry" : "entries");
 
 	if (operoverride)
 		logcommand(si, CMDLOG_ADMIN, "FLAGS: \2%s\2 (oper override)", mc->name);

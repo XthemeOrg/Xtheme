@@ -697,7 +697,8 @@ static void cs_cmd_access_list(sourceinfo_t *si, int parc, char *parv[])
 	}
 
 	command_success_nodata(si, "%s %s %s ---------------", entryborder, nickhostborder, roleborder);
-	command_success_nodata(si, _("End of \2%s\2 ACCESS listing."), channel);
+	command_success_nodata(si, _("End of \2%s\2 ACCESS listing.  Total of %u %s."),
+		channel, i - 1, i - 1 == 1 ? "entry" : "entries");
 
 	if (operoverride)
 		logcommand(si, CMDLOG_ADMIN, "ACCESS:LIST: \2%s\2 (oper override)", mc->name);
