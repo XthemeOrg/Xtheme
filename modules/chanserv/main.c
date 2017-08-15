@@ -437,11 +437,15 @@ static void cs_join(hook_channel_joinpart_t *hdata)
 		remove_ban_exceptions(chansvs.me->me, chan, u);
 		if (ca2 != NULL)
 		{
+			myentity_t *setter = NULL;
+
 			md = metadata_find(ca2, "reason");
 			if (md != NULL && *md->value != '|')
 			{
+				if (*ca2->setter_uid != '\0' && (setter = myentity_find_uid(ca2->setter_uid)))
+
 				snprintf(akickreason, sizeof akickreason,
-						"Banned: %s", md->value);
+						"(%s) %s", setter->name, md->value);
 				p = strchr(akickreason, '|');
 				if (p != NULL)
 					*p = '\0';
