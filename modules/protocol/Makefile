@@ -13,6 +13,7 @@ SRCS = \
 	bahamut.c	\
 	base36uid.c	\
 	charybdis.c	\
+	chatircd.c	\
 	elemental-ircd.c\
 	hybrid.c	\
 	inspircd.c	\
