@@ -1,25 +1,62 @@
-Xtheme IRC Services git (7.5.5) Development Notes
-==================================================
-contrib
--------
-* ns_ajoin: Fixed a bug in the NickServ AJOIN module that would 
-	allow adding erroneous channels to AJOIN. (instead of 
-	ensuring it is a valid channel name)
-* os_akillchan: Updated so that when a user joins an AKILLCHAN the 
-	user is AKILLed using @IP, making less redundant akills for 
-	the user@host and going with @IP instead.  (Previously would 
-	AKILL all user@hosts joining, which in the case of a botnet 
-	can result in many duplicate AKILLs that could have been solved 
-	with just 1 AKILL on the IP address.
-* os_akillnicklist: Updated so that when a user matches the AKILL
-	criteria that the AKILL is sent using *@IP to be more effective
-	against bots/drones.
+Xtheme IRC Services git (8.0.0-dev) Development Notes  
+==================================================  
+contrib  
+-------  
+* Help: Added observed missing help files for various contrib
+	modules.  
+* ns_ajoin: Fixed a bug in the NickServ AJOIN module that would  
+	allow adding erroneous channels to AJOIN. (instead of  
+	ensuring it is a valid channel name)  
+* os_akillchan: Updated so that when a user joins an AKILLCHAN the  
+	user is AKILLed using @IP, making less redundant akills for  
+	the user@host and going with @IP instead.  (Previously would  
+	AKILL all user@hosts joining, which in the case of a botnet  
+	can result in many duplicate AKILLs that could have been solved  
+	with just 1 AKILL on the IP address.  
+* os_akillnicklist: Updated so that when a user matches the AKILL  
+	criteria that the AKILL is sent using *@IP to be more effective  
+	against bots/drones.  
+* os_zlinechan: New contrib module that does the same as akillchan,  
+	but sets ZLINEs/DLINEs instead of AKILLs - managed via ZLINE  
+	management in OperServ. (LIST,ADD,DEL,etc.)    
 
 core
 ----
 * Added a VERIFICATION warning for un-verified users (when applicable) 
 	that reminds un-verified users that their account will expire 
 	within 24 hours of registration.  
+
+database
+--------
+* opensex database improvements  
+* Add a ratbox-services database conversion tool for Xtheme  
+
+general
+-------
+* xtheme.conf.example: Various updates for added modules, missing info,  
+	and maintenance.
+
+memoserv
+--------
+* send: Read receipts now include the original memo text (thanks to  
+	[ChatServices](https://bitbucket.org/chatlounge/chatservices/) and  
+	@MrBenC  
+
+nickserv  
+--------  
+* badmail: You now filter the LIST output by pattern.  Also, a new  
+	TEST subcommand was added to allow lookup of patterns that would  
+	prevent the use of an email address.  
+
+operserv
+--------
+* netlog: New module for logging/relaying network information (similar  
+	to Anope's LOGUSERS functionality) and logtype: NETLOG  
+
+protocol
+--------
+* chatircd protocol added (a modern Charybdis fork)  
+	https://bitbucket.org/chatlounge/chatircd/  
 
 
 ## STAY UP TO DATE WITH XthemeOrg NEWS, UPDATES & SECURITY ADVISORIES
