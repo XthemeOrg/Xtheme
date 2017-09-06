@@ -76,6 +76,7 @@ E void logfile_unregister(logfile_t *lf);
 #define LG_IOERROR      0x00000008      /* log I/O errors. */
 #define LG_DEBUG        0x00000010      /* log debugging stuff      */
 #define LG_VERBOSE	0x00000020	/* log a bit more verbosely than INFO or REGISTER, but not as much as DEBUG */
+#define LG_NETLOG       0x00000040      /* netlog events */
 /* commands */
 #define LG_CMD_ADMIN    0x00000100 /* oper-only commands */
 #define LG_CMD_REGISTER 0x00000200 /* register/drop */

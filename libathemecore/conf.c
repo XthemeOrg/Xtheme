@@ -106,6 +106,7 @@ static struct Token logflags[] = {
   { "SET",         LG_CMD_SET                                                                                 },
   { "REQUEST",     LG_CMD_REQUEST									      },
   { "NETWORK",     LG_NETWORK                                                                                 },
+  { "NETLOG",      LG_NETLOG                                                                                  },
   { "WALLOPS",     LG_WALLOPS                                                                                 },
   { "RAWDATA",     LG_RAWDATA                                                                                 },
   { "DENYCMD",     LG_DENYCMD                                                                                 },
