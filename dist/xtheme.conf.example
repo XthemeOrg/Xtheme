@@ -50,6 +50,7 @@
  * Asuka 1.2.1 or later                         modules/protocol/asuka
  * Bahamut 1.8.x                                modules/protocol/bahamut
  * Charybdis IRCd                               modules/protocol/charybdis
+ * ChatIRCd 1.0 or later						modules/protocol/chatircd
  * DreamForge 4.6.7 or later                    modules/protocol/dreamforge
  * Hybrid 7.1.2 and later                       modules/protocol/hybrid
  * InspIRCd 2.0                                 modules/protocol/inspircd
@@ -458,6 +459,7 @@ loadmodule "modules/chanserv/antiflood";
  * MODLOAD command                              modules/operserv/modload
  * MODRELOAD command                            modules/operserv/modreload
  * MODUNLOAD command                            modules/operserv/modunload
+ * NETLOG system                                modules/operserv/netlog
  * NOOP system                                  modules/operserv/noop
  * Override access (OVERRIDE command)           modules/operserv/override
  * Regex mass akill (RAKILL command)            modules/operserv/rakill
@@ -495,6 +497,7 @@ loadmodule "modules/operserv/modlist";
 loadmodule "modules/operserv/modload";
 loadmodule "modules/operserv/modunload";
 loadmodule "modules/operserv/modreload";
+#loadmodule "modules/operserv/netlog";
 loadmodule "modules/operserv/noop";
 #loadmodule "modules/operserv/override";
 #loadmodule "modules/operserv/rakill";
@@ -920,6 +923,7 @@ serverinfo {
 	 *      register        - account and channel registrations
 	 *      set             - changes of account or channel settings
 	 *      request         - user requests (currently only vhosts)
+	 *      netlog          - connects/disconnects, joins/parts, topic changes
 	 *      network         - log notices related to network status
 	 *      rawdata         - log raw data sent and received by services
 	 *      wallops         - <not yet used>
@@ -1927,6 +1931,7 @@ ldap {
  *      register        - account and channel registrations
  *      set             - changes of account or channel settings
  *      request         - user requests (currently only vhosts)
+ *      netlog          - connects/disconnects, joins/parts and topic changes
  *      network         - log notices related to network status
  *      rawdata         - log raw data sent and received by services
  *      wallops         - <not yet used>
@@ -1984,7 +1989,7 @@ general {
 	 * Network webpage for services help. Shown to users when they
 	 * request help for a command that doesn't exist.
 	 */
-	#helpurl = "http://www.IRC4Fun.net/xtheme-help/";
+	#helpurl = "https://github.com/XthemeOrg/Xtheme/wiki/";
 
 	/* (*)silent
 	 * If you want to prevent services from sending
