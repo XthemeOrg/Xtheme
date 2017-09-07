@@ -100,7 +100,7 @@ static void ms_cmd_read(sourceinfo_t *si, int parc, char *parv[])
 				else if (strcasecmp(si->service->nick, memo->sender) && (tmu != NULL) && (tmu->logins.count > 0))
 				{
 					myuser_notice(si->service->me->nick, tmu, "%s has read your memo, which was sent at %s.  The memo contained the following text:", entity(si->smu)->name, strfbuf);
-					myuser_notice(si->service->me->nick, tmu, memo->text);
+					myuser_notice(si->service->me->nick, tmu, "%s", memo->text);
 				}
 				else
 				{
