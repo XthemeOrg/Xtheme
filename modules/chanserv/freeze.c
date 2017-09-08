@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2016 Xtheme Development Group (Xtheme.org)
+ * Copyright (c) 2015-2017 Xtheme Development Group (Xtheme.org)
  * Rights to this code are as documented in doc/LICENSE.
  *
  * Similar to ChanServ CLOSE, but allows for channels to 
@@ -54,7 +54,7 @@ static void freeze_check_join(hook_channel_joinpart_t *data)
 		if (!chanuser_find(cu->chan, user_find_named(chansvs.nick)))
 			join(cu->chan->name, chansvs.nick);
 
-		/* stay for a bit to stop rejoin floods */
+		/* stay to prevent rejoins for ops */
 		mc->flags |= MC_INHABIT;
 	}
 }
@@ -65,6 +65,7 @@ static void cs_cmd_freeze(sourceinfo_t *si, int parc, char *parv[])
 	char *action = parv[1];
 	char *reason = parv[2];
 	mychan_t *mc;
+	metadata_t *md;
 	channel_t *c;
 	chanuser_t *cu, *origin_cu = NULL;
 	mowgli_node_t *n, *tn;
@@ -106,6 +107,14 @@ static void cs_cmd_freeze(sourceinfo_t *si, int parc, char *parv[])
 		metadata_add(mc, "private:frozen:freezer", get_oper_name(si));
 		metadata_add(mc, "private:frozen:reason", reason);
 		metadata_add(mc, "private:frozen:timestamp", number_to_string(CURRTIME));
+
+		/* if there is a BotServ bot, remove it */
+		if ((md = metadata_find(mc, "private:botserv:bot-assigned")) != NULL)
+		{
+			part(mc->name, md->value);
+			metadata_delete(mc, "private:botserv:bot-assigned");
+			metadata_delete(mc, "private:botserv:bot-handle-fantasy");
+		}
 
 		if ((c = channel_find(target)))
 		{
