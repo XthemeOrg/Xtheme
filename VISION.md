@@ -7,6 +7,10 @@ Our vision is to be a suitable successor to Atheme for IRC networks
 that ran Atheme.  We've added new features, fixed bugs and have more 
 planned for the future.  Be sure to read NEWS.md for more specifics.  
 
+XthemeOrg also provides the Services Web Interface (a Web Panel for  
+Xtheme IRC Services and some atheme forks) which is also known as  
+SWI.  
+
 Xtheme desires to maintain compatibility with networks that ran 
 Atheme, however in some cases this may change if it would actually 
 benefit Xtheme development and networks running Xtheme.

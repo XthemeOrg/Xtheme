@@ -1,4 +1,4 @@
-Xtheme-services -- a set of services for IRC networks
+Xtheme-Services -- a set of services for IRC networks
 	(forked from Atheme IRC Services by Xtheme.org)
 =====================================================
 
@@ -11,7 +11,7 @@ GETTING Xtheme:
 ---------------
 1) From Git:  git clone https://github.com/XthemeOrg/Xtheme.git
 2) From Releases  See: https://github.com/XthemeOrg/Xtheme/releases in ZIP or BZ2 packages.
-!) Please do not click "Download ZIP" button from GitHub or the "Source code (*)" versions 
+!) Please DO NOT click "Download ZIP" button from GitHub or the "Source code (*)" versions 
 under Releases or you will run into issues.
 
 TABLE OF CONTENTS
@@ -31,7 +31,7 @@ You should also read the README and FAQ files.
 
 The IRCds supported by Services are listed in `dist/xtheme.conf.example`.
 Although many others are supported, Services can provide the richest experience
-with Charybdis, InspIRCd, and UnrealIRCd.
+with ChatIRCd, Charybdis, InspIRCd, and UnrealIRCd.
 
 NOTE: if you are using a third party package of Services, most of this section
 will not apply.

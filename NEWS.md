@@ -1,5 +1,11 @@
 Xtheme IRC Services git (8.0.0-dev) Development Notes  
 ==================================================  
+chanserv
+--------
+* AKICK enforcement (kick messages) have been updated to a more  
+	modern kickreason.  Was: "Banned: Reason" - Now:  
+	"(setter) Reason"
+
 contrib  
 -------  
 * Help: Added observed missing help files for various contrib
@@ -39,8 +45,7 @@ general
 memoserv
 --------
 * send: Read receipts now include the original memo text (thanks to  
-	[ChatServices](https://bitbucket.org/chatlounge/chatservices/) and  
-	@MrBenC  
+	[ChatServices](https://bitbucket.org/chatlounge/chatservices/) and @MrBenC  
 
 nickserv  
 --------  

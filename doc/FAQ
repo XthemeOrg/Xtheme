@@ -22,7 +22,7 @@ are working, so why would we do all the work for you?
 crypto/posix, unless you are importing from anope, in which case
 use the module that is appropriate for you.
 
-3. There is an Atheme "0day exploit"?!&%&%@!!
+3. There is an Xtheme "0day exploit"?!&%&%@!!
 
 Report it to us.  Do not twitter about it, that is generally not
 helpful.  People who publicize 0days before they can be fixed are
@@ -32,10 +32,10 @@ also generally known as "assholes."
 
 ./configure --disable-nls or install gettext and rerun ./configure.
 
-5. Atheme exits complaining that it is 'tainted'.
+5. Xtheme exits complaining that it is 'tainted'.
 
 You have configured your network in a way that is not supported
-correctly by Atheme at this time.  In order to use this configuration,
+correctly by Xtheme at this time.  In order to use this configuration,
 you must acknowledge that you are using an unsupported configuration.
 
 To do this, you enable the allow_taint directive in the config, but
@@ -44,3 +44,7 @@ we will not provide you with support.
 
 Also note that we do not provide support for enabling allow_taint.
 
+If you modify Xtheme in any way, your support is VOID. (Gone)  We
+will not support users who modify the Xtheme source and then run
+into issues.  If you modified the source; you should be familiar 
+enough with C to know how to fix whatever you break.
