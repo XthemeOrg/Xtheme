@@ -23,6 +23,7 @@ static void watch_net_parts(hook_channel_joinpart_t *hdata);
 static void watch_net_topics(channel_t *c);
 static void watch_net_connects(hook_user_nick_t *hdata);
 static void user_delete_info(hook_user_delete_t *hdata);
+static void watch_net_nicks(hook_user_nick_t *hdata);
 
 static void watch_net_joins(hook_channel_joinpart_t *hdata)
 {
@@ -110,6 +111,23 @@ static void watch_net_connects(hook_user_nick_t *hdata)
 
 }
 
+static void watch_net_nicks(hook_user_nick_t *hdata)
+{
+	user_t *u = hdata->u;
+
+	if (u == NULL)
+		return;
+
+	/* If the IP is NULL, ignore. (it's of no use to us anyway) --siniStar */
+        if (u->ip == NULL)
+                return;
+
+	slog(LG_NETLOG, "\2NICK:\2 %s (%s@%s) [%s] is now known as \2%s\2",
+			hdata->oldnick, u->user, u->host, u->ip, u->nick);
+	return;
+
+}
+
 void _modinit(module_t *m)
 {
 	hook_add_event("channel_join");
@@ -122,6 +140,8 @@ void _modinit(module_t *m)
 	hook_add_user_add(watch_net_connects);
 	hook_add_event("user_delete_info");
 	hook_add_user_delete_info(user_delete_info_hook);
+	hook_add_event("user_nickchange");
+	hook_add_user_nickchange(watch_net_nicks);
 
 }
 
@@ -137,6 +157,8 @@ void _moddeinit(module_unload_intent_t intent)
 	hook_del_user_add(watch_net_connects);
 	hook_del_event("user_delete_info");
 	hook_del_user_delete_info(user_delete_info_hook);
+	hook_del_event("user_nickchange");
+	hook_del_user_nickchange(watch_net_nicks);
 
 }
 
