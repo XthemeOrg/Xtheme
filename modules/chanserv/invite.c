@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2016 Xtheme Development Group (Xtheme.org)
+ * Copyright (c) 2014-2017 Xtheme Development Group (Xtheme.org)
  * Copyright (c) 2005 William Pitcock, et al.
  * Rights to this code are as documented in doc/LICENSE.
  *
@@ -19,7 +19,7 @@ DECLARE_MODULE_V1
 static void cs_cmd_invite(sourceinfo_t *si, int parc, char *parv[]);
 
 command_t cs_invite = { "INVITE", N_("Invites you to a channel."),
-                        AC_NONE, 1, cs_cmd_invite, { .path = "cservice/invite" } };
+                        AC_NONE, 2, cs_cmd_invite, { .path = "cservice/invite" } };
 
 void _modinit(module_t *m)
 {
@@ -56,8 +56,14 @@ static void cs_cmd_invite(sourceinfo_t *si, int parc, char *parv[])
 		return;
 	}
 
-	mc = mychan_find(chan);
-	if (!mc)
+	if (*chan != '#')
+	{
+		command_fail(si, fault_badparams, STR_INVALID_PARAMS, "INVITE");
+		command_fail(si, fault_badparams, _("Syntax: INVITE <#channel>"));
+		return;
+	}
+
+	if (!(mc = mychan_find(chan)))
 	{
 		command_fail(si, fault_nosuch_target, _("Channel \2%s\2 is not registered."), chan);
 		return;
