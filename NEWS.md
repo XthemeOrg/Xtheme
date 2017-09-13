@@ -19,10 +19,10 @@ chanserv
 config
 ------
 * References to KLINE have been changed to AKILL for better consistency.  
-	This causes three (3) configuration changes:
-	-kline_time is now akill_time
-	-kline_with_ident is now akill_with_ident
-	-kline_verified_ident is now akill_verified_ident
+	This causes three (3) configuration changes:  
+	-kline_time is now akill_time  
+	-kline_with_ident is now akill_with_ident  
+	-kline_verified_ident is now akill_verified_ident  
 
 contrib  
 -------  
