@@ -2,7 +2,7 @@
  * xtheme-services: A collection of minimalist IRC services
  * conf.c: Services-specific configuration processing.
  *
- * Copyright (c) 2014-2015 Xtheme Development Group (http://www.Xtheme.org)
+ * Copyright (c) 2014-2017 Xtheme Development Group (http://www.Xtheme.org)
  * Copyright (c) 2005-2008 Atheme Project (http://www.atheme.org)
  *
  * Permission to use, copy, modify, and/or distribute this software for any
@@ -232,8 +232,8 @@ void init_newconf(void)
 	add_bool_conf_item("SILENT", &conf_gi_table, 0, &config_options.silent, false);
 	add_bool_conf_item("JOIN_CHANS", &conf_gi_table, 0, &config_options.join_chans, false);
 	add_bool_conf_item("LEAVE_CHANS", &conf_gi_table, 0, &config_options.leave_chans, false);
-	add_bool_conf_item("KLINE_WITH_IDENT", &conf_gi_table, 0, &config_options.kline_with_ident, false);
-	add_bool_conf_item("KLINE_VERIFIED_IDENT", &conf_gi_table, 0, &config_options.kline_verified_ident, false);
+	add_bool_conf_item("AKILL_WITH_IDENT", &conf_gi_table, 0, &config_options.akill_with_ident, false);
+	add_bool_conf_item("AKILL_VERIFIED_IDENT", &conf_gi_table, 0, &config_options.akill_verified_ident, false);
 	add_conf_item("UFLAGS", &conf_gi_table, c_gi_uflags);
 	add_conf_item("CFLAGS", &conf_gi_table, c_gi_cflags);
 	add_bool_conf_item("RAW", &conf_gi_table, 0, &config_options.raw, false);
@@ -242,7 +242,7 @@ void init_newconf(void)
 	add_duration_conf_item("FLOOD_TIME", &conf_gi_table, 0, &config_options.flood_time, "s", 10);
 	add_uint_conf_item("RATELIMIT_USES", &conf_gi_table, 0, &config_options.ratelimit_uses, 0, INT_MAX, 0);
 	add_duration_conf_item("RATELIMIT_PERIOD", &conf_gi_table, 0, &config_options.ratelimit_period, "s", 0);
-	add_duration_conf_item("KLINE_TIME", &conf_gi_table, 0, &config_options.kline_time, "d", 0);
+	add_duration_conf_item("AKILL_TIME", &conf_gi_table, 0, &config_options.akill_time, "d", 0);
 	add_duration_conf_item("ZLINE_TIME", &conf_gi_table, 0, &config_options.zline_time, "d", 0);
 	add_duration_conf_item("CLONE_TIME", &conf_gi_table, 0, &config_options.clone_time, "m", 0);
 	add_duration_conf_item("COMMIT_INTERVAL", &conf_gi_table, 0, &config_options.commit_interval, "m", 300);

@@ -1,4 +1,5 @@
 /*
+ * Copyright (C) 2014-2017 Xtheme Development Group
  * Copyright (C) 2003-2004 E. Will et al.
  * Copyright (C) 2005-2006 Atheme Development Group
  * Rights to this code are as documented in doc/LICENSE.
@@ -78,7 +79,7 @@ struct ConfOption
   unsigned int flood_time;          /* time determining flood     */
   unsigned int ratelimit_uses;	    /* uses of a ratelimited command */
   unsigned int ratelimit_period;    /* period in which ratelimit_uses are done */
-  unsigned int kline_time;          /* default expire for klines  */
+  unsigned int akill_time;          /* default expire for akills  */
   unsigned int zline_time;          /* default expire for zlines  */
   unsigned int clone_time;          /* default expire for clone exemptions */
   unsigned int commit_interval;     /* interval between commits   */
@@ -87,8 +88,8 @@ struct ConfOption
   bool join_chans;           /* join registered channels?  */
   bool leave_chans;          /* leave channels when empty? */
   bool secure;               /* require /msg <service>@host? */
-  bool kline_with_ident;     /* kline ident@host instead of *@host on automated bans? */
-  bool kline_verified_ident; /* Don't kline ident@host if first char of ident is ~ ? */
+  bool akill_with_ident;     /* kline ident@host instead of *@host on automated bans? */
+  bool akill_verified_ident; /* Don't kline ident@host if first char of ident is ~ ? */
 
   unsigned int defuflags;           /* default username flags     */
   unsigned int defcflags;           /* default channel flags      */

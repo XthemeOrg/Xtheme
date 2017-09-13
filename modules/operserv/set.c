@@ -1,4 +1,5 @@
 /*
+ * Copyright (c) 2014-2017 Xtheme Development Group <Xtheme.org>
  * Copyright (c) 2006 William Pitcock, et al.
  * Rights to this code are documented in doc/LICENSE.
  *
@@ -24,7 +25,7 @@ static void os_cmd_set_maxnicks(sourceinfo_t *si, int parc, char *parv[]);
 static void os_cmd_set_maxusers(sourceinfo_t *si, int parc, char *parv[]);
 static void os_cmd_set_maxchans(sourceinfo_t *si, int parc, char *parv[]);
 static void os_cmd_set_mdlimit(sourceinfo_t *si, int parc, char *parv[]);
-static void os_cmd_set_klinetime(sourceinfo_t *si, int parc, char *parv[]);
+static void os_cmd_set_akilltime(sourceinfo_t *si, int parc, char *parv[]);
 static void os_cmd_set_commitinterval(sourceinfo_t *si, int parc, char *parv[]);
 static void os_cmd_set_chanexpire(sourceinfo_t *si, int parc, char *parv[]);
 static void os_cmd_set_maxchanacs(sourceinfo_t *si, int parc, char *parv[]);
@@ -41,7 +42,7 @@ command_t os_set_maxnicks = { "MAXNICKS", N_("Changes the maximum number of nick
 command_t os_set_maxusers = { "MAXUSERS", N_("Changes the maximum number of accounts that one email address may have registered."), AC_NONE, 1, os_cmd_set_maxusers, { .path = "oservice/set_maxusers" } };
 command_t os_set_maxchans = { "MAXCHANS", N_("Changes the maximum number of channels one account may own."), AC_NONE, 1, os_cmd_set_maxchans, { .path = "oservice/set_maxchans" } };
 command_t os_set_mdlimit = { "MDLIMIT", N_("Sets the maximum amount of metadata one channel or account may have."), AC_NONE, 1, os_cmd_set_mdlimit, { .path = "oservice/set_mdlimit" } };
-command_t os_set_klinetime = { "KLINETIME", N_("Sets the default KLINE/AKILL time."), AC_NONE, 1, os_cmd_set_klinetime, { .path = "oservice/set_klinetime" } };
+command_t os_set_akilltime = { "AKILLTIME", N_("Sets the default AKILL time."), AC_NONE, 1, os_cmd_set_akilltime, { .path = "oservice/set_akilltime" } };
 command_t os_set_commitinterval = { "COMMITINTERVAL", N_("Changes how often the database is written to disk."), AC_NONE, 1, os_cmd_set_commitinterval, { .path = "oservice/set_commitinterval" } };
 command_t os_set_chanexpire = { "CHANEXPIRE", N_("Sets when unused channels expire."), AC_NONE, 1, os_cmd_set_chanexpire, { .path = "oservice/set_chanexpire" } };
 command_t os_set_maxchanacs = { "MAXCHANACS", N_("Changes the maximum number of channel access list entries per channel."), AC_NONE, 1, os_cmd_set_maxchanacs, { .path = "oservice/set_maxchanacs" } };
@@ -256,14 +257,14 @@ static void os_cmd_set_mdlimit(sourceinfo_t *si, int parc, char *parv[])
 	}
 }
 
-static void os_cmd_set_klinetime(sourceinfo_t *si, int parc, char *parv[])
+static void os_cmd_set_akilltime(sourceinfo_t *si, int parc, char *parv[])
 {
 	char *days = parv[0];
 
 	if (!days)
 	{
-		command_fail(si, fault_needmoreparams, STR_INSUFFICIENT_PARAMS, "KLINETIME");
-		command_fail(si, fault_needmoreparams, _("Syntax: SET KLINETIME <days>"));
+		command_fail(si, fault_needmoreparams, STR_INSUFFICIENT_PARAMS, "AKILLTIME");
+		command_fail(si, fault_needmoreparams, _("Syntax: SET AKILLTIME <days>"));
 		return;
 	}
 
@@ -271,15 +272,15 @@ static void os_cmd_set_klinetime(sourceinfo_t *si, int parc, char *parv[])
 
 	if (value < 0)
 	{
-		command_fail(si, fault_badparams, _("KLINETIME must be a positive integer, %s is invalid"), days);
+		command_fail(si, fault_badparams, _("AKILLTIME must be a positive integer, %s is invalid"), days);
 		return;
 	}
 	else
 	{
 		unsigned int realvalue = value * 24 * 60 * 60;
-		config_options.kline_time = realvalue;
-		command_success_nodata(si, "KLINETIME has been successfully set to %s days.", days);
-		logcommand(si, CMDLOG_ADMIN, "SET:KLINETIME: \2%s\2", days);
+		config_options.akill_time = realvalue;
+		command_success_nodata(si, "AKILLTIME has been successfully set to %s days.", days);
+		logcommand(si, CMDLOG_ADMIN, "SET:AKILLTIME: \2%s\2", days);
 	}
 }
 
@@ -517,7 +518,7 @@ void _modinit(module_t *m)
 	command_add(&os_set_maxusers, os_set_cmdtree);
 	command_add(&os_set_maxchans, os_set_cmdtree);
 	command_add(&os_set_mdlimit, os_set_cmdtree);
-	command_add(&os_set_klinetime, os_set_cmdtree);
+	command_add(&os_set_akilltime, os_set_cmdtree);
 	command_add(&os_set_commitinterval, os_set_cmdtree);
 	command_add(&os_set_chanexpire, os_set_cmdtree);
 	command_add(&os_set_maxchanacs, os_set_cmdtree);
@@ -537,7 +538,7 @@ void _moddeinit(module_unload_intent_t intent)
 	command_delete(&os_set_maxusers, os_set_cmdtree);
 	command_delete(&os_set_maxchans, os_set_cmdtree);
 	command_delete(&os_set_mdlimit, os_set_cmdtree);
-	command_delete(&os_set_klinetime, os_set_cmdtree);
+	command_delete(&os_set_akilltime, os_set_cmdtree);
 	command_delete(&os_set_commitinterval, os_set_cmdtree);
 	command_delete(&os_set_chanexpire, os_set_cmdtree);
 	command_delete(&os_set_maxchanacs, os_set_cmdtree);

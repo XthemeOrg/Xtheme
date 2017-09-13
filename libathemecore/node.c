@@ -162,7 +162,7 @@ kline_t *kline_add(const char *user, const char *host, const char *reason, long 
 
 kline_t *kline_add_user(user_t *u, const char *reason, long duration, const char *setby)
 {
-	bool use_ident = config_options.kline_with_ident && (!config_options.kline_verified_ident || *u->user != '~');
+	bool use_ident = config_options.akill_with_ident && (!config_options.akill_verified_ident || *u->user != '~');
 
 	return kline_add (use_ident ? u->user : "*", u->ip ? u->ip : u->host, reason, duration, setby);
 }

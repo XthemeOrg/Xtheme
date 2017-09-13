@@ -1,4 +1,5 @@
 /*
+ * Copyright (c) 2014-2017 Xtheme Development Group <www.Xtheme.org>
  * Copyright (c) 2009 Atheme Development Group
  * Copyright (c) 2009 Rizon Development Team <http://redmine.rizon.net>
  * Rights to this code are documented in doc/LICENSE.
@@ -182,7 +183,7 @@ static void os_cmd_sgline_add(sourceinfo_t *si, int parc, char *parv[])
 	}
 	else
 	{
-		duration = config_options.kline_time;
+		duration = config_options.akill_time;
 		mowgli_strlcpy(reason, token, BUFSIZE);
 		treason = strtok(NULL, "");
 

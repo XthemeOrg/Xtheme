@@ -2104,23 +2104,23 @@ general {
 	 */
 	ratelimit_period = 60;
 
-	/* (*)kline_time
+	/* (*)akill_time
 	 * The default expire time for AKILL's in days.
 	 * Setting this to 0 makes all AKILL's permanent.
 	 */
-	kline_time = 7;
+	akill_time = 7;
 
-	/* (*)kline_with_ident
+	/* (*)akill_with_ident
 	 * AKILL user@host instead of *@host.
 	 * Applies to all automatic AKILL's set by services.
 	 */
-	#kline_with_ident;
+	#akill_with_ident;
 
-	/* (*)kline_verified_ident
+	/* (*)akill_verified_ident
 	 * AKILL *@host if the first character of the ident is ~,
-	 * irrespective of the value of kline_with_ident.
+	 * irrespective of the value of akill_with_ident.
 	 * /
-	#kline_verified_ident;
+	#akill_verified_ident;
 
 	/* (*)zline_time
 	 * The default expire time for ZLINE/DLINE's in days.
