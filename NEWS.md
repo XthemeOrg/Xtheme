@@ -10,7 +10,8 @@ botserv
 chanserv
 --------
 * AKICK enforcement (kick messages) have been updated to a more
-	modern kickreason.  Was: "Banned: Reason" - Now:
+	modern kickreason.  
+	Was: "Banned: Reason" - Now:
 	"(setter) Reason"  
 * FREEZE command now un-assigns any BotServ bot that is assigned to
 	the channel so that there are not two service bots in the frozen
