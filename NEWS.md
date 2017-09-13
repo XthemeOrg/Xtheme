@@ -2,19 +2,19 @@ Xtheme IRC Services git (8.0.0-dev) Development Notes
 ==================================================  
 botserv
 -------
-* BotServ bots are now automatically un-assigned if a channel is frozen.  
-	(Previously, ChanServ would additionally join the channel; causing  
-	there to be ChanServ as well as a BotServ bot in a frozen channel  
+* BotServ bots are now automatically un-assigned if a channel is frozen.
+	(Previously, ChanServ would additionally join the channel; causing
+	there to be ChanServ as well as a BotServ bot in a frozen channel
 	and duplicated output of fantasy commands.)  
 
 chanserv
 --------
-* AKICK enforcement (kick messages) have been updated to a more  
-	modern kickreason.  Was: "Banned: Reason" - Now:  
-	"(setter) Reason"
-* FREEZE command now un-assigns any BotServ bot that is assigned to  
-	the channel so that there are not two service bots in the frozen  
-	channel.
+* AKICK enforcement (kick messages) have been updated to a more
+	modern kickreason.  Was: "Banned: Reason" - Now:
+	"(setter) Reason"  
+* FREEZE command now un-assigns any BotServ bot that is assigned to
+	the channel so that there are not two service bots in the frozen
+	channel.  
 
 config
 ------
