@@ -79,6 +79,7 @@ struct ConfOption
   unsigned int flood_time;          /* time determining flood     */
   unsigned int ratelimit_uses;	    /* uses of a ratelimited command */
   unsigned int ratelimit_period;    /* period in which ratelimit_uses are done */
+  unsigned int vhost_change;        /* days in which a user must wait between vhost changes */
   unsigned int akill_time;          /* default expire for akills  */
   unsigned int zline_time;          /* default expire for zlines  */
   unsigned int clone_time;          /* default expire for clone exemptions */

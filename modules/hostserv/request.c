@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2016 Xtheme Development Group <Xtheme.org>
+ * Copyright (c) 2014-2017 Xtheme Development Group <Xtheme.org>
  * Copyright (c) 2005 William Pitcock <nenolod -at- nenolod.net>
  * Rights to this code are as documented in doc/LICENSE.
  *
@@ -277,6 +277,15 @@ static void hs_cmd_request(sourceinfo_t *si, int parc, char *parv[])
 	if (metadata_find(si->smu, "private:restrict:setter"))
 	{
 		command_fail(si, fault_noprivs, _("You have been restricted from requesting vhosts by network staff."));
+		return;
+	}
+
+	md = metadata_find(si->smu, "private:usercloak-timestamp");
+
+	if (CURRTIME < (time_t)(md + config_options.vhost_change) && config_options.vhost_change > 0)
+	{
+		command_fail(si, fault_noprivs, _("You must wait at least \2%d\2 days between changes to your vHost."),
+			(config_options.vhost_change / 3600 / 24));
 		return;
 	}
 

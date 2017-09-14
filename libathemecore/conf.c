@@ -242,6 +242,7 @@ void init_newconf(void)
 	add_duration_conf_item("FLOOD_TIME", &conf_gi_table, 0, &config_options.flood_time, "s", 10);
 	add_uint_conf_item("RATELIMIT_USES", &conf_gi_table, 0, &config_options.ratelimit_uses, 0, INT_MAX, 0);
 	add_duration_conf_item("RATELIMIT_PERIOD", &conf_gi_table, 0, &config_options.ratelimit_period, "s", 0);
+	add_duration_conf_item("VHOST_CHANGE", &conf_gi_table, 0, &config_options.vhost_change, "d", 0);
 	add_duration_conf_item("AKILL_TIME", &conf_gi_table, 0, &config_options.akill_time, "d", 0);
 	add_duration_conf_item("ZLINE_TIME", &conf_gi_table, 0, &config_options.zline_time, "d", 0);
 	add_duration_conf_item("CLONE_TIME", &conf_gi_table, 0, &config_options.clone_time, "m", 0);
