@@ -2232,10 +2232,10 @@ proxyscan {
 	 * NONE - Do nothing
 	 * NOTIFY - Notify user that they are listed in a DNSBL and which one
 	 * SNOOP - Report the user to the logchannel or services channel
-	 * KLINE - AKILL the user from the network (default AKILL is 31 days)
+	 * AKILL - AKILL the user from the network (uses default AKILL time)
 	 */
 	 
-	dnsbl_action = kline;
+	dnsbl_action = akill;
 };
 
 /******************************************************************************
