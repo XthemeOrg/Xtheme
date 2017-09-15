@@ -24,11 +24,11 @@ config
 	* kline_time is now akill_time  
 	* kline_with_ident is now akill_with_ident  
 	* kline_verified_ident is now akill_verified_ident  
-* A new config option vhost_time has been added, allowing network staff
+* A new config option vhost_change has been added, allowing network staff
 	to limit how often (in days) a user must wait between vHost changes
 	such as use of TAKE or REQUEST command.  
 	This causes one (1) additional configuration addition:
-	* vhost_time (in days) 
+	* vhost_change (in days) 
 
 contrib  
 -------  
@@ -69,7 +69,7 @@ general
 
 hostserv
 --------
-* New config option (vhost_time) allows Network Staff to limit how often a
+* New config option (vhost_change) allows Network Staff to limit how often a
 	user may change their vHost without Staff intervention. (Helps deter
 	ban evaders, etc.)  
 
