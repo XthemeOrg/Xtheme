@@ -21,9 +21,14 @@ config
 ------
 * References to KLINE have been changed to AKILL for better consistency.  
 	This causes three (3) configuration changes:  
-	-kline_time is now akill_time  
-	-kline_with_ident is now akill_with_ident  
-	-kline_verified_ident is now akill_verified_ident  
+	* kline_time is now akill_time  
+	* kline_with_ident is now akill_with_ident  
+	* kline_verified_ident is now akill_verified_ident  
+* A new config option vhost_time has been added, allowing network staff
+	to limit how often (in days) a user must wait between vHost changes
+	such as use of TAKE or REQUEST command.  
+	This causes one (1) additional configuration addition:
+	* vhost_time (in days) 
 
 contrib  
 -------  
@@ -60,7 +65,13 @@ database
 general
 -------
 * xtheme.conf.example: Various updates for added modules, missing info,  
-	and maintenance.
+	and maintenance.  **4 changes to xtheme.conf so far.**  
+
+hostserv
+--------
+* New config option (vhost_time) allows Network Staff to limit how often a
+	user may change their vHost without Staff intervention. (Helps deter
+	ban evaders, etc.)  
 
 memoserv
 --------
