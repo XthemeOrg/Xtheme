@@ -46,7 +46,7 @@ static void os_cmd_info(sourceinfo_t *si, int parc, char *parv[])
 	command_success_nodata(si, _("Number of commands used before ratelimiting starts, (if 0, ratelimiting is disabled): %d"), config_options.ratelimit_uses);
 	command_success_nodata(si, _("How long before ratelimiting counter resets, (if 0, ratelimiting is disabled): %d seconds"), config_options.ratelimit_period);
 	command_success_nodata(si, _("No nick ownership enabled: %s"), nicksvs.no_nick_ownership ? "yes" : "no");
-	command_success_nodata(si, _("Number of days a user must wait between vHost changes: (if 0, limiting is disabled): %d days"), config_options.vhost_change);
+	command_success_nodata(si, _("Number of days a user must wait between vHost changes: (if 0, limiting is disabled): %d days"), config_options.vhost_change / 86400);
         command_success_nodata(si, _("Nickname expiration time: %d days"), nicksvs.expiry / 86400);
 	command_success_nodata(si, _("Nickname enforce expiry time: %d days"), nicksvs.enforce_expiry / 86400);
 	command_success_nodata(si, _("Default nickname enforce delay: %d seconds"), nicksvs.enforce_delay);
