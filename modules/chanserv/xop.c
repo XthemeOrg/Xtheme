@@ -306,6 +306,16 @@ static void cs_xop_do_add(sourceinfo_t *si, mychan_t *mc, myentity_t *mt, char *
 		return;
 	}
 
+	/* Again, do not allow unverified users to have
+	 * channel access. (when applicable)
+	 * -- siniStar */
+	if (chansvs.verifiedaccess && isuser(mt) && MU_WAITAUTH & user(mt)->flags && (ca->level == 0 || ca->level == CA_AKICK))
+	{
+		command_fail(si, fault_noprivs, _("\2%s\2 must complete \2Account Verification\2 to be added to channel access lists (\2UNVERIFIED\2 user)."), mt->name);
+		chanacs_close(ca);
+		return;
+	}
+
 	/*
 	 * this is a little more cryptic than it used to be, but much cleaner. Functionally should be
 	 * the same, with the exception that if they had access before, now it doesn't tell what it got

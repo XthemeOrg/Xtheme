@@ -298,6 +298,7 @@ void _modinit(module_t *m)
 
 	/* chanserv{} block */
 	add_bool_conf_item("FANTASY", &chansvs.me->conf_table, 0, &chansvs.fantasy, false);
+	add_bool_conf_item("VERIFIEDACCESS", &chansvs.me->conf_table, 0, &chansvs.verifiedaccess, false);
 	add_conf_item("VOP", &chansvs.me->conf_table, c_ci_vop);
 	add_conf_item("HOP", &chansvs.me->conf_table, c_ci_hop);
 	add_conf_item("AOP", &chansvs.me->conf_table, c_ci_aop);

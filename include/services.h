@@ -26,6 +26,8 @@ struct chansvs_
 
   bool fantasy;		/* enable fantasy commands    */
 
+  bool verifiedaccess;  /* allow only verified users chanacs  */
+
   char *trigger;		/* trigger, e.g. !, ` or .    */
 
   bool changets;		/* use TS to better deop people */
