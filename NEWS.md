@@ -16,6 +16,10 @@ chanserv
 * FREEZE command now un-assigns any BotServ bot that is assigned to
 	the channel so that there are not two service bots in the frozen
 	channel.  
+* New config option in chanserv section called 'verifiedaccess', which  
+	when enabled; only allows users who have completed account verification  
+	(when 'auth' is set to email) to be able to be added to access lists or  
+	given flags on channels.  
 
 config
 ------
@@ -24,11 +28,17 @@ config
 	* kline_time is now akill_time  
 	* kline_with_ident is now akill_with_ident  
 	* kline_verified_ident is now akill_verified_ident  
-* A new config option vhost_change has been added, allowing network staff
+* A new config option 'vhost_change' has been added, allowing network staff
 	to limit how often (in days) a user must wait between vHost changes
 	such as use of TAKE or REQUEST command.  
 	This causes one (1) additional configuration addition:
-	* vhost_change (in days) 
+	* vhost_change (in days)  
+* A new config option 'verifiedaccess' was added to the chanserv section  
+	which (when enabled) only allows verified users to be given channel  
+	flags or access.  
+	This causes one (1) additional configuration addition to the chanserv  
+	section:
+	* verifiedaccess;   (or #verifiedaccess; to disable)  
 
 contrib  
 -------  
@@ -44,7 +54,7 @@ contrib
 	can result in many duplicate AKILLs that could have been solved
 	with just 1 AKILL on the IP address.  
 * os_akillnicklist: Updated so that when a user matches the AKILL
-	criteria that the AKILL is sent using *@IP to be more effective
+	criteria that the AKILL is sent using @IP to be more effective
 	against bots/drones.  
 * os_zlinechan: New contrib module that does the same as akillchan,
 	but sets ZLINEs/DLINEs instead of AKILLs - managed via ZLINE
@@ -53,9 +63,12 @@ contrib
 
 core
 ----
-* Added a VERIFICATION warning for un-verified users (when applicable) 
+* Added a VERIFICATION warning for un-verified users (when applicable)
 	that reminds un-verified users that their account will expire
 	within 24 hours of registration.  
+* Updated cautions and warnings when users trigger Flood Protection  
+	within Services, as well as the AKILL reason when the user/bot  
+	ignores the first two notices.  
 
 database
 --------
@@ -77,7 +90,7 @@ memoserv
 --------
 * send: Read receipts now include the original memo text (thanks to
 	[ChatServices](https://bitbucket.org/chatlounge/chatservices/) and @MrBenC )  
-* send: fix format warnings during compile	
+* send: fix format warnings during compile
 
 nickserv  
 --------  
@@ -117,7 +130,7 @@ proxyscan
 operserv
 --------
 * Added a new ZLINE management system similar to the AKILL management
-	system.  ZLINEs can now be organized and easily managed via 
+	system.  ZLINEs can now be organized and easily managed via
 	Services
 * ZLINEs placed through OperServ will be numbered [Z#1]
 * AKILLs placed through OperServ will be numbered [AK#1]
@@ -164,7 +177,7 @@ memoserv
 
 protocol
 --------
-* inspircd: Added support for +U (inspircd-extras/m_opmoderated.cpp) 
+* inspircd: Added support for +U (inspircd-extras/m_opmoderated.cpp)
 	(Similar to Charybdis/ircd-seven's +z moderation mode)
 
 
@@ -201,12 +214,12 @@ Xtheme Services 7.5.0-rc1 Development Notes
 chanfix
 -------
 * Fixed a bug where certain channels were not being fixed (even without
-	NOFIX set) and if attempted to be manually fixed, would run into a 
+	NOFIX set) and if attempted to be manually fixed, would run into a
 	mode removal loop instead of fixing the channel.
 
 chanserv
 --------
-* INFO command will now indicate (if the channel is not private) the ANTIFLOOD 
+* INFO command will now indicate (if the channel is not private) the ANTIFLOOD
 	response or reaction. (if enabled)
 * MASS command and functions added. (Halfop, Op, Owner, Protect, Voice)
 	(Closes XthemeOrg/Xtheme#11)
@@ -221,18 +234,18 @@ contrib
 	module instead.
 * os_akillchan: updated to include the service bot issuing the automated AKILL instead
 	of "*".
-* os_akillnicklist: updated to include the service bot issuing the automated AKILL 
+* os_akillnicklist: updated to include the service bot issuing the automated AKILL
 	instead of "*".
 * os_defcon: updated to include the service bot issuing the automated AKILL instead of
 	"*".
-* AdminServ removed from contrib, but still available on XthemeOrg GitHub for users 
+* AdminServ removed from contrib, but still available on XthemeOrg GitHub for users
 	that desire to use it.
-* ns_forbid: Fix so forbidden nicks show up as forbidden in NickServ LIST instead of 
+* ns_forbid: Fix so forbidden nicks show up as forbidden in NickServ LIST instead of
 	frozen.
 
 core
 ----
-* SOPER and SOPER:AF (Authentication Failure) will now report the operclass 
+* SOPER and SOPER:AF (Authentication Failure) will now report the operclass
 	names in messages.  This helps increase visibility for network staff.
 
 general
@@ -258,12 +271,12 @@ operserv
 --------
 * CLEARCHAN with AKILL option will now show the Services Operator performing
 	the command in the AKILL list instead of "*"
-* AKILL now shows the number of matching users affected by the set AKILL as 
+* AKILL now shows the number of matching users affected by the set AKILL as
 	well as any matches/hits to the operator issuing the command.
 
 proxyscan
 ---------
-* The DNSBL module has been fixed (so that it is working and stable) by 
+* The DNSBL module has been fixed (so that it is working and stable) by
 	ilbelkyr (shalture/shalture)  Additional reviews and fixes were made
 	to the module after extensive testing.
 * DNSBL exemptions are now properly saved and do not cause issues with startup
@@ -271,7 +284,7 @@ proxyscan
 * DNSBL Hits (with KLINE option) will be set for 14 Days for more effectiveness.
 	(This may be changed to the xtheme.conf default in time.)
 * Example config for Proxyscan/dnsbl added to xtheme.conf.example [Requires xtheme.conf update]
-* DNSBL Hits (with KLINE option) will now show the DNSBL the user was listed in as the 
+* DNSBL Hits (with KLINE option) will now show the DNSBL the user was listed in as the
 	AKILLer in AKILL LIST FULL.
 
 
@@ -297,14 +310,14 @@ chanfix
 
 chanserv
 --------
-* hold: record services operator that held channel 
+* hold: record services operator that held channel
 * info: reveal services operator that held channel (*NOTE: Previous HOLDs
-	will not reveal services operator that set the HOLD as it was not 
+	will not reveal services operator that set the HOLD as it was not
 	recorded until Xtheme 7.4.3)
 
 core
 ----
-* Libmowgli-2 updated to most recent code 
+* Libmowgli-2 updated to most recent code
 
 memoserv
 --------
@@ -312,9 +325,9 @@ memoserv
 
 nickserv
 --------
-* hold: record services operator that held account 
+* hold: record services operator that held account
 * info: reveal services operator that held account (*NOTE: Previous HOLDs
-	will not reveal services operator that set the HOLD as it was not 
+	will not reveal services operator that set the HOLD as it was not
 	recorded until Xtheme 7.4.3)
 
 general
@@ -400,18 +413,18 @@ Xtheme Services 7.4.1 Development Notes
 chanserv
 --------
 * Fix for removing old suspend metadata once a suspension expires.
-* Added ability for channel Founders (+F users) to delete a 
-	suspension affecting them. 
+* Added ability for channel Founders (+F users) to delete a
+	suspension affecting them.
 	* NOTE: Checks are already in place to ensure Founders cannot
 		be suspended.
 * Fix for SUSPEND - Remove halfops status (if applicable) as well,
-	and added checks to ensure another user cannot simply ask 
+	and added checks to ensure another user cannot simply ask
 	ChanServ to give the suspended user halfop status.
 
 Xtheme goes sleeper
 -------------------
-! This will be the final release of Xtheme (excluding bug fixes) 
-	since the maintainers of Shalture, Zohlai and Xtheme have 
+! This will be the final release of Xtheme (excluding bug fixes)
+	since the maintainers of Shalture, Zohlai and Xtheme have
 	formed the new Atheme Group.  We will now be focusing our
 	efforts to bring the bug fixes from our forks over to Atheme
 	as well as (some) of the new features.  Feel free to request
@@ -428,18 +441,18 @@ Xtheme Services 7.4.0 Development Notes
 general
 -------
 * A lot of testing, bug fixes and code cleanups.
-	
+
 
 Xtheme Services 7.4.0alpha-2 Development Notes
 =====================================
 chanserv
 --------
 * SUSPEND ADD/DEL (flag +P) added for ability to suspend channel
-	users access or privileges in a channel.  Suspensions can be 
+	users access or privileges in a channel.  Suspensions can be
 	timed or permanent. (!T expiry or !P)
 * SUSPEND Help file added
 * SUSPEND (+P) added to HELP FLAGS output (when applicable)
-* SUSPEND information added to output in ChanServ WHY and 
+* SUSPEND information added to output in ChanServ WHY and
 	ChanServ ACCESS INFO.
 * Fixes for WHY and ACCESS INFO output giving incorrect information
 	in output for PERMANENT (or non-expiring) suspensions.
@@ -457,11 +470,11 @@ nickserv
 --------
 * LASTLOGIN will now be displayed along with successful authentication
 	notice.
-	
+
 general
 -------
-* Since this release introduces various fixes and a change to core, 
-	the development version has been bumped to 7.4.0.  Releases of 
+* Since this release introduces various fixes and a change to core,
+	the development version has been bumped to 7.4.0.  Releases of
 	v7.4.0 will begin in alpha stages. (beginning with 7.4.0-alpha1)
 
 
@@ -469,7 +482,7 @@ Xtheme Services 7.3.6 Development Notes
 =====================================
 chanfix
 -------
-* LIST -- Added MARKed channels to ChanFix LIST output. (Now ChanFix 
+* LIST -- Added MARKed channels to ChanFix LIST output. (Now ChanFix
 	LIST will show channels and indicate if they are NOFIXed or MARKed)
 
 release
@@ -496,7 +509,7 @@ chanserv
 * Fixed bug in chanserv/moderate where Services Operators were opped
 	in ACTIVATE'd channels instead of the actual Founder.
 * Add +e as a defualt flag for Channel Founders to match templates.
-* Small fix to LIST output so that closed channels are not listed 
+* Small fix to LIST output so that closed channels are not listed
 	with/as frozen channels.
 
 operserv
@@ -505,7 +518,7 @@ operserv
 
 contrib
 -------
-* Added contrib/os_akillchan AKILL hits to AKILL DB for easier 
+* Added contrib/os_akillchan AKILL hits to AKILL DB for easier
 	management.
 
 
@@ -543,7 +556,7 @@ chanserv
 * Add BLOCKBADWORDS help files and reference BLOCKBADWORDSOPS, from
 	upstream.
 * Added REGGROUP option (turned off by default) for Channel Request
-	memo's to be sent to the appropriate services team members to 
+	memo's to be sent to the appropriate services team members to
 	the Xtheme example config. (For networks using chanserv/moderate)
 * Bug Fix for ChanServ FREEZE which makes ChanServ leave the channel
 	after it is unfrozen (unless GUARD is set)
@@ -553,7 +566,7 @@ hostserv
 * added ability to send Group Memos for HostServ requests, allowing
 	proper services staff to be notified via Memo of vHost requests.
 * Added REGGROUP option (turned off by default) for vHost Request
-	memo's to be sent to the appropriate services team members to 
+	memo's to be sent to the appropriate services team members to
 	the Xtheme example config. (For all networks allowing requests)
 * added DROP command allowing users to drop their assigned vhosts
 	without the need for Staff Intervention.
@@ -583,12 +596,12 @@ general
 
 nickserv
 --------
-* added CERT IDENTIFY 
+* added CERT IDENTIFY
 * bug with SENDPASS fixed
 
 chanserv
 --------
-* fixed bug in ChanServ MODERATE where channels ACTIVATEd were not joined by 
+* fixed bug in ChanServ MODERATE where channels ACTIVATEd were not joined by
 	ChanServ if the Founder gets disconnected or logs out.
 * SET FOUNDER is back (and a bug introduced by it's return is fixed)
 
@@ -611,10 +624,10 @@ Xtheme Services 7.3.0 Development Notes
 =====================================
 general
 -------
-* Atheme has decided to end development.  The Xtheme Group forked Atheme to 
+* Atheme has decided to end development.  The Xtheme Group forked Atheme to
 	create Xtheme IRC Services!
 * added Help file for FREEZE command
-* added Help file for GroupServ/SET GROUPNAME (reported missing in 
+* added Help file for GroupServ/SET GROUPNAME (reported missing in
 	#Atheme on Freenode to Atheme group)
 * changed command actions from klines to akill, however core functionality is still
 	mostly the same to maintain compatibility with networks that were using either
@@ -625,14 +638,14 @@ chanserv
 * added FREEZE command (Similar to CLOSE, but allows a channel to remain
 	open, but all access to it "suspended".
 * Make `NOSYNC` show in ChanServ INFO output  
- 
+
 operserv
 --------
 * Change KLINE messages to AKILL to be more appropriate with todays most
 	commonly used IRCds.
-* "Ignoring attempt from..." wallops from OperServ have been turned into a 
+* "Ignoring attempt from..." wallops from OperServ have been turned into a
 	log event instead.
- 
+
 help files
 ----------
 - Help files have been updated to reference Xtheme, instead of Atheme.
@@ -898,7 +911,7 @@ dbverify
 
 ircd protocol
 -------------
-- bahamut: add experimental support for bahamut-2.0 NICKIPSTR 
+- bahamut: add experimental support for bahamut-2.0 NICKIPSTR
   capability.
 - charybdis: Add support for locking of modes provided by
   extensions modules.
@@ -943,7 +956,7 @@ exttarget
   or account attribute in channel access lists.  these targets can
   take optional parameters.
 - exttarget/oper: $oper extended target added.  this target allows you
-  to match against all opers on the network in channel access lists. 
+  to match against all opers on the network in channel access lists.
 - exttarget/registered: $registered extended target added.  this target
   matches anyone who is logged into services.
 - exttarget/channel: $channel extended target added.  this target allows
@@ -1002,7 +1015,7 @@ nickserv
 - nevergroup: New module that prevents anyone giving you access to a group.
 - badmail: New module which allows setting email addresses (or glob patterns)
   which are not allowed to register accounts on-the-fly.
-- nickserv now allows passwords longer than 32 characters if the database is 
+- nickserv now allows passwords longer than 32 characters if the database is
   being hashed.
 - subscribe: Removed as it had many flaws and no one used it.
 - ns_cleannick: new contrib module. Forces a nick change on a user if their nick is
@@ -1040,7 +1053,7 @@ rpgserv
 scripting
 ---------
 - Support for scripting Atheme in Perl added. Perl scripts are loaded with
-  OperServ MODLOAD just like modules. Still in alpha. Add the --with-perl configure 
+  OperServ MODLOAD just like modules. Still in alpha. Add the --with-perl configure
   switch to enable it. POD-style documentation for the perl API is in doc/perl/.
 
 statserv
@@ -1131,7 +1144,7 @@ chanserv
   channel_pick_successor hook.
 - chanserv/list: Enhance by adding many possible criteria to match channels
   against.
-- new set_prefix module. This module allows channels to define a channel-specific 
+- new set_prefix module. This module allows channels to define a channel-specific
   fantasy prefix. The channel-specific prefix is displayed in the INFO for the
   channel. This is particularly useful if the channel uses an external bot that
   conflicts with the services default fantasy prefix.
@@ -1258,7 +1271,7 @@ operserv
 
 code
 ----
-- replace the atheme-services build system with the ACBS used by many other 
+- replace the atheme-services build system with the ACBS used by many other
   Atheme projects.
 - rework the colour and special character stripping for xmlrpc.
 - remove snoop(). any modules still using snoop() will fail to compile on
@@ -1332,7 +1345,7 @@ operserv
 - reject jupes with names containing wildcards.
 - add os_trace contrib module. This module looks up users by various criteria
   and lets you perform actions on them.
-- add os_akillnicklist contrib module. Automatically AKILLs a list of clients, 
+- add os_akillnicklist contrib module. Automatically AKILLs a list of clients,
   given their operating parameters.
 - change CLEARCHAN GLINE action to AKILL to be more consistent with the rest
   of Atheme. GLINE still exists as an alias to AKILL.
@@ -1350,7 +1363,7 @@ code
 - allow #else in helpfiles
 - startup flag -r (read-only) added.
 - enable large file support.
-- Add 'force_language' to sourceinfo_t, which forces the locale 
+- Add 'force_language' to sourceinfo_t, which forces the locale
   to be reset to the language specified by the sourceinfo structure.
   Useful for forcing XMLRPC responses to be in English.
 - force dependency calculation before most targets to fix -j problems; there
