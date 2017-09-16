@@ -906,7 +906,7 @@ int floodcheck(user_t *u, user_t *t)
 				u->msgs = 0;
 				u->offenses = 11;
 
-				notice(from, u->nick, _("You have triggered services flood protection."));
+				notice(from, u->nick, _("\2CAUTION:\2 You have triggered Services Flood Protection."));
 				notice(from, u->nick, _("This is your first offense. You will be ignored for 30 seconds."));
 
 				slog(LG_INFO, "FLOOD: \2%s\2", u->nick);
@@ -921,8 +921,10 @@ int floodcheck(user_t *u, user_t *t)
 				u->msgs = 0;
 				u->offenses = 12;
 
-				notice(from, u->nick, _("You have triggered services flood protection."));
+				notice(from, u->nick, _("\2WARNING:\2 You have triggered Services Flood Protection, again."));
 				notice(from, u->nick, _("This is your last warning. You will be ignored for 30 seconds."));
+				notice(from, u->nick, _("If you continue to flood Services after the ignore expires,"));
+				notice(from, u->nick, _("you will be autokilled (banned) from the network for a while."));
 
 				slog(LG_INFO, "FLOOD: \2%s\2", u->nick);
 
@@ -933,9 +935,9 @@ int floodcheck(user_t *u, user_t *t)
 			{
 				kline_t *k;
 
-				k = kline_add_user(u, "ten minute ban - flooding services", 600, chansvs.nick);
+				k = kline_add_user(u, "Flooding Services - Ten (10) Minute ban", 600, chansvs.nick);
 
-				slog(LG_INFO, "FLOOD:KLINE: \2%s\2", u->nick);
+				slog(LG_INFO, "FLOOD:AKILL: \2%s\2", u->nick);
 
 				return 1;
 			}
