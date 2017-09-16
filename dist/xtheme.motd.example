@@ -1,4 +1,7 @@
-This is the services daemon for &network&.
+This is the Xtheme IRC Services v8.*.* daemon for &network&.
+
+(The next evolution of IRC Services for IRC networks, their
+Staff and especially the users!)
 
 Nickname registrations will expire after &nickexpiry& days.
 Channel registrations will expire after &chanexpiry& days.
@@ -8,3 +11,6 @@ Registered channels: &mychans&
 
 The services administrator can add additional information
 here such as where to get additional help with services.
+
+An Xtheme Commands WIKI exists at the below URL:
+https://github.com/XthemeOrg/Xtheme/wiki/
