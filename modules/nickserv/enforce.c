@@ -1,4 +1,5 @@
 /*
+ * Copyright (c) 2014-2017 Xtheme Development Group
  * Copyright (c) 2005-2007 Atheme Development Group
  * Rights to this code are as documented in doc/LICENSE.
  *
@@ -273,7 +274,7 @@ static void ns_cmd_release(sourceinfo_t *si, int parc, char *parv[])
 	else
 	{
 		logcommand(si, CMDLOG_DO, "failed RELEASE \2%s\2 (bad password)", target);
-		command_fail(si, fault_authfail, _("Invalid password for \2%s\2."), target);
+		command_fail(si, fault_authfail, _("AUTHENTICATION FAILED as \2%s\2!"), target);
 		bad_password(si, mn->owner);
 	}
 }
@@ -447,7 +448,7 @@ static void ns_cmd_regain(sourceinfo_t *si, int parc, char *parv[])
 	else
 	{
 		logcommand(si, CMDLOG_DO, "failed REGAIN \2%s\2 (bad password)", target);
-		command_fail(si, fault_authfail, _("Invalid password for \2%s\2."), target);
+		command_fail(si, fault_authfail, _("AUTHENTICATION FAILED as \2%s\2!"), target);
 		bad_password(si, mn->owner);
 	}
 }
@@ -503,6 +504,7 @@ void enforce_timeout_check(void *arg)
 			continue;
 
 		notice(nicksvs.nick, u->nick, "You failed to identify in time for the nickname %s", mn->nick);
+		slog(LG_VERBOSE, _("%s:ENFORCE:FNC: \2%s\2 (%s@%s) [%s] failed to authenticate to \2%s\2 in time."), nicksvs.nick, u->nick, u->user, u->host, u->ip, mn->nick);
 		guest_nickname(u);
 		if (ircd->flags & IRCD_HOLDNICK)
 			holdnick_sts(nicksvs.me->me, u->flags & UF_WASENFORCED ? 3600 : 30, u->nick, mn->owner);

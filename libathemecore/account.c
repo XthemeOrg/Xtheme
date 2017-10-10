@@ -231,7 +231,7 @@ void myuser_delete(myuser_t *mu)
 		if (ca->level & CA_FOUNDER && mychan_num_founders(mc) == 1 && (successor = mychan_pick_successor(mc)) != NULL)
 		{
 			slog(LG_INFO, _("SUCCESSION: \2%s\2 to \2%s\2 from \2%s\2"), mc->name, entity(successor)->name, entity(mu)->name);
-			slog(LG_VERBOSE, "myuser_delete(): giving channel %s to %s (unused %lds, founder %s, chanacs %zu)",
+			slog(LG_VERBOSE, "USER:DELETE: giving channel %s to %s (unused %lds, founder %s, chanacs %zu)",
 					mc->name, entity(successor)->name,
 					(long)(CURRTIME - mc->used),
 					entity(mu)->name,
@@ -255,7 +255,7 @@ void myuser_delete(myuser_t *mu)
 		else if (ca->level & CA_FOUNDER && mychan_num_founders(mc) == 1)
 		{
 			slog(LG_REGISTER, _("DELETE: \2%s\2 from \2%s\2"), mc->name, entity(mu)->name);
-			slog(LG_VERBOSE, "myuser_delete(): deleting channel %s (unused %lds, founder %s, chanacs %zu)",
+			slog(LG_VERBOSE, "USER:DELETE: deleting channel %s (unused %lds, founder %s, chanacs %zu)",
 					mc->name, (long)(CURRTIME - mc->used),
 					entity(mu)->name,
 					MOWGLI_LIST_LENGTH(&mc->chanacs));
@@ -303,7 +303,7 @@ void myuser_delete(myuser_t *mu)
 		mn = n->data;
 		if (irccasecmp(mn->nick, entity(mu)->name))
 		{
-			slog(LG_VERBOSE, "myuser_delete(): deleting nick %s (unused %lds, owner %s)",
+			slog(LG_VERBOSE, "USER:DELETE: deleting nick %s (unused %lds, owner %s)",
 					mn->nick,
 					(long)(CURRTIME - mn->lastseen),
 					entity(mu)->name);
@@ -880,13 +880,13 @@ void myuser_name_restore(const char *name, myuser_t *mu)
 	{
 		wallops(_("Not restoring mark \2\"%s\"\2 for account \2%s\2 (name \2%s\2) which is already marked"), md2->value, entity(mu)->name, name);
 		slog(LG_INFO, _("MARK:FORGET: \2\"%s\"\2 for \2%s (%s)\2 (already marked)"), md2->value, name, entity(mu)->name);
-		slog(LG_VERBOSE, "myuser_name_restore(): not restoring mark \"%s\" for account %s (name %s) which is already marked",
+		slog(LG_VERBOSE, "USER:MARK:RESTORE: not restoring mark \"%s\" for account %s (name %s) which is already marked",
 				md2->value, entity(mu)->name, name);
 	}
 	else if (md == NULL && md2 != NULL)
 	{
 		slog(LG_INFO, _("MARK:RESTORE: \2\"%s\"\2 for \2%s (%s)\2"), md2->value, name, entity(mu)->name);
-		slog(LG_VERBOSE, "myuser_name_restore(): restoring mark \"%s\" for account %s (name %s)",
+		slog(LG_VERBOSE, "USER:MARK:RESTORE: restoring mark \"%s\" for account %s (name %s)",
 				md2->value, entity(mu)->name, name);
 	}
 
@@ -1473,7 +1473,7 @@ chanacs_t *chanacs_add_host(mychan_t *mychan, const char *host, unsigned int lev
 
 	if (setter != NULL)
 		mowgli_strlcpy(ca->setter_uid, setter->id, IDLEN);
-	else 
+	else
 		ca->setter_uid[0] = '\0';
 
 	mowgli_node_add(ca, &ca->cnode, &mychan->chanacs);
@@ -1949,7 +1949,7 @@ bool chanacs_change(mychan_t *mychan, myentity_t *mt, const char *hostmask, unsi
 			ca->tmodified = CURRTIME;
 			if (setter != NULL)
 				mowgli_strlcpy(ca->setter_uid, setter->id, IDLEN);
-			else 
+			else
 				ca->setter_uid[0] = '\0';
 
 			if (ca->level == 0)
@@ -2007,7 +2007,7 @@ static int expire_myuser_cb(myentity_t *mt, void *unused)
 			return 0;
 
 		slog(LG_REGISTER, _("EXPIRE: \2%s\2 from \2%s\2 "), entity(mu)->name, mu->email);
-		slog(LG_VERBOSE, "expire_check(): expiring account %s (unused %ds, email %s, nicks %zu, chanacs %zu)",
+		slog(LG_VERBOSE, "USER:EXPIRE:DELETE: expiring account %s (unused %ds, email %s, nicks %zu, chanacs %zu)",
 				entity(mu)->name, (int)(CURRTIME - mu->lastlogin),
 				mu->email, MOWGLI_LIST_LENGTH(&mu->nicks),
 				MOWGLI_LIST_LENGTH(&entity(mu)->chanacs));
@@ -2062,7 +2062,7 @@ void expire_check(void *arg)
 			}
 
 			slog(LG_REGISTER, _("EXPIRE: \2%s\2 from \2%s\2"), mn->nick, entity(mn->owner)->name);
-			slog(LG_VERBOSE, "expire_check(): expiring nick %s (unused %lds, account %s)",
+			slog(LG_VERBOSE, "USER:EXPIRE:DELETE: expiring nick %s (unused %lds, account %s)",
 					mn->nick, (long)(CURRTIME - mn->lastseen),
 					entity(mn->owner)->name);
 			object_unref(mn);
@@ -2088,7 +2088,7 @@ void expire_check(void *arg)
 			if (mychan_isused(mc))
 			{
 				mc->used = CURRTIME;
-				slog(LG_DEBUG, "expire_check(): updating last used time on %s because it appears to be still in use", mc->name);
+				slog(LG_DEBUG, "CHANNEL:EXPIRE: updating last used time on %s because it appears to be still in use", mc->name);
 				continue;
 			}
 		}
@@ -2100,7 +2100,7 @@ void expire_check(void *arg)
 				continue;
 
 			slog(LG_REGISTER, _("EXPIRE: \2%s\2 from \2%s\2"), mc->name, mychan_founder_names(mc));
-			slog(LG_VERBOSE, "expire_check(): expiring channel %s (unused %lds, founder %s, chanacs %zu)",
+			slog(LG_VERBOSE, "CHANNEL:EXPIRE: expiring channel %s (unused %lds, founder %s, chanacs %zu)",
 					mc->name, (long)(CURRTIME - mc->used),
 					mychan_founder_names(mc),
 					MOWGLI_LIST_LENGTH(&mc->chanacs));

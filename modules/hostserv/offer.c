@@ -157,7 +157,7 @@ static void remove_group_offered_hosts(mygroup_t *mg)
 
 		if (l->group != NULL && l->group == mt)
 		{
-			slog(LG_VERBOSE, "remove_group_offered_hosts(): removing %s (group %s)", l->vhost, l->group->name);
+			slog(LG_VERBOSE, "GROUP:VHOST:DELETE: removing %s (group %s)", l->vhost, l->group->name);
 
 			mowgli_node_delete(n, &hs_offeredlist);
 

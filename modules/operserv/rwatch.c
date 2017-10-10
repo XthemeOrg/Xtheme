@@ -1,4 +1,5 @@
 /*
+ * Copyright (c) 2014-2017 Xtheme Development Group
  * Copyright (c) 2006 Atheme Development Group
  * Rights to this code are documented in doc/LICENCE.
  *
@@ -538,19 +539,19 @@ static void rwatch_newuser(hook_user_nick_t *data)
 		{
 			if (rw->actions & RWACT_SNOOP)
 			{
-				slog(LG_INFO, "RWATCH:%s \2%s\2 matches \2%s\2 (reason: \2%s\2)",
+				slog(LG_INFO, "RWATCH:MATCH:%s \2%s\2 matches \2%s\2 (reason: \2%s\2)",
 						rw->actions & RWACT_KLINE ? "AKILL:" : "",
 						usermask, rw->regex, rw->reason);
 			}
 			if (rw->actions & RWACT_KLINE)
 			{
 				if (is_autokline_exempt(u))
-					slog(LG_INFO, "rwatch_newuser(): not akilling *@%s (user %s!%s@%s is akill exempt but matches %s %s)",
+					slog(LG_INFO, "RWATCH:MATCH:EXEMPT - Not AKILLing *@%s (user %s!%s@%s is AKILL Exempt but matches %s %s)",
 							u->host, u->nick, u->user, u->host,
 							rw->regex, rw->reason);
 				else
 				{
-					slog(LG_VERBOSE, "rwatch_newuser(): akilling *@%s (user %s!%s@%s matches %s %s)",
+					slog(LG_VERBOSE, "RWATCH:MATCH: AKILLing *@%s (user %s!%s@%s matches %s %s)",
 							u->host, u->nick, u->user, u->host,
 							rw->regex, rw->reason);
 					if (! (u->flags & UF_KLINESENT)) {
@@ -562,12 +563,12 @@ static void rwatch_newuser(hook_user_nick_t *data)
 			else if (rw->actions & RWACT_QUARANTINE)
 			{
 				if (is_autokline_exempt(u))
-					slog(LG_INFO, "rwatch_newuser(): not qurantining *@%s (user %s!%s@%s is akill exempt but matches %s %s)",
+					slog(LG_INFO, "RWATCH:MATCH:EXEMPT - Not qurantining *@%s (user %s!%s@%s is AKILL Exempt but matches %s %s)",
 							u->host, u->nick, u->user, u->host,
 							rw->regex, rw->reason);
 				else
 				{
-					slog(LG_VERBOSE, "rwatch_newuser(): quaranting *@%s (user %s!%s@%s matches %s %s)",
+					slog(LG_VERBOSE, "RWATCH:MATCH: Quaranting *@%s (user %s!%s@%s matches %s %s)",
 							u->host, u->nick, u->user, u->host,
 							rw->regex, rw->reason);
 					quarantine_sts(service_find("operserv")->me, u, 86400, rw->reason);
@@ -607,19 +608,19 @@ static void rwatch_nickchange(hook_user_nick_t *data)
 				continue;
 			if (rw->actions & RWACT_SNOOP)
 			{
-				slog(LG_INFO, "RWATCH:NICKCHANGE:%s \2%s\2 -> \2%s\2 matches \2%s\2 (reason: \2%s\2)",
+				slog(LG_INFO, "RWATCH:MATCH:NICKCHANGE:%s \2%s\2 -> \2%s\2 matches \2%s\2 (reason: \2%s\2)",
 						rw->actions & RWACT_KLINE ? "AKILL:" : "",
 						data->oldnick, usermask, rw->regex, rw->reason);
 			}
 			if (rw->actions & RWACT_KLINE)
 			{
 				if (is_autokline_exempt(u))
-					slog(LG_INFO, "rwatch_nickchange(): not akilling *@%s (user %s -> %s!%s@%s is akill exempt but matches %s %s)",
+					slog(LG_INFO, "RWATCH:MATCH:NICKCHANGE:EXEMPT - Not AKILLing *@%s (user %s -> %s!%s@%s is AKILL Exempt but matches %s %s)",
 							u->host, data->oldnick, u->nick, u->user, u->host,
 							rw->regex, rw->reason);
 				else
 				{
-					slog(LG_VERBOSE, "rwatch_nickchange(): akilling *@%s (user %s -> %s!%s@%s matches %s %s)",
+					slog(LG_VERBOSE, "RWATCH:MATCH:NICKCHANGE: AKILLing *@%s (user %s -> %s!%s@%s matches %s %s)",
 							u->host, data->oldnick, u->nick, u->user, u->host,
 							rw->regex, rw->reason);
 					if (! (u->flags & UF_KLINESENT)) {
@@ -631,12 +632,12 @@ static void rwatch_nickchange(hook_user_nick_t *data)
 			else if (rw->actions & RWACT_QUARANTINE)
 			{
 				if (is_autokline_exempt(u))
-					slog(LG_INFO, "rwatch_newuser(): not qurantining *@%s (user %s!%s@%s is akill exempt but matches %s %s)",
+					slog(LG_INFO, "RWATCH:MATCH:EXEMPT - Not qurantining *@%s (user %s!%s@%s is AKILL Exempt but matches %s %s)",
 							u->host, u->nick, u->user, u->host,
 							rw->regex, rw->reason);
 				else
 				{
-					slog(LG_VERBOSE, "rwatch_newuser(): quaranting *@%s (user %s!%s@%s matches %s %s)",
+					slog(LG_VERBOSE, "RWATCH:MATCH: Quaranting *@%s (user %s!%s@%s matches %s %s)",
 							u->host, u->nick, u->user, u->host,
 							rw->regex, rw->reason);
 					quarantine_sts(service_find("operserv")->me, u, 86400, rw->reason);
