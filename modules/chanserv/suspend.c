@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Xtheme Development Group (Xtheme.org)
+ * Copyright (c) 2014-2017 Xtheme Development Group (Xtheme.org)
  * Rights to this code are as documented in doc/LICENSE.
  *
  * This file contains code for the CService SUSPEND functions.
@@ -22,11 +22,11 @@ DECLARE_MODULE_V1
 	VENDOR_STRING
 );
 
-command_t cs_suspend = { "SUSPEND", N_("Manipulates a channel's SUSPEND list."),
+command_t cs_suspend = { "SUSPEND", N_("Manipulates a channel's SUSPENSIONS."),
                         AC_NONE, 4, cs_cmd_suspend, { .path = "cservice/suspend" } };
-command_t cs_suspend_add = { "ADD", N_("Adds a user to the channel SUSPEND list."),
+command_t cs_suspend_add = { "ADD", N_("Suspend a user's channel access or flags."),
                         AC_NONE, 4, cs_cmd_suspend_add, { .path = "" } };
-command_t cs_suspend_del = { "DEL", N_("Deletes a user from the channel SUSPEND list."),
+command_t cs_suspend_del = { "DEL", N_("Unsuspend a user's channel access or flags."),
                         AC_NONE, 3, cs_cmd_suspend_del, { .path = "" } };
 
 typedef struct {
@@ -149,7 +149,7 @@ void cs_cmd_suspend_add(sourceinfo_t *si, int parc, char *parv[])
 		command_fail(si, fault_nosuch_target, _("Channel \2%s\2 is not registered."), chan);
 		return;
 	}
-	
+
 	if (metadata_find(mc, "private:frozen:freezer"))
 	{
 		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), chan);
@@ -267,7 +267,7 @@ void cs_cmd_suspend_add(sourceinfo_t *si, int parc, char *parv[])
 		{
 			if (ca->level & CA_SUSPENDED)
 			{
-				command_fail(si, fault_nochange, _("\2%s\2 is already on the SUSPEND list for \2%s\2"), mt->name, mc->name);
+				command_fail(si, fault_nochange, _("\2%s\2 is already SUSPENDED on \2%s\2"), mt->name, mc->name);
 				return;
 			}
 		}
@@ -319,7 +319,7 @@ void cs_cmd_suspend_add(sourceinfo_t *si, int parc, char *parv[])
 			metadata_add(ca2, "expires", expiry);
 
 			command_success_nodata(si, _("SUSPENSION on \2%s\2 was successfully added for \2%s\2 and will expire in %s."), mt->name, mc->name, timediff(duration));
-			verbose(mc, "\2%s\2 added \2%s\2 to the SUSPEND list, expires in %s.", get_source_name(si), mt->name, timediff(duration));
+			verbose(mc, "\2%s\2 SUSPENDED \2%s\2, expires in %s.", get_source_name(si), mt->name, timediff(duration));
 			logcommand(si, CMDLOG_SET, "SUSPEND:ADD: \2%s\2 on \2%s\2, expires in %s", mt->name, mc->name, timediff(duration));
 
 			timeout = suspend_add_timeout(mc, mt, mt->name, expireson);
@@ -341,7 +341,7 @@ void cs_cmd_suspend_add(sourceinfo_t *si, int parc, char *parv[])
 				metadata_delete(ca2, "sreason");
 			}
 				metadata_add(ca2, "sreason", reason);
-			
+
 			if ((metadata_find(ca2, "expires") != NULL))
 			{
 				metadata_delete(ca2, "expires");
@@ -349,7 +349,7 @@ void cs_cmd_suspend_add(sourceinfo_t *si, int parc, char *parv[])
 
 			command_success_nodata(si, _("SUSPENSION on \2%s\2 was successfully added to the SUSPEND list for \2%s\2."), mt->name, mc->name);
 
-			verbose(mc, "\2%s\2 added \2%s\2 to the SUSPEND list.", get_source_name(si), mt->name);
+			verbose(mc, "\2%s\2 SUSPENDED \2%s\2, with no expiration.", get_source_name(si), mt->name);
 			logcommand(si, CMDLOG_SET, "SUSPEND:ADD: \2%s\2 on \2%s\2", mt->name, mc->name);
 		}
 
@@ -388,7 +388,7 @@ void cs_cmd_suspend_del(sourceinfo_t *si, int parc, char *parv[])
 		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), chan);
 		return;
 	}
-	
+
 	if (metadata_find(mc, "private:close:closer"))
 	{
 		command_fail(si, fault_noprivs, _("\2%s\2 is closed."), chan);
@@ -418,9 +418,9 @@ void cs_cmd_suspend_del(sourceinfo_t *si, int parc, char *parv[])
 		{
 			ca = chanacs_find_host(mc, uname, CA_SUSPENDED);
 			if (ca != NULL)
-				command_fail(si, fault_nosuch_key, _("\2%s\2 is not on the SUSPEND list for \2%s\2, however \2%s\2 is."), uname, mc->name, ca->host);
+				command_fail(si, fault_nosuch_key, _("\2%s\2 is not SUSPENDED on \2%s\2, however \2%s\2 is."), uname, mc->name, ca->host);
 			else
-				command_fail(si, fault_nosuch_key, _("\2%s\2 is not on the SUSPEND list for \2%s\2."), uname, mc->name);
+				command_fail(si, fault_nosuch_key, _("\2%s\2 is not SUSPENDED on \2%s\2."), uname, mc->name);
 			return;
 		}
 
@@ -437,9 +437,9 @@ void cs_cmd_suspend_del(sourceinfo_t *si, int parc, char *parv[])
 		hook_call_channel_acl_change(&req);
 		chanacs_close(ca);
 
-		verbose(mc, "\2%s\2 removed \2%s\2 from the SUSPEND list.", get_source_name(si), uname);
+		verbose(mc, "\2%s\2 UNSUSPENDED \2%s\2.", get_source_name(si), uname);
 		logcommand(si, CMDLOG_SET, "SUSPEND:DEL: \2%s\2 on \2%s\2", uname, mc->name);
-		command_success_nodata(si, _("\2%s\2 has been removed from the SUSPEND list for \2%s\2."), uname, mc->name);
+		command_success_nodata(si, _("\2%s\2 has been UNSUSPENDED on \2%s\2."), uname, mc->name);
 
 		MOWGLI_ITER_FOREACH_SAFE(n, tn, suspenddel_list.head)
 		{
@@ -456,7 +456,7 @@ void cs_cmd_suspend_del(sourceinfo_t *si, int parc, char *parv[])
 
 	if (!(ca = chanacs_find_literal(mc, mt, CA_SUSPENDED)))
 	{
-		command_fail(si, fault_nosuch_key, _("\2%s\2 is not on the SUSPEND list for \2%s\2."), mt->name, mc->name);
+		command_fail(si, fault_nosuch_key, _("\2%s\2 is not SUSPENDED on \2%s\2."), mt->name, mc->name);
 		return;
 	}
 
@@ -483,9 +483,9 @@ void cs_cmd_suspend_del(sourceinfo_t *si, int parc, char *parv[])
 	hook_call_channel_acl_change(&req);
 	chanacs_close(ca);
 
-	command_success_nodata(si, _("\2%s\2 has been removed from the SUSPEND list for \2%s\2."), mt->name, mc->name);
+	command_success_nodata(si, _("\2%s\2 UNSUSPENDED on \2%s\2."), mt->name, mc->name);
 	logcommand(si, CMDLOG_SET, "SUSPEND:DEL: \2%s\2 on \2%s\2", mt->name, mc->name);
-	verbose(mc, "\2%s\2 removed \2%s\2 from the SUSPEND list.", get_source_name(si), mt->name);
+	verbose(mc, "\2%s\2 UNSUSPENDED \2%s\2.", get_source_name(si), mt->name);
 
 	return;
 }
