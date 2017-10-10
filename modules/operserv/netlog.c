@@ -39,7 +39,7 @@ static void watch_net_joins(hook_channel_joinpart_t *hdata)
 	if (cu->user->ip == NULL)
 		return;
 
-	slog(LG_NETLOG, "\2JOIN:\2 %s (%s@%s) [%s] has joined \2%s\2",
+	slog(LG_NETLOG, "\2JOIN:\2 %s (%s@%s) [%s] joined \2%s\2",
 			cu->user->nick, cu->user->user, cu->user->host, cu->user->ip, cu->chan->name);
 	return;
 
@@ -59,7 +59,7 @@ static void watch_net_parts(hook_channel_joinpart_t *hdata)
         if (cu->user->ip == NULL)
                 return;
 
-	slog(LG_NETLOG, "\2PART:\2 %s (%s@%s) [%s] has left \2%s\2",
+	slog(LG_NETLOG, "\2PART:\2 %s (%s@%s) [%s] left \2%s\2",
 			cu->user->nick, cu->user->user, cu->user->host, cu->user->ip, cu->chan->name);
 	return;
 
@@ -122,7 +122,7 @@ static void watch_net_nicks(hook_user_nick_t *hdata)
         if (u->ip == NULL)
                 return;
 
-	slog(LG_NETLOG, "\2NICK:\2 %s (%s@%s) [%s] is now known as \2%s\2",
+	slog(LG_NETLOG, "\2NICK:\2 %s (%s@%s) [%s] is now \2%s\2",
 			hdata->oldnick, u->user, u->host, u->ip, u->nick);
 	return;
 
