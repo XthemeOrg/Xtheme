@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Xtheme Development Group
+ * Copyright (c) 2014-2017 Xtheme Development Group
  * Copyright (c) 2005-2006 William Pitcock, et al.
  * Rights to this code are as documented in doc/LICENSE.
  *
@@ -508,7 +508,10 @@ static void ns_cmd_info(sourceinfo_t *si, int parc, char *parv[])
 
 	command_success_nodata(si, _("*** \2End of Info\2 ***"));
 
-	logcommand(si, CMDLOG_GET, "INFO: \2%s\2", mn != NULL ? mn->nick : entity(mu)->name);
+	if (mn == NULL)
+		logcommand(si, CMDLOG_GET, "INFO: \2%s\2", entity(mu)->name);
+	else
+		logcommand(si, CMDLOG_GET, "INFO: \2%s\2 (%s)", mn->nick, entity(mu)->name);
 }
 
 /* vim:cinoptions=>s,e0,n0,f0,{0,}0,^0,=s,ps,t0,c3,+s,(2s,us,)20,*30,gs,hs
