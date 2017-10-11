@@ -1,18 +1,30 @@
 language: c
-script: ./configure --disable-nls --enable-ssl $CONFIGURE_WITH && make -j $(nproc)
+
+addons:
+  apt:
+    packages:
+      - libperl-dev
+      - libssl-dev
+
+sudo: false
+
 compiler:
   - gcc
   - clang
+
+env:
+  - OPTIONAL_CONF_ARGS=""
+  - OPTIONAL_CONF_ARGS="--with-perl"
+  - OPTIONAL_CONF_ARGS="--enable-contrib"
+
+script:
+  - ./configure --disable-nls --enable-ssl $OPTIONAL_CONF_ARGS
+  - make -j $(nproc)
+
 matrix:
   fast_finish: true
   allow_failures:
-    - env: CONFIGURE_WITH="--with-contrib"
-env:
-  - CONFIGURE_WITH=""
-  - CONFIGURE_WITH="--with-perl"
-  - CONFIGURE_WITH="--enable-contrib"
-install:
-  - sudo apt-get update -qq
-  - sudo apt-get install -q -y libperl-dev
+    - env: OPTIONAL_CONF_ARGS="--enable-contrib"
 notifications:
   irc: "irc.irc4fun.net#Xtheme"
+  irc: "irc.irc4fun.net#Development"
