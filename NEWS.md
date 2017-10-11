@@ -1,4 +1,4 @@
-Xtheme IRC Services git (8.0.0-dev) Development Notes  
+Xtheme IRC Services git (8.0.0-dev1) Development Notes  
 ==================================================  
 botserv
 -------
@@ -6,10 +6,12 @@ botserv
 	(Previously, ChanServ would additionally join the channel; causing
 	there to be ChanServ as well as a BotServ bot in a frozen channel
 	and duplicated output of fantasy commands.)  
+* botserv/say_caller: Added two checks that were overlooked, thanks to
+	@MrBenC and [ChatServices](https://bitbucket.org/chatlounge/chatservices/)  
 
 chanserv
 --------
-* AKICK enforcement (kick messages) have been updated to a more
+* AKICK enforcement _(kick messages)_ have been updated to a more
 	modern kickreason.  
 	Was: "Banned: Reason" - Now:
 	"(setter) Reason"  
@@ -20,6 +22,8 @@ chanserv
 	when enabled; only allows users who have completed account verification  
 	(when 'auth' is set to email) to be able to be added to access lists or  
 	given flags on channels.  
+* chanserv/suspend: No longer refers to "lists", as there aren't any.  It's
+	a flag _(+P)_.  
 
 config
 ------
@@ -31,13 +35,13 @@ config
 * A new config option 'vhost_change' has been added, allowing network staff
 	to limit how often (in days) a user must wait between vHost changes
 	such as use of TAKE or REQUEST command.  
-	This causes one (1) additional configuration addition:
+	This causes one (1) additional configuration addition:  
 	* vhost_change (in days)  
-* A new config option 'verifiedaccess' was added to the chanserv section  
-	which (when enabled) only allows verified users to be given channel  
+* A new config option 'verifiedaccess' was added to the chanserv section
+	which (when enabled) only allows verified users to be given channel
 	flags or access.  
-	This causes one (1) additional configuration addition to the chanserv  
-	section:
+	This causes one (1) additional configuration addition to the chanserv
+	section:  
 	* verifiedaccess;   (or #verifiedaccess; to disable)  
 
 contrib  
@@ -60,6 +64,8 @@ contrib
 	but sets ZLINEs/DLINEs instead of AKILLs - managed via ZLINE
 	management in OperServ. (LIST,ADD,DEL,etc.)   
 * os_trace: updated to use the new akill_time config option.  
+* ns_generatehash & ns_sendpassmail updated with new crypto
+	improvements.  
 
 core
 ----
@@ -70,6 +76,11 @@ core
 	within Services, as well as the AKILL reason when the user/bot  
 	ignores the first two notices.  
 
+crypto  
+------  
+* Many improvements to crypto modules and security. (from upstream
+	atheme group: most notably @amdj)  
+
 database
 --------
 * opensex database improvements  
@@ -78,7 +89,7 @@ database
 general
 -------
 * xtheme.conf.example: Various updates for added modules, missing info,  
-	and maintenance.  **4 changes to xtheme.conf so far.**  
+	and maintenance.  **5 changes to xtheme.conf so far.**  
 
 hostserv
 --------
@@ -97,17 +108,25 @@ nickserv
 * badmail: You now filter the LIST output by pattern.  Also, a new
 	TEST subcommand was added to allow lookup of patterns that would
 	prevent the use of an email address.  
+* badmail: You can now REJECT _(traditional)_ or AKILL on badmail matches
+	or hits.  _(Helpful to combat botnets calling NickServ REGISTER)_
+* nickserv/info: Reveals a user's account _(if different than their nickname)_  
+
 
 operserv
 --------
 * netlog: New module for logging/relaying network information (similar
 	to Anope's LOGUSERS functionality) and logtype: NETLOG  
-* info: Now refers to KLINEs as AKILLs for better consistency
+* info: Now refers to KLINEs as AKILLs for better consistency  
+* info: Now shows vhost_change value as well as verifiedaccess value.  
+
 
 protocol
 --------
 * chatircd protocol added (a modern Charybdis fork)
 	https://bitbucket.org/chatlounge/chatircd/  
+* UnrealIRCd 4: Advertise SASL mechanisms to UnrealIRCd servers.
+	(From upstream atheme - Thanks @syzop)  
 
 
 ## STAY UP TO DATE WITH XthemeOrg NEWS, UPDATES & SECURITY ADVISORIES  
