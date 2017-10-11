@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Xtheme Development Group (Xtheme.org)
+ * Copyright (c) 2016-2017 Xtheme Development Group (Xtheme.org)
  * Rights to this code are as documented in doc/LICENSE.
  *
  * Enable say/act caller ID.
@@ -62,7 +62,7 @@ static void bs_cmd_set_saycaller(sourceinfo_t *si, int parc, char *parv[])
 		command_fail(si, fault_noprivs, _("You are not authorized to perform this operation."));
 		return;
 	}
-	
+
 	if (metadata_find(mc, "private:frozen:freezer"))
 	{
 		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), mc->name);
@@ -72,14 +72,32 @@ static void bs_cmd_set_saycaller(sourceinfo_t *si, int parc, char *parv[])
 	if (!irccasecmp(option, "ON"))
 	{
 		if ((md = metadata_find(mc, "private:botserv:bot-assigned")) != NULL)
+		{
+			if (metadata_find(mc, "private:botserv:saycaller"))
+			{
+				command_fail(si, fault_nochange, _("The \2%s\2 flag is already set for channel: \2%s\2"), "SAYCALLER", mc->name);
+				return;
+			}
+			else
+				metadata_add(mc, "private:botserv:saycaller", "ON");
+		}
+		else
+		{
+			command_fail(si, fault_noprivs, _("The channel \2%s\2 does not have a bot assigned to it.  You may not enable this option until you assign a bot to the channel."), mc->name);
+			return;
+		}
 			metadata_add(mc, "private:botserv:saycaller", md->value);
-
-		logcommand(si, CMDLOG_SET, "SET:SAYCALLER:ON: \2%s\2", mc->name);
-
-		command_success_nodata(si, _("Say Caller is now \2ON\2 on channel %s."), mc->name);
+			logcommand(si, CMDLOG_SET, "SET:SAYCALLER:ON: \2%s\2", mc->name);
+			command_success_nodata(si, _("Say Caller is now \2ON\2 on channel %s."), mc->name);
 	}
 	else if(!irccasecmp(option, "OFF"))
 	{
+		if (!metadata_find(mc, "private:botserv:saycaller"))
+		{
+			command_fail(si, fault_nochange, _("The \2%s\2 flag is not set for channel: \2%s\2"), "SAYCALLER", mc->name);
+			return;
+		}
+
 		metadata_delete(mc, "private:botserv:saycaller");
 		logcommand(si, CMDLOG_SET, "SET:SAYCALLER:OFF: \2%s\2", mc->name);
 		command_success_nodata(si, _("Say Caller is now \2OFF\2 on channel %s."), mc->name);
@@ -90,4 +108,3 @@ static void bs_cmd_set_saycaller(sourceinfo_t *si, int parc, char *parv[])
 		command_fail(si, fault_badparams, _("Syntax: SET <#channel> SAYCALLER {ON|OFF}"));
 	}
 }
-
