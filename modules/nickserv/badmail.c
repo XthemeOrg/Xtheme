@@ -22,7 +22,9 @@ static void check_registration(hook_user_register_check_t *hdata);
 static void ns_cmd_badmail(sourceinfo_t *si, int parc, char *parv[]);
 
 static void write_bedb(database_handle_t *db);
+static void write_bedb2(database_handle_t *db);
 static void db_h_be(database_handle_t *db, const char *type);
+static void db_h_be2(database_handle_t *db, const char *type);
 
 command_t ns_badmail = { "BADMAIL", N_("Disallows registrations from certain email addresses."), PRIV_USER_ADMIN, 4, ns_cmd_badmail, { .path = "nickserv/badmail" } };
 
@@ -37,6 +39,7 @@ struct badmail_ {
 typedef struct badmail_ badmail_t;
 
 mowgli_list_t ns_maillist;
+mowgli_list_t ns_maillist2;
 
 void _modinit(module_t *m)
 {
@@ -52,6 +55,7 @@ void _modinit(module_t *m)
 	hook_add_db_write(write_bedb);
 
 	db_register_type_handler("BE", db_h_be);
+	db_register_type_handler("BE2", db_h_be2);
 
 	service_named_bind_command("nickserv", &ns_badmail);
 }
@@ -62,6 +66,7 @@ void _moddeinit(module_unload_intent_t intent)
 	hook_del_db_write(write_bedb);
 
 	db_unregister_type_handler("BE");
+	db_unregister_type_handler("BE2");
 
 	service_named_unbind_command("nickserv", &ns_badmail);
 }
@@ -76,6 +81,23 @@ static void write_bedb(database_handle_t *db)
 
 		db_start_row(db, "BE");
 		db_write_word(db, l->mail);
+		db_write_time(db, l->mail_ts);
+		db_write_word(db, l->creator);
+		db_write_str(db, l->reason);
+		db_commit_row(db);
+	}
+}
+
+static void write_bedb2(database_handle_t *db)
+{
+	mowgli_node_t *n;
+
+	MOWGLI_ITER_FOREACH(n, ns_maillist2.head)
+	{
+		badmail_t *l = n->data;
+
+		db_start_row(db, "BE2");
+		db_write_word(db, l->mail);
 		db_write_word(db, l->action);
 		db_write_time(db, l->mail_ts);
 		db_write_word(db, l->creator);
@@ -85,6 +107,22 @@ static void write_bedb(database_handle_t *db)
 }
 
 static void db_h_be(database_handle_t *db, const char *type)
+{
+	const char *mail = db_sread_word(db);
+	time_t mail_ts = db_sread_time(db);
+	const char *creator = db_sread_word(db);
+	const char *reason = db_sread_str(db);
+
+	badmail_t *l = smalloc(sizeof(badmail_t));
+	l->mail = sstrdup(mail);
+	l->action = "REJECT";
+	l->mail_ts = mail_ts;
+	l->creator = sstrdup(creator);
+	l->reason = sstrdup(reason);
+	mowgli_node_add(l, mowgli_node_create(), &ns_maillist);
+}
+
+static void db_h_be2(database_handle_t *db, const char *type)
 {
 	const char *mail = db_sread_word(db);
 	const char *action = db_sread_word(db);
@@ -98,8 +136,9 @@ static void db_h_be(database_handle_t *db, const char *type)
 	l->mail_ts = mail_ts;
 	l->creator = sstrdup(creator);
 	l->reason = sstrdup(reason);
-	mowgli_node_add(l, mowgli_node_create(), &ns_maillist);
+	mowgli_node_add(l, mowgli_node_create(), &ns_maillist2);
 }
+
 static void check_registration(hook_user_register_check_t *hdata)
 {
 	mowgli_node_t *n;
@@ -190,6 +229,18 @@ static void ns_cmd_badmail(sourceinfo_t *si, int parc, char *parv[])
 				}
 			}
 
+			/* search for it in new bademail lists */
+			MOWGLI_ITER_FOREACH(n, ns_maillist2.head)
+			{
+				l = n->data;
+
+				if (!irccasecmp(l->mail, email))
+				{
+					command_success_nodata(si, _("Email \2%s\2 has already been banned."), email);
+					return;
+				}
+			}
+
 			l = smalloc(sizeof(badmail_t));
 			l->mail = sstrdup(email);
 			l->action = "REJECT";
@@ -200,7 +251,7 @@ static void ns_cmd_badmail(sourceinfo_t *si, int parc, char *parv[])
 			logcommand(si, CMDLOG_ADMIN, "BADMAIL:ADD: \2%s\2 Action: \2%s\2 (Reason: \2%s\2)", email, baction, reason);
 
 			n = mowgli_node_create();
-			mowgli_node_add(l, n, &ns_maillist);
+			mowgli_node_add(l, n, &ns_maillist2);
 
 			command_success_nodata(si, _("You have banned email address \2%s\2."), email);
 			return;
@@ -209,6 +260,18 @@ static void ns_cmd_badmail(sourceinfo_t *si, int parc, char *parv[])
 		{
 			/* search for it */
 			MOWGLI_ITER_FOREACH(n, ns_maillist.head)
+			{
+				l = n->data;
+
+				if (!irccasecmp(l->mail, email))
+				{
+					command_success_nodata(si, _("Email \2%s\2 has already been banned."), email);
+					return;
+				}
+			}
+
+			/* again, search for it in new badmail lists */
+			MOWGLI_ITER_FOREACH(n, ns_maillist2.head)
 			{
 				l = n->data;
 
@@ -229,7 +292,7 @@ static void ns_cmd_badmail(sourceinfo_t *si, int parc, char *parv[])
 			logcommand(si, CMDLOG_ADMIN, "BADMAIL:ADD: \2%s\2 Action: \2%s\2 (Reason: \2%s\2)", email, baction, reason);
 
 			n = mowgli_node_create();
-			mowgli_node_add(l, n, &ns_maillist);
+			mowgli_node_add(l, n, &ns_maillist2);
 
 			command_success_nodata(si, _("You have banned email address \2%s\2."), email);
 			return;
@@ -261,6 +324,27 @@ static void ns_cmd_badmail(sourceinfo_t *si, int parc, char *parv[])
 				mowgli_node_delete(n, &ns_maillist);
 
 				free(l->mail);
+				free(l->creator);
+				free(l->reason);
+				free(l);
+
+				command_success_nodata(si, _("You have unbanned email address \2%s\2."), email);
+				return;
+			}
+		}
+
+		/* search for it in new badmail lists */
+		MOWGLI_ITER_FOREACH_SAFE(n, tn, ns_maillist2.head)
+		{
+			l = n->data;
+
+			if (!irccasecmp(l->mail, email))
+			{
+				logcommand(si, CMDLOG_ADMIN, "BADMAIL:DEL: \2%s\2", l->mail);
+
+				mowgli_node_delete(n, &ns_maillist2);
+
+				free(l->mail);
 				free(l->action);
 				free(l->creator);
 				free(l->reason);
@@ -270,6 +354,7 @@ static void ns_cmd_badmail(sourceinfo_t *si, int parc, char *parv[])
 				return;
 			}
 		}
+
 		command_success_nodata(si, _("Email pattern \2%s\2 not found in badmail database."), email);
 		return;
 	}
@@ -288,8 +373,29 @@ static void ns_cmd_badmail(sourceinfo_t *si, int parc, char *parv[])
 				count++;
 				tm = *localtime(&l->mail_ts);
 				strftime(buf, BUFSIZE, TIME_FORMAT, &tm);
-				command_success_nodata(si, _("Email: \2%s\2, Action: \2%s\2 Reason: \2%s\2 (%s - %s)"),
-					l->mail, l->action, l->reason, l->creator, buf);
+				command_success_nodata(si, _("Email: \2%s\2, Action: \2REJECT\2 Reason: \2%s\2 (%s - %s)"), l->mail, l->reason, l->creator, buf);
+			}
+		}
+		MOWGLI_ITER_FOREACH(n, ns_maillist2.head)
+		{
+			l = n->data;
+
+			if ((!email) || !match(email, l->mail))
+			{
+				if (l->action == NULL)
+				{
+					count++;
+					tm = *localtime(&l->mail_ts);
+					strftime(buf, BUFSIZE, TIME_FORMAT, &tm);
+					command_success_nodata(si, _("Email: \2%s\2, Action: \2REJECT\2 Reason: \2%s\2 (%s - %s)"), l->mail, l->reason, l->creator, buf);
+				}
+				else
+				{
+					count++;
+					tm = *localtime(&l->mail_ts);
+					strftime(buf, BUFSIZE, TIME_FORMAT, &tm);
+					command_success_nodata(si, _("Email: \2%s\2, Action: \2%s\2 Reason: \2%s\2 (%s - %s)"), l->mail, l->action, l->reason, l->creator, buf);
+				}
 			}
 		}
 		if (email && !count)
