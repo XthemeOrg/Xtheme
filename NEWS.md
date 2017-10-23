@@ -1,4 +1,40 @@
-Xtheme IRC Services git (8.0.0-dev1) Development Notes  
+Xtheme IRC Services git (8.0.0-dev2) Development Notes  
+==================================================  
+protocol
+--------
+* nefarious: Patch to prevent display of un-registered users' IP addresses
+	being shown during GLINE with Xtheme.  
+* nefarious: Update protocol for compatibility, as the protocol changed
+	in Nefarious 2.  
+	(Thanks to @xnite and @GLolol for these patches)  
+
+
+	## STAY UP TO DATE WITH XthemeOrg NEWS, UPDATES & SECURITY ADVISORIES  
+	Subscribe to the XthemeOrg News (hosted by IRC4Fun) at:  
+	https://www.irc4fun.net/xtheme-news/  
+
+
+Xtheme IRC Services 8.0.0-dev1r2 Development Notes  
+==================================================  
+database  
+--------  
+* nickserv/badmail: Fixed database fail from update to BADMAIL so that
+	networks do not need to delete all old BADMAIL database entries or
+	manually edit the services.db to remove BE entries.  
+
+nickserv  
+--------  
+* nickserv/badmail: Fixed database fail from update to BADMAIL so that
+	networks do not need to delete all old BADMAIL database entries or
+	manually edit the services.db to remove BE entries.
+
+
+	## STAY UP TO DATE WITH XthemeOrg NEWS, UPDATES & SECURITY ADVISORIES  
+	Subscribe to the XthemeOrg News (hosted by IRC4Fun) at:  
+	https://www.irc4fun.net/xtheme-news/  
+
+
+Xtheme IRC Services 8.0.0-dev1 Development Notes  
 ==================================================  
 botserv
 -------
