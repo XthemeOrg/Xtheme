@@ -116,8 +116,10 @@ static void do_list(sourceinfo_t *si, mychan_t *mc, unsigned int flags)
 {
 	chanacs_t *ca;
 	mowgli_node_t *m, *n;
+	unsigned int entrywidth = 5, nickhostwidth = 13, flagswidth = 5; /* "Nickname/Host" is 13 chars long, "Flags" is 5. */
 	bool operoverride = false;
-	unsigned int i = 1;
+	unsigned int i = 0;
+	char fmtstring[BUFSIZE], entryspacing[BUFSIZE], entryborder[BUFSIZE], nickhostspacing[BUFSIZE], nickhostborder[BUFSIZE], flagsborder[BUFSIZE];
 
 	if (!(mc->flags & MC_PUBACL) && !chanacs_source_has_flag(mc, si, CA_ACLVIEW))
 	{
