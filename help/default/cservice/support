@@ -1,0 +1,21 @@
+Help for SUPPORT:
+
+Use of the SUPPORT command indicates that you
+SUPPORT the Channel Registration for the 
+channel you provide.  This command needs to 
+be used by each Supporter listed in a Channel
+Registration request.  (If you are used as a 
+Supporter on a Channel, you will be notified 
+via Memo and asked to either use the SUPPORT 
+command or report that you do NOT support the 
+Channel Registration request.)
+
+Each Channel being registered must have 2 (two)
+registered users who SUPPORT the channel being 
+Registered, in order to be provided registration.
+
+Syntax: SUPPORT #Channel
+
+Examples:
+    /msg &nick& SUPPORT #FunChat
+

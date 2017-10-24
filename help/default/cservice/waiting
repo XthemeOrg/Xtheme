@@ -5,6 +5,11 @@ channel registration request list.  (For
 networks that moderate Channel Registration 
 requests)
 
+#if module chanserv/register_v2
+Supporters and Registration Process data
+will also be shown.
+#endif
+
 Syntax: WAITING
 
 Examples:

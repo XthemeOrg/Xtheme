@@ -1,0 +1,18 @@
+Help for NOSUPPORT:
+
+You can toggle the NOSUPPORT flag in &nick& 
+to prevent being used in Channel Registration
+requests as a Supporter.
+
+When NOSUPPORT is ON for your account:
+Users will be unable to use you as a Supporter.
+
+If NOSUPPORT is OFF for your account:
+Users will be able to use you as a Supporter.
+
+Syntax: NOSUPPORT ON|OFF
+
+Examples:
+    /msg &nick& NOSUPPORT ON
+    /msg &nick& NOSUPPORT OFF
+

@@ -3,10 +3,37 @@ Help for REGISTER:
 REGISTER allows you to register a channel
 so that you have better control. Registration
 allows you to maintain a channel access list
-and other functions that are normally
+and manage other functions that are normally
 provided by IRC bots.
 
+#if module chanserv/register_v2
+You will need 2 (two) registered users who 
+will SUPPORT you in your Channel Registration 
+request.  Once both Supporters have used the
+SUPPORT command for your channel; &nick& will
+notify Staff to review the Registration request.
+#endif
+
+#if module chanserv/register
 Syntax: REGISTER <#channel>
 
 Examples:
     /msg &nick& REGISTER #Xtheme
+#endif
+
+#if module chanserv/moderate
+Syntax: REGISTER <#channel>
+
+Examples:
+    /msg &nick& REGISTER #Xtheme
+#endif
+
+#if module chanserv/register_v2
+Syntax: REGISTER <#channel> <Supporter1> <Supporter2>
+
+Examples:
+    /msg &nick& REGISTER #Xtheme tabb Medusa
+
+See Also:
+    /msg &nick& SUPPORT #FunChat
+#endif
