@@ -115,7 +115,7 @@ static const char *get_template_name(mychan_t *mc, unsigned int level)
 static void do_list(sourceinfo_t *si, mychan_t *mc, unsigned int flags)
 {
 	chanacs_t *ca;
-	mowgli_node_t *n;
+	mowgli_node_t *m, *n;
 	bool operoverride = false;
 	unsigned int i = 1;
 
