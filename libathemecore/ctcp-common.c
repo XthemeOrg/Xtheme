@@ -2,7 +2,7 @@
  * xtheme-services: A collection of minimalist IRC services
  * ctcp-common.c: Handling of CTCP commands.
  *
- * Copyright (c) 2014-2015 Xtheme Development Group (http://www.Xtheme.org)
+ * Copyright (c) 2014-2017 Xtheme Development Group (http://www.Xtheme.org)
  * Copyright (c) 2005-2007 Atheme Project (http://www.atheme.org)
  *
  * Permission to use, copy, modify, and/or distribute this software for any
@@ -53,21 +53,14 @@ static void ctcp_clientinfo_handler(sourceinfo_t *si, char *cmd, char *args)
 	notice(si->service->nick, si->su->nick, "\001CLIENTINFO PING VERSION CLIENTINFO\001");
 }
 
-/* easter egg (so is the next one, who cares) */
-static void ctcp_machinegod_handler(sourceinfo_t *si, char *cmd, char *args)
-{
-	notice(si->service->nick, si->su->nick, "\001MACHINEGOD http://www.findagrave.com/cgi-bin/fg.cgi?page=gr&GRid=10369601\001");
-}
-
 /* update this as necessary to track notable events */
 static void ctcp_about_handler(sourceinfo_t *si, char *cmd, char *args)
 {
 	/*
 	 * October 31, 2014: Atheme 7.2 final was released, the final release series from atheme.org, which has dissolved
-	 * afterward.  The atheme.org activity remains until October 31, 2016 to facilitate and coordinate downstream forks,
-	 * thus creating a truly community-directed project.
+	 * afterward.  The atheme group would later be revived, consisting of downstream forks like Shalture and Xtheme.
 	 */
-	notice(si->service->nick, si->su->nick, "\001ABOUT The machine god has \002fallen\002, and the unbelievers \037rejoiced\037. But from the debris rose new machines which will have their vengeance. ~The Book of Atheme, 10:31\001");
+	notice(si->service->nick, si->su->nick, "\001ABOUT \002Xtheme IRC Services\002 was born in \037December 2013\037 from the atheme family.  Xtheme is a leader of evolutionary IRC features. (www.Xtheme.org/)\001");
 }
 
 void common_ctcp_init(void)
@@ -77,7 +70,6 @@ void common_ctcp_init(void)
 	mowgli_patricia_add(ctcptree, "\001PING", ctcp_ping_handler);
 	mowgli_patricia_add(ctcptree, "\001VERSION\001", ctcp_version_handler);
 	mowgli_patricia_add(ctcptree, "\001CLIENTINFO\001", ctcp_clientinfo_handler);
-	mowgli_patricia_add(ctcptree, "\001MACHINEGOD\001", ctcp_machinegod_handler);
 	mowgli_patricia_add(ctcptree, "\001ABOUT\001", ctcp_about_handler);
 }
 
