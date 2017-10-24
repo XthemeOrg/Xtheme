@@ -2,7 +2,7 @@
  * xtheme-services: A collection of minimalist IRC services
  * function.c: Miscillaneous functions.
  *
- * Copyright (c) 2014-2015 Xtheme Development Group (http://www.Xtheme.org)
+ * Copyright (c) 2014-2017 Xtheme Development Group (http://www.Xtheme.org)
  * Copyright (c) 2005-2007 Atheme Project (http://www.atheme.org)
  *
  * Permission to use, copy, modify, and/or distribute this software for any
@@ -24,7 +24,7 @@
 
 #include "atheme.h"
 
-char ch[] = "abcdefghijklmnopqrstuvwxyz";
+char ch[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
 /* This function uses smalloc() to allocate memory.
  * You MUST free the result when you are done with it!
@@ -36,7 +36,7 @@ char *random_string(int sz)
 
 	for (i = 0; i < sz; i++)
 	{
-		buf[i] = ch[arc4random() % 26];
+		buf[i] = ch[arc4random() % 62];
 	}
 
 	buf[sz] = 0;
