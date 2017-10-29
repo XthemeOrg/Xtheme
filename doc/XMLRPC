@@ -27,6 +27,9 @@ Methods from modules/transport/xmlrpc:
  *       an authcookie ticket is created for the myuser_t.
  *       the user's lastlogin is updated
  */
+ 
+ Curl Example:
+ curl -H "Content-Type: text/xml" -d '<?xml version="1.0"?><methodCall><methodName>atheme.login</methodName><params><username><value><string>nickname</string></value></username><password><value><string>password</string></value></password></params></methodCall>' -X POST http://127.0.0.1:8080/xmlrpc
 
 Source ip is logged with the request, it does not need to be an IP address.
 
