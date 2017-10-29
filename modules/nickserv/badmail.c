@@ -182,6 +182,40 @@ static void check_registration(hook_user_register_check_t *hdata)
 			}
 		}
 	}
+	MOWGLI_ITER_FOREACH(n, ns_maillist2.head)
+	{
+		l = n->data;
+
+		if (!match(l->mail, hdata->email))
+		{
+			if (l->action == "AKILL")
+			{
+				if (hdata->si->su->nick != NULL)
+				{
+					if (is_autokline_exempt(hdata->si->su)) 
+					{
+						command_success_nodata(hdata->si, _("\2REGISTER:BADEMAIL\2: Not akilling exempt user %s!%s@%s"), hdata->si->su->nick, hdata->si->su->user, hdata->si->su->host);
+					} 
+					else 
+					{
+						command_fail(hdata->si, fault_noprivs, "Sorry, we do not accept registrations with email addresses from that domain. Use another address.");
+						k = kline_add("*", hdata->si->su->host, "We do not accept registrations with email addresses from that domain.", config_options.akill_time, "BADMAIL");
+						hdata->approved = 1;
+						slog(LG_INFO, "REGISTER:BADEMAIL: %s to \2%s\2 by \2%s\2", hdata->account, hdata->email, hdata->si->su->nick);
+
+					}
+				}
+			}
+
+			if (l->action == NULL || l->action == "REJECT")
+			{
+				command_fail(hdata->si, fault_noprivs, "Sorry, we do not accept registrations with email addresses from that domain. Use another address.");
+				hdata->approved = 1;
+				slog(LG_INFO, "REGISTER:BADEMAIL: %s to \2%s\2 by \2%s\2", hdata->account, hdata->email, hdata->si->su != NULL ? hdata->si->su->nick : get_source_name(hdata->si));
+				return;
+			}
+		}
+	}
 }
 
 static void ns_cmd_badmail(sourceinfo_t *si, int parc, char *parv[])
@@ -345,7 +379,6 @@ static void ns_cmd_badmail(sourceinfo_t *si, int parc, char *parv[])
 				mowgli_node_delete(n, &ns_maillist2);
 
 				free(l->mail);
-				free(l->action);
 				free(l->creator);
 				free(l->reason);
 				free(l);

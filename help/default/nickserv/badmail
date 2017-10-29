@@ -6,16 +6,16 @@ not allowed to be used to register accounts.
 These email addresses are saved to the Xtheme database and are kept
 between services restarts.
 
-In BADMAIL ADD, you are able to use glob matching to disallow email
-addresses that match a pattern.
+In BADMAIL ADD, you are able to use glob matching to disallow or AKILL
+email addresses that match a pattern.
 
-Syntax: BADMAIL ADD <email> [reason]
+Syntax: BADMAIL ADD <email> <action> [reason]
 
 Examples:
-    /msg &nick& BADMAIL ADD jdhore1@gmail.com bar reason
-    /msg &nick& BADMAIL ADD *@aol.com bar reason
-    /msg &nick& BADMAIL ADD *@*.tk foo reason
-    /msg &nick& BADMAIL ADD some-spambot-pattern-*@gmail.com
+    /msg &nick& BADMAIL ADD jdhore1@gmail.com REJECT reason
+    /msg &nick& BADMAIL ADD *@aol.com AKILL reason
+    /msg &nick& BADMAIL ADD *@*.tk REJECT reason
+    /msg &nick& BADMAIL ADD spambot-pattern-*@gmail.com AKILL reason
 
 BADMAIL DEL allows you to remove entries from the list of currently
 banned email addresses.
