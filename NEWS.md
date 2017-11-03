@@ -1,5 +1,42 @@
 Xtheme IRC Services git (8.0.0-dev2) Development Notes  
 ==================================================  
+chanserv
+--------
+* access: LIST command now shows Last Modified information, similar to FLAGS output.  
+* access: LIST headers added
+* flags: LIST headers added, formatting and spacing fixes (thanks @MrBenC)  
+* list: PUBACL is now added as criteria
+
+contrib
+-------
+* ns_ajoin: Removed check that caused crashes (thanks @MrMaro & @mohdschizo)  
+
+core
+----
+* function: random_string is now more random (A-Z,a-z,0-9) for keys generated  
+* flags: save PUBACL flag so it is not lost across restarts (thanks @MrBenC)  
+
+crypto
+------
+* MANY improvements to the crypto functionality. (thanks to upstream atheme/atheme and @amdj)    
+* YOU SHOULD READ xtheme.conf.example FOR INFORMATION ABOUT HOW CRYPTO IS CHANGING.  
+	+ Backup your services.db at **least 3 times** for safety of your database. +  
+	_(**YOU SHOULD BE DOING THIS REGULARLY, ANYWAY**)_
+
+help
+----
+* nickserv/badmail: Update with new functionality and SYNTAX.  
+
+hostserv
+--------
+* request: Only verified accounts can utilize the REQUEST command.  
+
+nickserv
+--------
+* badmail: Fixed a crash bug discovered in BADMAIL DEL command (thanks @MrMaro)  
+* badmail: Fixed a bug that prevented matches for AKILL actioned entries. (thanks @MrMaro)  
+* badmail: Updated log messages to be more helpful. (Show ACTION taken)  
+
 protocol
 --------
 * nefarious: Patch to prevent display of un-registered users' IP addresses
@@ -7,6 +44,8 @@ protocol
 * nefarious: Update protocol for compatibility, as the protocol changed
 	in Nefarious 2.  
 	(Thanks to @xnite and @GLolol for these patches)  
+* unreal4: Updates to channel modes supported (thanks @MrBenC)  
+* unreal/unreal4: Support channel mode +T (NONOTICE) (thanks @MrBenC)
 
 
 	## STAY UP TO DATE WITH XthemeOrg NEWS, UPDATES & SECURITY ADVISORIES  
