@@ -3,20 +3,20 @@
  * Rights to this code are as documented in doc/LICENSE.
  *
  * ChanServ/REGPROC is similar to ChanServ/MODERATE in the sense that
- * Services Operators review channels requesting registration, however, 
+ * Services Operators review channels requesting registration, however,
  * it also requires the SUPPORT of TWO (registered) users.
  *
  * Users who have NOSUPPORT enabled will not be able to be used as
- * channel SUPPORTers (as they have indicated by use of the setting, 
- * that they do not wish to SUPPORT channels in the Registration 
+ * channel SUPPORTers (as they have indicated by use of the setting,
+ * that they do not wish to SUPPORT channels in the Registration
  * process.)
  *
- * Each Supporter will be notified of being used as a Supporter for a 
+ * Each Supporter will be notified of being used as a Supporter for a
  * given channel's registration and will need to indicate whether they
  * SUPPORT the channel or not.  Services Operators can review channels
  * at any time, even if the SUPPORT verification process has not completed.
  *
- * Once both Supporters have verified their SUPPORT for a Channel's 
+ * Once both Supporters have verified their SUPPORT for a Channel's
  * Registration, the channel application is moved in the REGPROC to
  * "PENDING REVIEW" and Services Operators are notified (if set) via a
  * Group memo that the channel is now ready for review.
@@ -489,7 +489,7 @@ static void cs_cmd_register(sourceinfo_t *si, int parc, char *parv[])
 		return;
 	}
 
-	else 
+	else
 	{
 
 		l = smalloc(sizeof(csrq_t));
@@ -576,7 +576,7 @@ static void cs_cmd_waiting(sourceinfo_t *si, int parc, char *parv[])
 		{
 			status = "SUPPORTER VERIFICATION";
 		}
-		else 
+		else
 		{
 			status = "SUPPORTER NOTIFICATION";
 		}
@@ -622,10 +622,6 @@ static void cs_cmd_reject(sourceinfo_t *si, int parc, char *parv[])
 			mowgli_node_delete(n, &cs_csrqlist);
 
 			free(l->chan);
-			free(l->founder);
-			free(l->status);
-			free(l->supp1);
-			free(l->supp2);
 			free(l);
 
 		}
@@ -700,10 +696,6 @@ static void cs_cmd_activate(sourceinfo_t *si, int parc, char *parv[])
 			mowgli_node_delete(n, &cs_csrqlist);
 
 			free(l->chan);
-			free(l->founder);
-			free(l->status);
-			free(l->supp1);
-			free(l->supp2);
 			free(l);
 
 		}
@@ -829,7 +821,7 @@ static void cs_cmd_support(sourceinfo_t *si, int parc, char *parv[])
 				command_fail(si, fault_noprivs, _("Sorry, \2%s\2, I do not see you listed as a Supporter on \2%s\2."), entity(si->smu)->name, chan);
 				return;
 
-			}		
+			}
 		}
 	}
 
@@ -873,5 +865,3 @@ static void cs_cmd_nosupport(sourceinfo_t *si, int parc, char *parv[])
 		command_success_nodata(si, _("\2NOSUPPORT\2 is now \2OFF\2, \2%s\2."), entity(si->smu)->name);
 	}
 }
-
-
