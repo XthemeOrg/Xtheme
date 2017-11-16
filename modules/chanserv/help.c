@@ -48,11 +48,12 @@ static void cs_cmd_help(sourceinfo_t *si, int parc, char *parv[])
 	{
 		command_success_nodata(si, _("***** \2%s Help\2 *****"), chansvs.nick);
 		command_success_nodata(si, _("\2%s\2 gives normal users the ability to maintain control\n"
-					"of a channel, without the need of a bot. Channel takeovers are\n"
+					"of a channel, without the need of a bot. Channel takeovers are \n"
 					"virtually impossible when a channel is registered with \2%s\2.\n"
-					"Registration is a quick and painless process. Once registered,\n"
+					"Registration is a quick and painless process. Once registered, \n"
 					"the founder can maintain complete and total control over the channel."),
 				chansvs.nick, chansvs.nick);
+		command_success_nodata(si, " ");
 		if (chansvs.expiry > 0)
 		{
 			command_success_nodata(si, _("Please note that channels will expire after %d days of inactivity,\n"
@@ -63,6 +64,7 @@ static void cs_cmd_help(sourceinfo_t *si, int parc, char *parv[])
 		{
 			command_success_nodata(si, _("Please note that channels will expire if there are no eligible channel successors."));
 		}
+		command_success_nodata(si, " ");
 		command_success_nodata(si, _("Successors are primarily those who have the +S (if available) or +R flag\n"
 					"set on their account in the channel, although other people may be chosen\n"
 					"depending on their access level and activity."));
