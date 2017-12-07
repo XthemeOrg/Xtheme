@@ -49,8 +49,8 @@ protocol
 
 
 	## STAY UP TO DATE WITH XthemeOrg NEWS, UPDATES & SECURITY ADVISORIES  
-	Subscribe to the XthemeOrg News (hosted by IRC4Fun) at:  
-	https://www.irc4fun.net/xtheme-news/  
+	Subscribe to the XthemeOrg News at:  
+	https://xtheme.org/org-tools/newsletter/  
 
 
 Xtheme IRC Services 8.0.0-dev1r2 Development Notes  
@@ -69,8 +69,8 @@ nickserv
 
 
 	## STAY UP TO DATE WITH XthemeOrg NEWS, UPDATES & SECURITY ADVISORIES  
-	Subscribe to the XthemeOrg News (hosted by IRC4Fun) at:  
-	https://www.irc4fun.net/xtheme-news/  
+	Subscribe to the XthemeOrg News at:  
+	https://xtheme.org/org-tools/newsletter/  
 
 
 Xtheme IRC Services 8.0.0-dev1 Development Notes  
@@ -205,8 +205,8 @@ protocol
 
 
 ## STAY UP TO DATE WITH XthemeOrg NEWS, UPDATES & SECURITY ADVISORIES  
-Subscribe to the XthemeOrg News (hosted by IRC4Fun) at:  
-https://www.irc4fun.net/xtheme-news/  
+Subscribe to the XthemeOrg News at:  
+https://xtheme.org/org-tools/newsletter/  
 
 
 Xtheme Services 7.5.2 Development Notes
@@ -236,8 +236,8 @@ sasl
 
 
 ## STAY UP TO DATE WITH XthemeOrg NEWS, UPDATES & SECURITY ADVISORIES
-Subscribe to the XthemeOrg News (hosted by IRC4Fun) at:
-https://www.irc4fun.net/xtheme-news/
+Subscribe to the XthemeOrg News at:
+https://xtheme.org/org-tools/newsletter/
 
 
 Xtheme Services 7.5.1 Development Notes
@@ -277,8 +277,8 @@ protocol
 
 
 ## STAY UP TO DATE WITH XthemeOrg NEWS, UPDATES & SECURITY ADVISORIES
-Subscribe to the XthemeOrg News (hosted by IRC4Fun) at:
-https://www.irc4fun.net/xtheme-news/
+Subscribe to the XthemeOrg News at:
+https://xtheme.org/org-tools/newsletter/
 
 Xtheme Services 7.5.0 Development Notes
 ============================================
@@ -300,8 +300,8 @@ nickserv
 
 
 ## STAY UP TO DATE WITH XthemeOrg NEWS, UPDATES & SECURITY ADVISORIES
-Subscribe to the XthemeOrg News (hosted by IRC4Fun) at:
-https://www.irc4fun.net/xtheme-news/
+Subscribe to the XthemeOrg News at:
+https://xtheme.org/org-tools/newsletter/
 
 Xtheme Services 7.5.0-rc1 Development Notes
 ============================================
@@ -384,8 +384,8 @@ proxyscan
 
 
 ## STAY UP TO DATE WITH XthemeOrg NEWS, UPDATES & SECURITY ADVISORIES
-Subscribe to the XthemeOrg News (hosted by IRC4Fun) at:
-https://www.irc4fun.net/xtheme-news/
+Subscribe to the XthemeOrg News at:
+https://xtheme.org/org-tools/newsletter/
 
 Xtheme Services 7.4.3 Development Notes
 =====================================
@@ -440,8 +440,8 @@ protocols
 
 
 ## STAY UP TO DATE WITH XthemeOrg NEWS, UPDATES & SECURITY ADVISORIES
-Subscribe to the XthemeOrg News (hosted by IRC4Fun) at:
-https://www.irc4fun.net/xtheme-news/
+Subscribe to the XthemeOrg News at:
+https://xtheme.org/org-tools/newsletter/
 
 ## NOTE
 ! Atheme Development has resumed.  Xtheme development will continue up until
