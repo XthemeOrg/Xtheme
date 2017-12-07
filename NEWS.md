@@ -1,3 +1,28 @@
+Xtheme IRC Services git (8.0.0-dev3) Development Notes  
+==================================================  
+chanserv  
+--------
+* regproc: Removed invalid pointer that could lead to a crash on ACTIVATE or REJECT. (Fixed)  
+
+core
+----
+* version: added Maro to to credits for being an excellent bug-finder and reporter.  
+
+doc
+---
+* INSTALL document Updated  
+
+help
+----
+* cservice/register: Fix to actually provide the necessary output.  
+* cservice: some cosmetic cleanups  
+
+
+## STAY UP TO DATE WITH XthemeOrg NEWS, UPDATES & SECURITY ADVISORIES  
+Subscribe to the XthemeOrg News at:  
+https://xtheme.org/org-tools/newsletter/  
+
+
 Xtheme IRC Services git (8.0.0-dev2) Development Notes  
 ==================================================  
 chanserv
