@@ -5,13 +5,13 @@ Xtheme-Services -- a set of services for IRC networks
 This program is free but copyrighted software; see the LICENSE file for
 details.
 
-Information about Services may be found at http://www.Xtheme.org/Xtheme/
+Information about Services may be found at http://www.Xtheme.org/xtheme/
 
 GETTING Xtheme:
 ---------------
 1) From Git:  git clone https://github.com/XthemeOrg/Xtheme.git
 2) From Releases  See: https://github.com/XthemeOrg/Xtheme/releases in ZIP or BZ2 packages.
-!) Please DO NOT click "Download ZIP" button from GitHub or the "Source code (*)" versions 
+!) Please DO NOT click "Download ZIP" button from GitHub or the "Source code (*)" versions
 under Releases or you will run into issues.
 
 TABLE OF CONTENTS
@@ -231,4 +231,3 @@ a live network like:
 or in your xtheme.conf by adding a loadmodule line like:
 
     loadmodule "modules/contrib/os_kill";
-
