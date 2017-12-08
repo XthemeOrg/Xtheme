@@ -2,11 +2,14 @@ Xtheme IRC Services 8.0.0-dev3 Development Notes
 ==================================================  
 chanserv  
 --------
-* regproc: Removed invalid pointer that could lead to a crash on ACTIVATE or REJECT. (Fixed)  
+* regproc: Removed invalid pointer that could lead to a crash on ACTIVATE or REJECT. _(Fixed)_  
 
 core
 ----
 * version: added Maro to to credits for being an excellent bug-finder and reporter.  
+
+dist  
+* rotatelogs.in: Added a Log Rotation script that will _(when **modified correctly** and **crontab'd to run once a day**)_ fixes OperServ GREPLOG.
 
 doc
 ---
@@ -19,6 +22,9 @@ help
 
 helpserv  
 * ticket: HelpServ REQUEST command can now notify network staff of help requests via MemoServ and Group memos!  
+
+operserv
+* greplog: Now works if the included log rotation script is configured properly, along with a daily crontab _(cronjob)_  
 
 
 ## STAY UP TO DATE WITH XthemeOrg NEWS, UPDATES & SECURITY ADVISORIES  
