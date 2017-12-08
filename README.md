@@ -32,18 +32,18 @@ Help is also available on the [Xtheme IRC Services Wiki](https://github.com/Xthe
 
 If you are interested in having a Services Web Interface (or Services Web Panel), SWI
 *IS* compatible with Xtheme and other Atheme forks, and is available at:
-http://www.Xtheme.org/SWI/ or https://github.com/XthemeOrg/SWI/
+http://www.Xtheme.org/swi/ or https://github.com/XthemeOrg/SWI/
 
 ## Stay up-to-date with XthemeOrg
 
 For News, Updates and Security Advisories, please subscribe to the XthemeOrg News mailing list at:
-https://www.irc4fun.net/xtheme-news/
+https://xtheme.org/org-tools/newsletter
 
 ## links / contact
 
  * [GitHub](http://www.github.com/XthemeOrg/Xtheme)
- * [Website](http://www.Xtheme.org/Xtheme/)
+ * [Website](http://www.Xtheme.org/xXtheme/)
  * [Xtheme Group Website] (http://www.Xtheme.org/)
- * [Xtheme Group News] https://www.irc4fun.net/xtheme-news/
+ * [Xtheme Group News] https://xtheme.org/org-tools/newsletter
  * [IRC](irc://irc.IRC4Fun.net/#Xtheme) irc.IRC4Fun.net #Xtheme
  * [IRC](irc://chat.freenode.net/#Xtheme) chat.Freenode.net #Xtheme
