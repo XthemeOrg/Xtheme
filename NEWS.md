@@ -1,4 +1,4 @@
-Xtheme IRC Services git (8.0.0-dev3) Development Notes  
+Xtheme IRC Services 8.0.0-dev3 Development Notes  
 ==================================================  
 chanserv  
 --------
@@ -26,7 +26,7 @@ Subscribe to the XthemeOrg News at:
 https://xtheme.org/org-tools/newsletter/  
 
 
-Xtheme IRC Services git (8.0.0-dev2) Development Notes  
+Xtheme IRC Services 8.0.0-dev2 Development Notes  
 ==================================================  
 chanserv
 --------
