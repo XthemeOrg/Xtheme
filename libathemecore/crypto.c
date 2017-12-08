@@ -76,16 +76,8 @@ static void
 crypt_log_modchg(const char *const restrict caller, const char *const restrict which,
                  const crypt_impl_t *const restrict impl)
 {
-	const crypt_impl_t *ci = crypt_get_default_provider();
-
-	if (!salt || !*salt)
-		salt = ci->salt();
-
-	if (!salt)
-		return NULL;
-
-	return ci->crypt(key, salt);
-}
+	const unsigned int level = (runflags & RF_STARTING) ? LG_DEBUG : LG_INFO;
+	const crypt_impl_t *const ci = crypt_get_default_provider();
 
 	(void) slog(level, "%s: %s crypto provider '%s'", caller, which, impl->id);
 
