@@ -17,6 +17,9 @@ help
 * cservice/register: Fix to actually provide the necessary output.  
 * cservice: some cosmetic cleanups  
 
+helpserv  
+* ticket: HelpServ REQUEST command can now notify network staff of help requests via MemoServ and Group memos!  
+
 
 ## STAY UP TO DATE WITH XthemeOrg NEWS, UPDATES & SECURITY ADVISORIES  
 Subscribe to the XthemeOrg News at:  

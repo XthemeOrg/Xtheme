@@ -1611,6 +1611,12 @@ memoserv {
 	 * What is the maximum amount of memos a user can have in their inbox?
 	 */
 	maxmemos = 30;
+
+  /* (*)helpgroup
+	 * If using GroupServ and MemoServ, which group should be notified of
+   * NEW HelpServ requests?
+	 */
+   helpgroup = "!Network-Staff"
 };
 
 /* GameServ configuration.

@@ -1,4 +1,5 @@
 /*
+ * Copyright (c) 2014-2017 Xtheme Development Group <Xtheme.org>
  * Copyright (c) 2005 William Pitcock <nenolod -at- nenolod.net>
  * Rights to this code are as documented in doc/LICENSE.
  *
@@ -15,6 +16,7 @@ DECLARE_MODULE_V1
 	VENDOR_STRING
 );
 
+service_t *memosvs = NULL;
 unsigned int ratelimit_count = 0;
 time_t ratelimit_firsttime = 0;
 
@@ -32,6 +34,8 @@ command_t helpserv_request = { "REQUEST", N_("Request help from network staff.")
 command_t helpserv_list = { "LIST", N_("Lists users waiting for help."), PRIV_HELPER, 1, helpserv_cmd_list, { .path = "helpserv/list" } };
 command_t helpserv_close = { "CLOSE", N_("Close a users' help request."), PRIV_HELPER, 2, helpserv_cmd_close, { .path = "helpserv/close" } };
 command_t helpserv_cancel = { "CANCEL", N_("Cancel your own pending help request."), AC_AUTHENTICATED, 1, helpserv_cmd_cancel, { .path = "helpserv/cancel" } };
+
+static char *groupmemo;
 
 struct ticket_ {
 	stringref nick;
@@ -58,6 +62,8 @@ void _modinit(module_t *m)
 	hook_add_event("myuser_delete");
 	hook_add_myuser_delete(account_delete_request);
 	hook_add_db_write(write_ticket_db);
+	memosvs = service_find("memoserv");
+	add_dupstr_conf_item("HELPGROUP", &memosvs->conf_table, 0, &groupmemo, NULL);
 
 	db_register_type_handler("HE", db_h_he);
 
@@ -72,6 +78,7 @@ void _moddeinit(module_unload_intent_t intent)
 	hook_del_user_drop(account_drop_request);
 	hook_del_myuser_delete(account_delete_request);
 	hook_del_db_write(write_ticket_db);
+	del_conf_item("HELPGROUP", &memosvs->conf_table);
 
 	db_unregister_type_handler("HE");
 
@@ -111,6 +118,64 @@ static void db_h_he(database_handle_t *db, const char *type)
 	l->creator = sstrdup(creator);
 	l->topic = sstrdup(topic);
 	mowgli_node_add(l, mowgli_node_create(), &helpserv_reqlist);
+}
+
+/* Add ability to send MemoServ memos and Group Memos to staff
+	that are supposed to assist.  (It might just help to let them know!) */
+	
+static void send_memo(sourceinfo_t *si, myuser_t *mu, const char *memo, ...)
+{
+	service_t *msvs;
+	va_list va;
+	char buf[BUFSIZE];
+
+	return_if_fail(si != NULL);
+	return_if_fail(mu != NULL);
+	return_if_fail(memo != NULL);
+
+	va_start(va, memo);
+	vsnprintf(buf, BUFSIZE, memo, va);
+	va_end(va);
+
+	if ((msvs = service_find("memoserv")) == NULL)
+		myuser_notice(chansvs.nick, mu, "%s", buf);
+	else
+	{
+		char cmdbuf[BUFSIZE];
+
+		mowgli_strlcpy(cmdbuf, entity(mu)->name, BUFSIZE);
+		mowgli_strlcat(cmdbuf, " ", BUFSIZE);
+		mowgli_strlcat(cmdbuf, buf, BUFSIZE);
+
+		command_exec_split(msvs, si, "SEND", cmdbuf, msvs->commands);
+	}
+}
+
+static void send_group_memo(sourceinfo_t *si, const char *memo, ...)
+{
+	service_t *msvs;
+	va_list va;
+	char buf[BUFSIZE];
+
+	return_if_fail(si != NULL);
+	return_if_fail(memo != NULL);
+
+	va_start(va, memo);
+	vsnprintf(buf, BUFSIZE, memo, va);
+	va_end(va);
+
+	if ((msvs = service_find("memoserv")) == NULL)
+		return;
+	else
+	{
+		char cmdbuf[BUFSIZE];
+
+		mowgli_strlcpy(cmdbuf, groupmemo, BUFSIZE);
+		mowgli_strlcat(cmdbuf, " ", BUFSIZE);
+		mowgli_strlcat(cmdbuf, buf, BUFSIZE);
+
+		command_exec_split(msvs, si, "SEND", cmdbuf, msvs->commands);
+	}
 }
 
 static void account_drop_request(myuser_t *mu)
@@ -208,6 +273,9 @@ static void helpserv_cmd_request(sourceinfo_t *si, int parc, char *parv[])
 
 			command_success_nodata(si, _("You have requested help about \2%s\2."), topic);
 			logcommand(si, CMDLOG_REQUEST, "REQUEST: \2%s\2", topic);
+			if (groupmemo != NULL)
+			send_group_memo(si, "[auto memo] Please review my HelpServ request about \2%s\2.", topic);
+
 			if (config_options.ratelimit_uses && config_options.ratelimit_period)
 				ratelimit_count++;
 			return;
@@ -231,6 +299,8 @@ static void helpserv_cmd_request(sourceinfo_t *si, int parc, char *parv[])
 
 	command_success_nodata(si, _("You have requested help about \2%s\2."), topic);
 	logcommand(si, CMDLOG_REQUEST, "REQUEST: \2%s\2", topic);
+	if (groupmemo != NULL)
+	send_group_memo(si, "[auto memo] Please review my HelpServ request about \2%s\2.", topic);
 	if (config_options.ratelimit_uses && config_options.ratelimit_period)
 		ratelimit_count++;
 	return;
