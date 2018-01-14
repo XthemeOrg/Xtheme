@@ -51,7 +51,6 @@ SRCS =			\
 	quiet.c	\
 	recover.c	\
 	register.c	\
-	regproc.c	\
 	set.c		\
 	set_core.c	\
 	set_email.c	\
