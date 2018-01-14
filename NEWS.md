@@ -1,3 +1,15 @@
+Xtheme IRC Services 8.0.0-dev4 (Git) Development Notes  
+========================================================  
+chanserv  
+--------
+* regproc: chanserv/regproc was removed -- it was full of bugs and the requesting network _(and myself)_ have lost interest in the module.
+
+
+## STAY UP TO DATE WITH XthemeOrg NEWS, UPDATES & SECURITY ADVISORIES  
+Subscribe to the XthemeOrg News at:  
+https://xtheme.org/org-tools/newsletter/    
+
+
 Xtheme IRC Services 8.0.0-dev3 Development Notes  
 ==================================================  
 chanserv  

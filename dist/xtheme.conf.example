@@ -336,7 +336,6 @@ loadmodule "modules/nickserv/vhost";
  * QUIET command (+q support)                   modules/chanserv/quiet
  * Channel takeover recovery (RECOVER command)  modules/chanserv/recover
  * REGISTER command                             modules/chanserv/register
- * REGPROC (REGISTER with 2 SUPPORTers)         modules/chanserv/regproc
  * SET command core                             modules/chanserv/set_core
  * SET EMAIL command                            modules/chanserv/set_email
  * SET ENTRYMSG command                         modules/chanserv/set_entrymsg
@@ -415,7 +414,6 @@ loadmodule "modules/chanserv/op";
 #loadmodule "modules/chanserv/quiet";
 loadmodule "modules/chanserv/recover";
 loadmodule "modules/chanserv/register";
-#loadmodule "modules/chanserv/regproc";
 loadmodule "modules/chanserv/set_core";
 loadmodule "modules/chanserv/set_email";
 loadmodule "modules/chanserv/set_entrymsg";
