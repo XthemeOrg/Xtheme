@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2016 Xtheme Development Group (Xtheme.org)
+ * Copyright (c) 2015-2018 Xtheme Development Group (Xtheme.org)
  * Copyright (c) 2005 William Pitcock, et al.
  * Rights to this code are as documented in doc/LICENSE.
  *
@@ -81,7 +81,7 @@ static void cs_cmd_topic(sourceinfo_t *si, int parc, char *parv[])
 		command_fail(si, fault_noprivs, _("\2%s\2 is closed."), chan);
 		return;
 	}
-	
+
 	if (metadata_find(mc, "private:frozen:freezer"))
 	{
 		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), chan);
@@ -163,7 +163,7 @@ static void cs_cmd_topicappend(sourceinfo_t *si, int parc, char *parv[])
 		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), chan);
 		return;
 	}
-	
+
 	topicbuf[0] = '\0';
 
 	if (c->topic)
@@ -238,7 +238,7 @@ static void cs_cmd_topicprepend(sourceinfo_t *si, int parc, char *parv[])
 		command_fail(si, fault_noprivs, _("\2%s\2 is closed."), chan);
 		return;
 	}
-	
+
         if (metadata_find(mc, "private:frozen:freezer"))
 	{
 		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), chan);
@@ -338,7 +338,7 @@ static void cs_cmd_topicswap(sourceinfo_t *si, int parc, char *parv[])
 		command_fail(si, fault_noprivs, _("\2%s\2 is closed."), chan);
 		return;
 	}
-	
+
 	if (metadata_find(mc, "private:frozen:freezer"))
 	{
 		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), chan);

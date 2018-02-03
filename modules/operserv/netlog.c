@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2017 siniStar (Austin Ellis)
+ * Copyright (c) 2017-2018 siniStar (Austin Ellis)
  * Xtheme Development Group (Xtheme.org)
  * Rights to this code are as documented in doc/LICENSE.
  *
  * operserv/netlog - Network logging routines for Xtheme.
- * Provides network logging of: connections & disconnects, 
+ * Provides network logging of: connections & disconnects,
  * joins & parts and topic changes.
  *
  */
@@ -15,7 +15,7 @@ DECLARE_MODULE_V1
 (
 	"operserv/netlog", false, _modinit, _moddeinit,
 	PACKAGE_STRING,
-	"Xtheme Development Group <http://www.Xtheme.org>"
+	VENDOR_STRING
 );
 
 static void watch_net_joins(hook_channel_joinpart_t *hdata);
@@ -161,4 +161,3 @@ void _moddeinit(module_unload_intent_t intent)
 	hook_del_user_nickchange(watch_net_nicks);
 
 }
-

@@ -1,7 +1,7 @@
 #!/bin/sh
 # application.sh: Special package building rules for xtheme-services.
 #
-# Copyright (c) 2014-2015 Xtheme.org
+# Copyright (c) 2014-2018 Xtheme.org
 # Copyright (c) 2007 atheme.org
 #
 # Permission to use, copy, modify, and/or distribute this software for

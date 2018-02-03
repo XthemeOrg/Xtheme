@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Austin Ellis <siniStar -at- IRC4Fun.net>
+ * Copyright (c) 2016-2018 Xtheme Development Group <www.Xtheme.org>
  * Rights to this code are as documented in doc/LICENSE.
  *
  * Hides (opts you OUT) of the automatic Last Login notice upon
@@ -86,5 +86,3 @@ static void ns_cmd_set_hidelastlogin(sourceinfo_t *si, int parc, char *parv[])
 		return;
 	}
 }
-
-

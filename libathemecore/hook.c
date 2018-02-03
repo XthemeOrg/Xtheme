@@ -2,7 +2,7 @@
  * xtheme-services: A collection of minimalist IRC services
  * hook.c: Hook system.
  *
- * Copyright (c) 2014-2015 Xtheme Development Group (http://www.Xtheme.org)
+ * Copyright (c) 2014-2018 Xtheme Development Group (http://www.Xtheme.org)
  * Copyright (c) 2005-2007 Atheme Project (http://www.atheme.org)
  * Copyright (c) 2013 William Pitcock <nenolod@dereferenced.org>
  *

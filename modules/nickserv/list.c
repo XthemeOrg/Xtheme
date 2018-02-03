@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2005-2007 Robin Burchell, et al.
  * Copyright (c) 2010 William Pitcock <nenolod@atheme.org>.
- * Copyright (c) 2016 Austin Ellis <siniStar@IRC4Fun.net>.
+ * Copyright (c) 2016-2018 Xtheme Development Group <Xtheme.org>.
  * Rights to this code are as documented in doc/LICENSE.
  *
  * This file contains code for the NickServ LIST function.

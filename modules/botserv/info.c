@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2009 Celestin, et al.
+ * Copyright (c) 2014-2018 Xtheme Development Group
  * Rights to this code are as documented in doc/LICENSE.
  *
  * This file contains a BService INFO which can show
@@ -138,5 +139,3 @@ static void bs_cmd_info(sourceinfo_t *si, int parc, char *parv[])
  * vim:sw=8
  * vim:noexpandtab
  */
-
-

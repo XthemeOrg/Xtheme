@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2005-2010 Atheme Development Group
- * Copyright (c) 2014-2017 Xtheme Development Group
+ * Copyright (c) 2014-2018 Xtheme Development Group
  * Rights to this code are documented in doc/LICENSE.
  *
  * This file contains version information.
@@ -15,10 +15,10 @@ const char *infotext[] =
 {
   "Xtheme IRC Services --",
   "Xtheme is a fork of Atheme",
-  "Copyright (c) 2014-2017 Xtheme Development Group (http://www.Xtheme.org)",
+  "Copyright (c) 2014-2018 Xtheme Development Group (http://www.Xtheme.org)",
   "Portions copyright(c) 2005-2015 Atheme Development Group (http://www.atheme.org)",
   "Portions copyright (c) 2004 Shrike Developers (http://www.malkier.net)",
-  "Portions copyright (c) 2017 ChatServices (https://bitbucket.org/chatlounge/chatservices)"
+  "Portions copyright (c) 2017-2018 ChatServices (https://bitbucket.org/chatlounge/chatservices)"
   "Portions copyright (c) 2015 Shalture (https://github.com/shalture/shalture)",
   " ",
   "Permission to use, copy, modify, and/or distribute this software for any",

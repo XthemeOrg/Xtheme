@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2016 Xtheme Development Group (Xtheme.org)
+ * Copyright (c) 2014-2018 Xtheme Development Group (Xtheme.org)
  * Copyright (c) 2003-2004 E. Will et al.
  * Copyright (c) 2006-2010 Atheme Development Group
  * Rights to this code are documented in doc/LICENSE.
@@ -43,7 +43,7 @@ static void cs_cmd_set_pubacl(sourceinfo_t *si, int parc, char *parv[])
 		command_fail(si, fault_nosuch_target, _("Channel \2%s\2 is not registered."), parv[0]);
 		return;
 	}
-	
+
 	if (metadata_find(mc, "private:frozen:freezer"))
 	{
 		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), parv[0]);

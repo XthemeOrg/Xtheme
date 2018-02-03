@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2016 Xtheme Development Group (Xtheme.org)
+ * Copyright (c) 2014-2018 Xtheme Development Group (Xtheme.org)
  * Copyright (c) 2005 William Pitcock, et al.
  * Rights to this code are as documented in doc/LICENSE.
  *
@@ -63,7 +63,7 @@ static void cs_cmd_drop(sourceinfo_t *si, int parc, char *parv[])
 		command_fail(si, fault_nosuch_target, _("Channel \2%s\2 is not registered."), name);
 		return;
 	}
-	
+
 	/* Ensure a founder cannot drop a frozen channel and re-register it.  Only staff may fdrop it. */
 	if (metadata_find(mc, "private:frozen:freezer"))
 	{

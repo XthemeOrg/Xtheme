@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2005 Atheme Development Group
- * Copyright (c) 2014-2016 Xtheme Development Group
+ * Copyright (c) 2014-2018 Xtheme Development Group
  * Rights to this code are documented in doc/LICENSE.
  *
  * This file contains the main() routine.
@@ -878,7 +878,7 @@ static void bs_cmd_assign(sourceinfo_t *si, int parc, char *parv[])
 		command_fail(si, fault_noprivs, _("You cannot assign bots to \2%s\2."), mc->name);
 		return;
 	}
-	
+
 	if (metadata_find(mc, "private:frozen:freezer"))
 	{
 		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), mc->name);

@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2014-2017 Xtheme Development Group <www.Xtheme.org>
+ * Copyright (c) 2014-2018 Xtheme Development Group <www.Xtheme.org>
  * Copyright (c) 2006 Robin Burchell <surreal.w00t@gmail.com>
  * Rights to this code are documented in doc/LICENCE.
  *
  * This file contains functionality implementing OperServ CLEARCHAN.
- * 
+ *
  * Default AKILL/ZLINE or DLINE time is 7 days (604800 seconds)
  *
  */

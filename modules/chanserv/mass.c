@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2016 Xtheme Development Group (Xtheme.org)
+ * Copyright (c) 2014-2018 Xtheme Development Group (Xtheme.org)
  * Rights to this code are as documented in doc/LICENSE.
  *
  * This file contains code for the CService MASS functions.
@@ -89,5 +89,3 @@ static void cs_cmd_mass(sourceinfo_t *si, int parc, char *parv[])
 	parv[1] = chan;
 	command_exec(si->service, si, c, parc - 1, parv + 1);
 }
-
-

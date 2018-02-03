@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Xtheme Development Group (Xtheme.org)
+ * Copyright (c) 2016-2018 Xtheme Development Group (Xtheme.org)
  * Copyright (c) 2009 Celestin, et al.
  * Rights to this code are as documented in doc/LICENSE.
  *
@@ -70,7 +70,7 @@ static void bs_cmd_say(sourceinfo_t *si, int parc, char *parv[])
 		command_fail(si, fault_noprivs, _("You are not authorized to perform this operation."));
 		return;
 	}
-	
+
 	if (metadata_find(mc, "private:frozen:freezer"))
 	{
 		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), mc->name);
@@ -93,7 +93,7 @@ static void bs_cmd_say(sourceinfo_t *si, int parc, char *parv[])
 		msg(bot->nick, channel, "(%s) %s", saybuf, message);
 		logcommand(si, CMDLOG_DO, "SAY:\2%s\2: \2%s\2", channel, message);
 	}
-	else 
+	else
 	{
 
 	msg(bot->nick, channel, "%s", message);
@@ -136,7 +136,7 @@ static void bs_cmd_act(sourceinfo_t *si, int parc, char *parv[])
 		command_fail(si, fault_noprivs, _("You are not authorized to perform this operation."));
 		return;
 	}
-	
+
 	if (metadata_find(mc, "private:frozen:freezer"))
 	{
 		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), mc->name);
@@ -171,5 +171,3 @@ static void bs_cmd_act(sourceinfo_t *si, int parc, char *parv[])
  * vim:sw=8
  * vim:noexpandtab
  */
-
-

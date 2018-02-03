@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2017 Xtheme Development Group
+ * Copyright (C) 2014-2018 Xtheme Development Group
  * Copyright (C) 2003-2004 E. Will et al.
  * Copyright (C) 2005-2006 Atheme Development Group
  * Rights to this code are as documented in doc/LICENSE.

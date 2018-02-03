@@ -1,5 +1,5 @@
 dnl Copyright (c) 2005 Atheme Development Group
-dnl Copyright (c) 2014-2017 Xtheme Development Group
+dnl Copyright (c) 2014-2018 Xtheme Development Group
 dnl Rights to this code are documented in doc/LICENSE.
 dnl
 dnl This file is the autoconf stub.
@@ -8,7 +8,7 @@ dnl Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.59)
 
-AC_INIT(xtheme, 8.0.0-dev3, [https://github.com/XthemeOrg/Xtheme/issues])
+AC_INIT(xtheme, 8.0.0-dev4, [https://github.com/XthemeOrg/Xtheme/issues])
 
 AC_CONFIG_AUX_DIR(autoconf)
 

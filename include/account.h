@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2005-2009 Atheme Development Group
- * Copyright (c) 2015-2017 Xtheme Development Group <www.Xtheme.org>
+ * Copyright (c) 2015-2018 Xtheme Development Group <www.Xtheme.org>
  * Rights to this code are as documented in doc/LICENSE.
  *
  * Data structures for account information.

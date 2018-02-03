@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2016 Xtheme Development Group (Xtheme.org)
+ * Copyright (c) 2014-2018 Xtheme Development Group (Xtheme.org)
  * Copyright (c) 2005 William Pitcock, et al.
  * Rights to this code are as documented in doc/LICENSE.
  *
@@ -68,7 +68,7 @@ static void cs_cmd_info(sourceinfo_t *si, int parc, char *parv[])
 		command_fail(si, fault_noprivs, _("\2%s\2 has been closed down by the %s administration."), mc->name, me.netname);
 		return;
 	}
-	
+
 	if (!has_priv(si, PRIV_CHAN_AUSPEX) && metadata_find(mc, "private:frozen:freezer"))
 	{
 		command_fail(si, fault_noprivs, _("\2%s\2 has been frozen by the %s administration."), mc->name, me.netname);
@@ -229,7 +229,7 @@ static void cs_cmd_info(sourceinfo_t *si, int parc, char *parv[])
 
 		strcat(buf, "FANTASY");
 	}
-	
+
 	if (MC_NOSYNC & mc->flags)
 	{
 		if (*buf)
@@ -336,7 +336,7 @@ static void cs_cmd_info(sourceinfo_t *si, int parc, char *parv[])
 
 		command_success_nodata(si, _("%s was \2CLOSED\2 by %s on %s (%s)"), mc->name, setter, strfbuf, reason);
 	}
-	
+
 	if (has_priv(si, PRIV_CHAN_AUSPEX) && (md = metadata_find(mc, "private:frozen:freezer")))
 	{
 		const char *setter = md->value;

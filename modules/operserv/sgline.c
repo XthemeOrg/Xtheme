@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2017 Xtheme Development Group <www.Xtheme.org>
+ * Copyright (c) 2014-2018 Xtheme Development Group <www.Xtheme.org>
  * Copyright (c) 2009 Atheme Development Group
  * Copyright (c) 2009 Rizon Development Team <http://redmine.rizon.net>
  * Rights to this code are documented in doc/LICENSE.

@@ -2,7 +2,7 @@
  * xtheme-services: A collection of minimalist IRC services
  * services.c: Routines commonly used by various services.
  *
- * Copyright (c) 2014-2017 Xtheme Development Group (http://www.Xtheme.org)
+ * Copyright (c) 2014-2018 Xtheme Development Group (http://www.Xtheme.org)
  * Copyright (c) 2005-2007 Atheme Project (http://www.atheme.org)
  *
  * Permission to use, copy, modify, and/or distribute this software for any
@@ -801,7 +801,7 @@ void change_notify(const char *from, user_t *to, const char *fmt, ...)
  *       - opers warned if necessary
  *
  * Note:
- *       - akills are added after 10 failed attempts 
+ *       - akills are added after 10 failed attempts
  *         on a user, for one hour (3600 seconds)
  */
 bool bad_password(sourceinfo_t *si, myuser_t *mu)

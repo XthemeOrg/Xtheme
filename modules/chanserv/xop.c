@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2016 Xtheme Development Group (Xtheme.org)
+ * Copyright (c) 2014-2018 Xtheme Development Group (Xtheme.org)
  * Copyright (c) 2005-2007 Atheme Development Group
  * Rights to this code are as documented in doc/LICENSE.
  *
@@ -110,7 +110,7 @@ static void cs_xop(sourceinfo_t *si, int parc, char *parv[], const char *levelde
 		command_fail(si, fault_noprivs, _("\2%s\2 is closed."), chan);
 		return;
 	}
-	
+
 	if (metadata_find(mc, "private:frozen:freezer") && (!has_priv(si, PRIV_CHAN_AUSPEX) || strcasecmp("LIST", cmd)))
 	{
 		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), chan);

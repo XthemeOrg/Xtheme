@@ -1,9 +1,9 @@
 /*
- * Copyright (c) 2014-2017 Xtheme Development Group (Xtheme.org)
+ * Copyright (c) 2014-2018 Xtheme Development Group (Xtheme.org)
  * Rights to this code are as documented in doc/LICENSE.
  *
  * This file contains code for the CService FSUSPEND functions
- * for Services Operators with the chan:admin privilege to 
+ * for Services Operators with the chan:admin privilege to
  * suspend any user's channel access (including Founders)
  *
  */
@@ -152,7 +152,7 @@ void cs_cmd_fsuspend_add(sourceinfo_t *si, int parc, char *parv[])
 		command_fail(si, fault_nosuch_target, _("Channel \2%s\2 is not registered."), chan);
 		return;
 	}
-	
+
 	if (metadata_find(mc, "private:frozen:freezer"))
 	{
 		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), chan);
@@ -323,7 +323,7 @@ void cs_cmd_fsuspend_add(sourceinfo_t *si, int parc, char *parv[])
 				metadata_delete(ca2, "sreason");
 			}
 				metadata_add(ca2, "sreason", reason);
-			
+
 			if ((metadata_find(ca2, "expires") != NULL))
 			{
 				metadata_delete(ca2, "expires");
@@ -370,7 +370,7 @@ void cs_cmd_fsuspend_del(sourceinfo_t *si, int parc, char *parv[])
 		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), chan);
 		return;
 	}
-	
+
 	if (metadata_find(mc, "private:close:closer"))
 	{
 		command_fail(si, fault_noprivs, _("\2%s\2 is closed."), chan);

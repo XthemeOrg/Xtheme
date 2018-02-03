@@ -1,8 +1,8 @@
 /*
- * Copyright (c) 2015-2017 Xtheme Development Group (Xtheme.org)
+ * Copyright (c) 2015-2018 Xtheme Development Group (Xtheme.org)
  * Rights to this code are as documented in doc/LICENSE.
  *
- * Similar to ChanServ CLOSE, but allows for channels to 
+ * Similar to ChanServ CLOSE, but allows for channels to
  * remain open while all access on the channel is suspended.
  *
  */

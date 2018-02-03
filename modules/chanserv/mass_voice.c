@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2016 Xtheme Development Group (Xtheme.org)
+ * Copyright (c) 2014-2018 Xtheme Development Group (Xtheme.org)
  * Rights to this code are as documented in doc/LICENSE.
  *
  * This file contains code for the ChanServ MASS VOICE function.
@@ -47,7 +47,7 @@ static void cs_cmd_mass_voice(sourceinfo_t *si, int parc, char *parv[])
 		command_fail(si, fault_nosuch_target, _("Channel \2%s\2 is not registered."), channel);
 		return;
 	}
-	
+
 	if (metadata_find(mc, "private:frozen:freezer"))
 	{
 		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), channel);
@@ -83,7 +83,7 @@ static void cs_cmd_mass_voice(sourceinfo_t *si, int parc, char *parv[])
 		command_fail(si, fault_noprivs, _("\2%s\2 is closed."), channel);
 		return;
 	}
-	
+
 	/* voice everyone */
 			MOWGLI_ITER_FOREACH(n, mc->chan->members.head)
 			{
@@ -101,5 +101,3 @@ static void cs_cmd_mass_voice(sourceinfo_t *si, int parc, char *parv[])
 
 	command_success_nodata(si, _("Mass Voiced channel users in \2%s\2."), channel);
 }
-
-

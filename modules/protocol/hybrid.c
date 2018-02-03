@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2005-2006 Atheme Development Group
- * Copyright (c) 2014-2015 Xtheme Development Group (http://www.Xtheme.org)
+ * Copyright (c) 2014-2018 Xtheme Development Group (http://www.Xtheme.org)
  * Rights to this code are documented in doc/LICENSE.
  *
  * This file contains protocol support for hybrid-based ircd.
@@ -87,7 +87,7 @@ static void m_tburst(sourceinfo_t *si, int parc, char *parv[])
 	time_t chants = atol(parv[0]);
 	channel_t *c = channel_find(parv[1]);
 	time_t topicts = atol(parv[2]);
- 
+
 	if (c == NULL)
 		return;
 

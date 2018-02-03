@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2015-2017 Xtheme Development Group <www.xtheme.org>
- * Copyright (c) 2015-2016 Shalture / ilbelkyr 
+ * Copyright (c) 2015-2018 Xtheme Development Group <www.xtheme.org>
+ * Copyright (c) 2015-2016 Shalture / ilbelkyr
  * Copyright (c) 2012 William Pitcock <nenolod@dereferenced.org>.
  *
  * Permission to use, copy, modify, and/or distribute this software for any
@@ -53,9 +53,9 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* Special thanks go to ilbelkyr for fixing most of the bugs in this 
+/* Special thanks go to ilbelkyr for fixing most of the bugs in this
  * module.  It was then tested and further modified by siniStar.
- * An example of the configuration needed will be added to the 
+ * An example of the configuration needed will be added to the
  * xtheme.conf.example, however it will be commented out by default.
  * NOTE: Default AKILL and ZLINE times are used from your default
  * akill_time and zline_time in xtheme.conf.
@@ -686,4 +686,3 @@ _moddeinit(module_unload_intent_t intent)
  * vim:sw=8
  * vim:noexpandtab
  */
- 

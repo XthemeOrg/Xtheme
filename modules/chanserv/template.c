@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2016 Xtheme Development Group (Xtheme.org)
+ * Copyright (c) 2014-2018 Xtheme Development Group (Xtheme.org)
  * Copyright (c) 2005-2006 Jilles Tjoelker, et al.
  * Rights to this code are as documented in doc/LICENSE.
  *
@@ -106,7 +106,7 @@ static void cs_cmd_template(sourceinfo_t *si, int parc, char *parv[])
 			command_fail(si, fault_noprivs, _("\2%s\2 is closed."), channel);
 			return;
 		}
-		
+
 		if (metadata_find(mc, "private:frozen:freezer") && !has_priv(si, PRIV_CHAN_AUSPEX))
 		{
 			command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), channel);
@@ -179,7 +179,7 @@ static void cs_cmd_template(sourceinfo_t *si, int parc, char *parv[])
 			command_fail(si, fault_noprivs, _("\2%s\2 is closed."), channel);
 			return;
 		}
-		
+
 		if (metadata_find(mc, "private:frozen:freezer"))
 		{
 			command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), channel);

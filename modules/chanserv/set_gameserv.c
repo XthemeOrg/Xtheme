@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2016 Xtheme Development Group (Xtheme.org)
+ * Copyright (c) 2014-2018 Xtheme Development Group (Xtheme.org)
  * Copyright (c) 2003-2004 E. Will et al.
  * Copyright (c) 2006-2009 Atheme Development Group
  * Rights to this code are documented in doc/LICENSE.
@@ -52,7 +52,7 @@ static void cs_cmd_set_gameserv(sourceinfo_t *si, int parc, char *parv[])
 		command_fail(si, fault_noprivs, _("\2%s\2 is frozen."), parv[0]);
 		return;
 	}
-	
+
 	if (!parv[1])
 	{
 		command_fail(si, fault_needmoreparams, STR_INSUFFICIENT_PARAMS, "SET GAMESERV");

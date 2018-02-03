@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2016 Xtheme Development Group (Xtheme.org)
+ * Copyright (c) 2014-2018 Xtheme Development Group (Xtheme.org)
  * Copyright (c) 2012 William Pitcock <nenolod@dereferenced.org>.
  *
  * Permission to use, copy, modify, and/or distribute this software for any
@@ -298,7 +298,7 @@ static void cs_cmd_activate(sourceinfo_t *si, int parc, char *parv[])
 	}
 
 	csreq_destroy(cs);
-	/* Check if GUARD is enabled by default and if so, ChanServ should join even 
+	/* Check if GUARD is enabled by default and if so, ChanServ should join even
 	 * if the founder is no longer present or identified. --siniStar
 	 */
 	if (mc->flags & MC_GUARD)

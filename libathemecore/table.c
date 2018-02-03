@@ -5,7 +5,7 @@
  * NOTE: This is a work in progress and will probably change considerably
  * later on.
  *
- * Copyright (c) 2014-2015 Xtheme Development Group (http://www.Xtheme.org)
+ * Copyright (c) 2014-2018 Xtheme Development Group (http://www.Xtheme.org)
  * Copyright (c) 2005-2007 Atheme Project (http://www.atheme.org)
  *
  * Permission to use, copy, modify, and/or distribute this software for any
@@ -300,4 +300,3 @@ void table_render(table_t *t, void (*callback)(const char *line, void *data), vo
  * vim:sw=8
  * vim:noexpandtab
  */
-

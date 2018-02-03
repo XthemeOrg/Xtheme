@@ -1,7 +1,7 @@
 #!/bin/sh
 # mkrelease.sh: Creates a release suitable for distfiles.atheme.org.
 #
-# Copyright (c) 2015 Xtheme.org
+# Copyright (c) 2015-2018 Xtheme.org
 # Copyright (c) 2007, 2011 atheme.org
 #
 # Permission to use, copy, modify, and/or distribute this software for

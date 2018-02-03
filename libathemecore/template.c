@@ -2,7 +2,7 @@
  * xtheme-services: A collection of minimalist IRC services
  * template.c: Functions to work with predefined flags collections
  *
- * Copyright (c) 2014-2015 Xtheme Development Group (http://www.Xtheme.org)
+ * Copyright (c) 2014-2018 Xtheme Development Group (http://www.Xtheme.org)
  * Copyright (c) 2005-2010 Atheme Project (http://www.atheme.org)
  *
  * Permission to use, copy, modify, and/or distribute this software for any

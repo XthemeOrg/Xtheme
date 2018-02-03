@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Xtheme Development Group (Xtheme.org)
+ * Copyright (c) 2015-2018 Xtheme Development Group (Xtheme.org)
  * Copyright (c) 2006 William Pitcock, et al.
  * Rights to this code are documented in doc/LICENSE.
  *

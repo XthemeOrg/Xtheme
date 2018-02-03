@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2005-2006 Atheme Development Group
- * Copyright (c) 2014-2015 Xtheme Development Group (http://www.Xtheme.org)
+ * Copyright (c) 2014-2018 Xtheme Development Group (http://www.Xtheme.org)
  * Rights to this code are documented in doc/LICENSE.
  *
  * InspIRCd link support

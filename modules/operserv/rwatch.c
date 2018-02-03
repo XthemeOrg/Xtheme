@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2017 Xtheme Development Group
+ * Copyright (c) 2014-2018 Xtheme Development Group
  * Copyright (c) 2006 Atheme Development Group
  * Rights to this code are documented in doc/LICENCE.
  *
@@ -13,7 +13,7 @@ DECLARE_MODULE_V1
 (
 	"operserv/rwatch", true, _modinit, _moddeinit,
 	PACKAGE_STRING,
-	"Atheme Development Group <http://www.atheme.org>"
+	VENDOR_STRING
 );
 
 static void rwatch_newuser(hook_user_nick_t *data);

@@ -9,7 +9,7 @@
  * Copyright (c) 1996-2002 Hybrid Development Team
  * Copyright (c) 2002-2005 ircd-ratbox development team
  * Copyright (c) 2005-2007 Atheme Project (http://www.atheme.org)
- * Copyright (c) 2014-2015 Xtheme Development Group (http://www.Xtheme.org)
+ * Copyright (c) 2014-2018 Xtheme Development Group (http://www.Xtheme.org)
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above

@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2005-2007 Atheme Development Group
+ * Copyright (c) 2017-2018 Xtheme Development Group
  * Rights to this code are as documented in doc/LICENSE.
  *
  * This file contains code for the Memoserv READ function

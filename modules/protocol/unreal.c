@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2003-2004 E. Will et al.
  * Copyright (c) 2005-2006 Atheme Development Group
- * Copyright (c) 2014-2015 Xtheme Development Group
+ * Copyright (c) 2014-2018 Xtheme Development Group
  * Rights to this code are documented in doc/LICENSE.
  *
  * This file contains protocol support for bahamut-based ircd.

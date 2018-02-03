@@ -2,7 +2,7 @@
 # xtheme-services: A collection of minimalist IRC services
 # mkhooktypes.sh: Code generator for type-safe hooks.
 #
-# Copyright (c) 2014-2015 IRC4Fun Development Group (http://www.Xtheme.org)
+# Copyright (c) 2014-2018 Xtheme Development Group (http://www.Xtheme.org)
 # Copyright (c) 2009 Atheme Project (http://www.atheme.org)
 #
 # Permission to use, copy, modify, and/or distribute this software for any

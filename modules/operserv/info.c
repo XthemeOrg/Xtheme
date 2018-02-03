@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2017 Xtheme Development Group <www.Xtheme.org>
+ * Copyright (c) 2014-2018 Xtheme Development Group <www.Xtheme.org>
  * Copyright (c) 2010 Atheme Development Group, et al.
  * Copyright (c) 2016-2017 ChatLounge IRC Network Development Team
  *

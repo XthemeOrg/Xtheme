@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2016 Xtheme Development Group (Xtheme.org)
+ * Copyright (c) 2014-2018 Xtheme Development Group (Xtheme.org)
  * Copyright (c) 2005 Robin Burchell, et al.
  * Copyright (c) 2010 William Pitcock <nenolod@atheme.org>.
  * Rights to this code are as documented in doc/LICENSE.
@@ -207,7 +207,7 @@ static void cs_cmd_list(sourceinfo_t *si, int parc, char *parv[])
 			if (!closedmatch)
 				continue;
 		}
-		
+
 		if (frozenpattern)
 		{
 			frozenmatch = false;
@@ -224,7 +224,7 @@ static void cs_cmd_list(sourceinfo_t *si, int parc, char *parv[])
 
 		if (closed && !metadata_find(mc, "private:close:closer"))
 			continue;
-		
+
 		if (frozen && !metadata_find(mc, "private:frozen:freezer"))
 			continue;
 

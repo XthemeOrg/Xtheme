@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Atheme Development Group
+ * Copyright (c) 2017-2018 Atheme Development Group
  * Rights to this code are as documented in doc/LICENSE.
  *
  * Data structures and macros for the PBKDF2v2 crypto module.

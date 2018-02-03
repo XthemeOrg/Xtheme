@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2017 Xtheme Development Group <Xtheme.org>
+ * Copyright (c) 2014-2018 Xtheme Development Group <Xtheme.org>
  * Copyright (c) 2005 William Pitcock <nenolod -at- nenolod.net>
  * Rights to this code are as documented in doc/LICENSE.
  *
@@ -122,7 +122,7 @@ static void db_h_he(database_handle_t *db, const char *type)
 
 /* Add ability to send MemoServ memos and Group Memos to staff
 	that are supposed to assist.  (It might just help to let them know!) */
-	
+
 static void send_memo(sourceinfo_t *si, myuser_t *mu, const char *memo, ...)
 {
 	service_t *msvs;
