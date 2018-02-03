@@ -1,6 +1,6 @@
 /* chanfix - channel fixing service
- * 
- * Copyright (c) 2014-2016 Xtheme Development Group <Xtheme.org>
+ *
+ * Copyright (c) 2014-2018 Xtheme Development Group <Xtheme.org>
  * Copyright (c) 2010 Atheme Development Group
  */
 
@@ -449,8 +449,8 @@ static void chanfix_cmd_fix(sourceinfo_t *si, int parc, char *parv[])
 		return;
 	}
 
-        /* Do not fix NOFIX'd channels */
-        if ((metadata_find(chan, "private:nofix:setter")) != NULL)
+  /* Do not fix NOFIX'd channels */
+  if ((metadata_find(chan, "private:nofix:setter")) != NULL)
 	{
 		command_fail(si, fault_nochange, _("\2%s\2 has NOFIX enabled."), parv[0]);
 		return;
