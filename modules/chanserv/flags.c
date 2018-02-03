@@ -208,6 +208,12 @@ static void do_list(sourceinfo_t *si, mychan_t *mc, unsigned int flags)
 
 		ca = n->data;
 
+		/* Do not clutter FLAGS list with AKICKS, they have their own list.
+		  Also channels with PUBACL loaded may not want AKICKs shown to easily
+			evade. -siniStar */
+		if (ca->level == CA_AKICK)
+			continue;
+
 		if (flags && !(ca->level & flags))
 			continue;
 
