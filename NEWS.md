@@ -2,7 +2,13 @@ Xtheme IRC Services 8.0.0-dev4 (Git) Development Notes
 ========================================================  
 chanserv  
 --------
+* flags: updated to not show AKICKS in a FLAGS LIST.  _(AKICKs have their own list, and channels with PUBACL set probably do not want their bans revealed to be easily evaded.)_  
 * regproc: chanserv/regproc was removed -- it was full of bugs and the requesting network _(and myself)_ have lost interest in the module.
+
+general
+-------
+* Copyright years updated.  
+* corrected line endings in various modules.    
 
 
 ## STAY UP TO DATE WITH XthemeOrg NEWS, UPDATES & SECURITY ADVISORIES  
