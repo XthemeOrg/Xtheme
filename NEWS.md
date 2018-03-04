@@ -1,4 +1,4 @@
-Xtheme IRC Services 8.0.0-dev4 (Git) Development Notes  
+Xtheme IRC Services 8.0.0-dev4 Development Notes  
 ========================================================  
 chanserv  
 --------
@@ -9,6 +9,10 @@ general
 -------
 * Copyright years updated.  
 * corrected line endings in various modules.    
+
+nickserv  
+--------  
+* Fix added for BADMAIL entries.  _(They will now be saved to database instead of disappearing)_
 
 
 ## STAY UP TO DATE WITH XthemeOrg NEWS, UPDATES & SECURITY ADVISORIES  
