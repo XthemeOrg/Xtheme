@@ -53,6 +53,7 @@ void _modinit(module_t *m)
 	hook_add_event("user_can_register");
 	hook_add_user_can_register(check_registration);
 	hook_add_db_write(write_bedb);
+	hook_add_db_write(write_bedb2);
 
 	db_register_type_handler("BE", db_h_be);
 	db_register_type_handler("BE2", db_h_be2);
@@ -64,6 +65,7 @@ void _moddeinit(module_unload_intent_t intent)
 {
 	hook_del_user_can_register(check_registration);
 	hook_del_db_write(write_bedb);
+	hook_del_db_write(write_bedb2);
 
 	db_unregister_type_handler("BE");
 	db_unregister_type_handler("BE2");
