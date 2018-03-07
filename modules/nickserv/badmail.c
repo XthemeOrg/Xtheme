@@ -146,9 +146,16 @@ static void check_registration(hook_user_register_check_t *hdata)
 	mowgli_node_t *n;
 	badmail_t *l;
 	kline_t *k;
+	user_t *u = hdata->si->su;
 
 	if (hdata->approved)
 		return;
+
+	if (!u)
+	{
+		command_fail(hdata->si, fault_noprivs, "Sorry, we do not accept registrations with email addresses from that domain.");
+	}
+
 
 	MOWGLI_ITER_FOREACH(n, ns_maillist.head)
 	{
