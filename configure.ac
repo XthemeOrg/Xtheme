@@ -8,7 +8,7 @@ dnl Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.59)
 
-AC_INIT(xtheme, 8.0.0-dev4, [https://github.com/XthemeOrg/Xtheme/issues])
+AC_INIT(xtheme, 8.0.0-dev5, [https://github.com/XthemeOrg/Xtheme/issues])
 
 AC_CONFIG_AUX_DIR(autoconf)
 
