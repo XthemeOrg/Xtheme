@@ -1,3 +1,9 @@
+Xtheme IRC Services 8.0.0-dev5 Development Notes  
+========================================================  
+nickserv  
+--------  
+* Crash bug fixed that was introduced by the option to AKILL on BADMAIL matches, with use of XMLRPC interfaces.  
+
 Xtheme IRC Services 8.0.0-dev4 Development Notes  
 ========================================================  
 chanserv  
