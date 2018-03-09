@@ -154,6 +154,7 @@ static void check_registration(hook_user_register_check_t *hdata)
 	if (!u)
 	{
 		command_fail(hdata->si, fault_noprivs, "Sorry, we do not accept registrations with email addresses from that domain.");
+		return;
 	}
 
 
