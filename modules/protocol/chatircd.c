@@ -1,7 +1,8 @@
 /*
- * Copyright (c) 2014-2016 ChatLounge IRC Network Development Team
+ * Copyright (c) 2014-2017 ChatLounge IRC Network Development Team
  * Copyright (c) 2003-2004 E. Will et al.
  * Copyright (c) 2005-2007 Atheme Development Group
+ *
  * Rights to this code are documented in doc/LICENSE.
  *
  * This file contains protocol support for ChatIRCd, a charybdis fork.
@@ -13,34 +14,42 @@
 #include "pmodule.h"
 #include "protocol/chatircd.h"
 
-DECLARE_MODULE_V1("protocol/chatircd", true, _modinit, NULL, PACKAGE_STRING, "ChatLounge IRC Network Development Team <http://www.chatlounge.net>");
+DECLARE_MODULE_V1
+(
+	"protocol/chatircd", true, _modinit, NULL,
+	PACKAGE_STRING,
+	VENDOR_STRING
+);
 
 /* *INDENT-OFF* */
 
 ircd_t chatircd = {
-        "ChatIRCd",			/* IRCd name */
-        "$$",                           /* TLD Prefix, used by Global. */
-        true,                           /* Whether or not we use IRCNet/TS6 UID */
-        false,                          /* Whether or not we use RCOMMAND */
-        true,                          /* Whether or not we support channel owners. */
-        true,                          /* Whether or not we support channel protection. */
-        true,                          /* Whether or not we support halfops. */
-	false,				/* Whether or not we use P10 */
-	false,				/* Whether or not we use vHosts. */
-	CMODE_EXLIMIT | CMODE_PERM,	/* Oper-only cmodes */
-        CSTATUS_OWNER,                              /* Integer flag for owner channel flag. */
-        CSTATUS_PROTECT,                              /* Integer flag for protect channel flag. */
-        CSTATUS_HALFOP,                              /* Integer flag for halfops. */
-        "+y",                            /* Mode we set for owner. */
-        "+a",                            /* Mode we set for protect. */
-        "+h",                            /* Mode we set for halfops. */
-	PROTOCOL_CHARYBDIS,		/* Protocol type */
+	"ChatIRCd",                     /* IRCd name */
+	"$$",                           /* TLD Prefix, used by Global. */
+	true,                           /* Whether or not we use IRCNet/TS6 UID */
+	false,                          /* Whether or not we use RCOMMAND */
+	true,                           /* Whether or not we support channel owners. */
+	true,                           /* Whether or not we support channel protection. */
+	true,                           /* Whether or not we support halfops. */
+	false,                          /* Whether or not we use P10 */
+	false,                          /* Whether or not we use vHosts. */
+	CMODE_EXLIMIT | CMODE_PERM | CMODE_NETADMINONLY | CMODE_ADMINONLY | CMODE_OPERONLY,	/* Oper-only cmodes */
+	CSTATUS_OWNER,                  /* Integer flag for owner channel flag. */
+	CSTATUS_PROTECT,                /* Integer flag for protect channel flag. */
+	CSTATUS_HALFOP,                 /* Integer flag for halfops. */
+	"+y",                           /* Mode we set for owner. */
+	"+a",                           /* Mode we set for protect. */
+	"+h",                           /* Mode we set for halfops. */
+	PROTOCOL_CHARYBDIS,             /* Protocol type */
 	CMODE_PERM,                     /* Permanent cmodes */
 	0,                              /* Oper-immune cmode */
 	"beIq",                         /* Ban-like cmodes */
 	'e',                            /* Except mchar */
 	'I',                            /* Invex mchar */
 	IRCD_CIDR_BANS | IRCD_HOLDNICK, /* Flags */
+	true,                           /* Uses quiets */
+	"q",                            /* Mode for quiets, if supported. (e.g. "q" on ChatIRCd)  Otherwise, NULL. */
+	""                              /* Acting extban, if needed (e.g. "m:" on InspIRCd).  "" otherwise. */
 };
 
 struct cmode_ chatircd_mode_list[] = {
@@ -122,7 +131,7 @@ static bool check_forward(const char *value, channel_t *c, mychan_t *mc, user_t 
 	if (u == NULL && mu == NULL)
 		return true;
 	target_c = channel_find(value);
-	target_mc = mychan_from(target_c);
+	target_mc = MYCHAN_FROM(target_c);
 	if (target_c == NULL && target_mc == NULL)
 		return false;
 	if (target_c != NULL && target_c->modes & CMODE_FTARGET)
@@ -156,7 +165,7 @@ static bool check_jointhrottle(const char *value, channel_t *c, mychan_t *mc, us
 				return false;
 			arg2 = p + 1;
 		}
-		else if (!isdigit(*p))
+		else if (!isdigit((unsigned char)*p))
 			return false;
 		p++;
 	}
@@ -178,6 +187,30 @@ static bool extgecos_match(const char *mask, user_t *u)
 	snprintf(hostgbuf, sizeof hostgbuf, "%s!%s@%s#%s", u->nick, u->user, u->vhost, u->gecos);
 	snprintf(realgbuf, sizeof realgbuf, "%s!%s@%s#%s", u->nick, u->user, u->host, u->gecos);
 	return !match(mask, hostgbuf) || !match(mask, realgbuf);
+}
+
+/* Check if the user is both *NOT* identified to services, and
+ * matches the given hostmask.  Syntax: $u:n!u@h
+ * e.g. +b $u:*!webchat@* would ban all webchat users who are not
+ * identified to services.
+ */
+static bool unidentified_match(const char *mask, user_t *u)
+{
+	char hostbuf[NICKLEN+USERLEN+HOSTLEN];
+	char realbuf[NICKLEN+USERLEN+HOSTLEN];
+
+	/* Is identified, so just bail. */
+	if (u->myuser != NULL)
+		return false;
+
+	snprintf(hostbuf, sizeof hostbuf, "%s!%s@%s", u->nick, u->user, u->vhost);
+	snprintf(realbuf, sizeof realbuf, "%s!%s@%s", u->nick, u->user, u->host);
+
+	/* If here, not identified to services so just check if the given hostmask matches. */
+	if (!match(mask, hostbuf) || !match(mask, realbuf))
+		return true;
+
+	return false;
 }
 
 static mowgli_node_t *chatircd_next_matching_ban(channel_t *c, user_t *u, int type, mowgli_node_t *first)
@@ -252,10 +285,10 @@ static mowgli_node_t *chatircd_next_matching_ban(channel_t *c, user_t *u, int ty
 						continue;
 					matched = !match(p, u->gecos);
 					break;
-				case 's':
+				case 'u':
 					if (p == NULL)
 						continue;
-					matched = !match(p, u->server->name);
+					matched = unidentified_match(p, u);
 					break;
 				case 'x':
 					if (p == NULL)
@@ -292,12 +325,15 @@ static void chatircd_notice_channel_sts(user_t *from, channel_t *target, const c
 static bool chatircd_is_extban(const char *mask)
 {
 	const char without_param[] = "oza";
-	const char with_param[] = "ajcxr";
+	const char with_param[] = "ajcxru";
 	const size_t mask_len = strlen(mask);
-	unsigned char offset = 0;
+	unsigned int offset = 0;
 
 	if ((mask_len < 2 || mask[0] != '$'))
 		return NULL;
+
+	if (strchr(mask, ' '))
+		return false;
 
 	if (mask_len > 2 && mask[1] == '~')
 		offset = 1;
@@ -340,4 +376,3 @@ void _modinit(module_t * m)
  * vim:sw=8
  * vim:noexpandtab
  */
- 
