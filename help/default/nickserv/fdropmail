@@ -1,0 +1,14 @@
+Help for FDROPMAIL:
+
+FDROPMAIL forcefully removes the given accounts, including
+all nicknames, channel access and memos attached to it from
+an email address.
+
+When dropping and re-registering an account during a
+netsplit, users on the other side of the split may later
+be recognized as the new account.
+
+Syntax: FDROPMAIL <email@address.com>
+
+Examples:
+    /msg &nick& FDROPMAIL spamguyz@hotmail.com

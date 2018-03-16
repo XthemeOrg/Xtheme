@@ -16,6 +16,7 @@ BASE_SRCS =			\
 	$(CRACKLIB_C)	\
 	drop.c	\
 	enforce.c	\
+	fdropmail.c \
 	freeze.c	\
 	ghost.c	\
 	group.c	\
