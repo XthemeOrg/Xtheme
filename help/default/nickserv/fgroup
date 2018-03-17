@@ -1,0 +1,21 @@
+Help for FGROUP:
+
+FGROUP registers the given nickname to a specified
+account.  This means that &nick& protects this nickname
+the same way as it protects the account name.  Most
+services commands will accept the new nickname as
+an alias for your account name.
+
+Please note that grouped nicks expire separately
+from accounts.  To prevent this, you must use them.
+Otherwise, all properties of the account are shared
+among all nicks registered to it.
+
+If an account name is not specified, the nick will be
+grouped to your account.
+
+Syntax: FGROUP <nickname> [accountname]
+
+Examples:
+    /msg &nick& FGROUP SomeNick
+    /msg &nick& FGROUP SomeName SomeNick

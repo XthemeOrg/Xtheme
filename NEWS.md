@@ -1,9 +1,26 @@
-Xtheme IRC Services 8.0.0-dev5 (Git) Development Notes  
+Xtheme IRC Services 8.0.0-dev6 Development Notes  
 ========================================================  
 nickserv  
 --------  
 * Added FDROPMAIL, which allows Services Operators to FDROP accounts by email address.  
+* Added FGROUP, which allows Services Operators to forcibly GROUP a nickname to their own account, or a user account.  
+
+operserv  
+--------  
+* Cleaned up OperServ INFO command.  Displayed output will now be in sections.  
+
+
+## STAY UP TO DATE WITH XthemeOrg NEWS, UPDATES & SECURITY ADVISORIES  
+Subscribe to the XthemeOrg News at:  
+https://xtheme.org/org-tools/newsletter/   
+
+
+Xtheme IRC Services 8.0.0-dev5 Development Notes  
+========================================================  
+nickserv  
+--------  
 * Crash bug fixed that was introduced by the option to AKILL on BADMAIL matches, with use of XMLRPC interfaces.  
+* Fixed bug that allowed BADMAIL registrations to proceed, even when they are denied. (via XMLRPC)
 
 
 ## STAY UP TO DATE WITH XthemeOrg NEWS, UPDATES & SECURITY ADVISORIES  
