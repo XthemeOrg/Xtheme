@@ -38,7 +38,7 @@ static void os_cmd_info(sourceinfo_t *si, int parc, char *parv[])
 
 	logcommand(si, CMDLOG_GET, "INFO");
 
-	command_success_nodata(si, _("\2General Xtheme Configurations:\2");
+	command_success_nodata(si, _("\2General Xtheme Configurations:\2"));
 	command_success_nodata(si, _("%s [%s] Build Date: %s", PACKAGE_STRING, revision, __DATE__));
 	command_success_nodata(si, _("Services have been up for %s - PID: %d"), timediff(CURRTIME - me.start), getpid());
 	command_success_nodata(si, _("How often services writes changes to the database: %d minutes"), config_options.commit_interval / 60);
