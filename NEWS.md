@@ -1,5 +1,9 @@
 Xtheme IRC Services 8.0.0-dev6 Development Notes  
 ========================================================  
+chanserv  
+--------  
+* AntiFlood updates, making it more effective against drive-by spammers, and flooders.  Also performs a verbose notice upon trigger.  
+
 nickserv  
 --------  
 * Added FDROPMAIL, which allows Services Operators to FDROP accounts by email address.  
