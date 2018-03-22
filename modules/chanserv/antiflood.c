@@ -243,7 +243,7 @@ antiflood_enforce_quiet(user_t *u, channel_t *c)
 		cb = place_quietmask(c, MTYPE_ADD, hostbuf);
 		if (cb != NULL)
 			cb->flags |= CBAN_ANTIFLOOD;
-	verbose(c, "\2Flood Protection Activated\2 by \2%s!%s@%s\2", u->nick, u->user, u->vhost);
+	msg(chansvs.nick, c->name, "\2Flood Protection Activated\2 by \2%s!%s@%s\2", u->nick, u->user, u->vhost);
 	slog(LG_INFO, "ANTIFLOOD:ENFORCE:QUIET: \2%s!%s@%s\2 on \2%s\2", u->nick, u->user, u->vhost, c->name);
 	}
 }
@@ -285,7 +285,7 @@ antiflood_enforce_kickban(user_t *u, channel_t *c)
 		cb = c->bans.head->data;
 		cb->flags |= CBAN_ANTIFLOOD;
 	}
-	verbose(c, "\2Flood Protection Activated\2 by \2%s!%s@%s\2", u->nick, u->user, u->vhost);
+	msg(chansvs.nick, c->name, "\2Flood Protection Activated\2 by \2%s!%s@%s\2", u->nick, u->user, u->vhost);
 	slog(LG_INFO, "ANTIFLOOD:ENFORCE:KICKBAN: \2%s!%s@%s\2 from \2%s\2", u->nick, u->user, u->vhost, c->name);
 }
 
@@ -293,7 +293,7 @@ static void
 antiflood_enforce_kline(user_t *u, channel_t *c)
 {
 	kline_add_user(u, "Flooding", 86400, chansvs.nick);
-	verbose(c, "\2Flood Protection Activated\2 by \2%s!%s@%s\2", u->nick, u->user, u->vhost);
+	msg(chansvs.nick, c->name, "\2Flood Protection Activated\2 by \2%s!%s@%s\2", u->nick, u->user, u->vhost);
 	slog(LG_INFO, "ANTIFLOOD:ENFORCE:AKILL: \2%s!%s@%s\2 from \2%s\2", u->nick, u->user, u->vhost, c->name);
 }
 
