@@ -483,6 +483,8 @@ static void ns_cmd_info(sourceinfo_t *si, int parc, char *parv[])
 	else if (metadata_find(mu, "private:held:holder"))
 		command_success_nodata(si, _("%s has been HELD by the %s administration."), entity(mu)->name, me.netname);
 
+	if (metadata_find(mu, "private:blocksendpass:on"))
+		command_success_nodata(si, _("%s has blocked SENDPASS, except by the %s administration."), entity(mu)->name, me.netname);
 
 	if (MU_WAITAUTH & mu->flags)
 		command_success_nodata(si, _("%s has \2NOT COMPLETED\2 registration verification"), entity(mu)->name);

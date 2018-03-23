@@ -3,12 +3,13 @@ Xtheme IRC Services 8.0.0-dev6 Development Notes
 chanserv  
 --------  
 * AntiFlood updates, making it more effective against drive-by spammers, and flooders.  Also performs a verbose notice upon trigger.  
-* MASS DE-COMMANDS are now available. _(Such as MASS DEVOICE, MASS DEOP, etc)_  
+* MASS DE-Commands are now available. _(Such as MASS DEVOICE, MASS DEOP, etc)_  
 
 nickserv  
 --------  
 * Added FDROPMAIL, which allows Services Operators to FDROP accounts by email address.  
 * Added FGROUP, which allows Services Operators to forcibly GROUP a nickname to their own account, or a user account.  
+* Added SET BLOCKSENDPASS, which when set to ON will only allow IRC Operators to SENDPASS that account. (per account setting)
 
 operserv  
 --------  

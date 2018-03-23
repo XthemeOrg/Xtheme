@@ -1,0 +1,9 @@
+Help for SET BLOCKSENDPASS:
+
+SET BLOCKSENDPASS will OPT you out of the SENDPASS
+command usage, except by IRC Operators.
+
+Syntax: SET BLOCKSENDPASS ON|OFF
+
+Example:
+    /msg &nick& SET BLOCKSENDPASS ON

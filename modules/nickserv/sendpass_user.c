@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2005 William Pitcock, et al.
+ * Copyright (c) 2014-2018 Xtheme Development Group <Xtheme.org>
  * Rights to this code are as documented in doc/LICENSE.
  *
  * This file contains code for the CService SENDPASS function.
@@ -118,6 +119,13 @@ static void ns_cmd_sendpass(sourceinfo_t *si, int parc, char *parv[])
 	if (metadata_find(mu, "private:freeze:freezer"))
 	{
 		command_fail(si, fault_noprivs, _("%s has been frozen by the %s administration."), entity(mu)->name, me.netname);
+		return;
+	}
+
+	if (metadata_find(mu, "private:blocksendpass:on"))
+	{
+		if (!is_ircop(si))
+		command_fail(si, fault_noprivs, _("%s only allows %s administration to use SENDPASS on this account."), entity(mu)->name, me.netname);
 		return;
 	}
 
