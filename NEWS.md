@@ -3,6 +3,7 @@ Xtheme IRC Services 8.0.0-dev6 Development Notes
 chanserv  
 --------  
 * AntiFlood updates, making it more effective against drive-by spammers, and flooders.  Also performs a verbose notice upon trigger.  
+* MASS DE-COMMANDS are now available. _(Such as MASS DEVOICE, MASS DEOP, etc)_  
 
 nickserv  
 --------  
