@@ -44,6 +44,7 @@ BASE_SRCS =			\
 	set.c		\
 	set_core.c	\
 	set_accountname.c \
+	set_blocksendpass.c	\
 	set_email.c	\
 	set_emailmemos.c  \
 	set_enforcetime.c	\
