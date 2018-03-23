@@ -124,7 +124,7 @@ static void ns_cmd_sendpass(sourceinfo_t *si, int parc, char *parv[])
 
 	if (metadata_find(mu, "private:blocksendpass:on"))
 	{
-		if (!is_ircop(si->smu))
+		if (!is_ircop(si->su))
 		command_fail(si, fault_noprivs, _("%s only allows %s administration to use SENDPASS on this account."), entity(mu)->name, me.netname);
 		return;
 	}
