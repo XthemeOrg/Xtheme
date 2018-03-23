@@ -1,0 +1,13 @@
+Help for MASS DEVOICE:
+
+This command will De-Voice all users in a channel, including
+the user issuing the command.  This command should be
+used with discretion.
+
+Use of this command requires the +R flag channel flag
+and +v flag.
+
+Syntax: MASS <#channel> DEVOICE
+
+Examples:
+    /msg &nick& MASS #ChatZone DEVOICE

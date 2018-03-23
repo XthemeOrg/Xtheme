@@ -1,0 +1,13 @@
+Help for MASS DEOWNER:
+
+This command will take Owner from all users in
+a channel, including the user issuing the command.
+This command should be used with discretion.
+
+Use of this command requires the +R flag channel flag
+and +q flag.
+
+Syntax: MASS <#channel> DEOWNER
+
+Examples:
+    /msg &nick& MASS #ChatZone DEOWNER

@@ -1,0 +1,13 @@
+Help for MASS DEOP:
+
+This command will De-Op all users in a channel, including
+the user issuing the command.  This command should be
+used with discretion.
+
+Use of this command requires the +R flag channel flag
+and +o flag.
+
+Syntax: MASS <#channel> DEOP
+
+Examples:
+    /msg &nick& MASS #ChatZone DEOP

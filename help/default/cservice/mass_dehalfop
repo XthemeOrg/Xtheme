@@ -1,0 +1,12 @@
+Help for MASS DEHALFOP:
+
+This command will De-HalfOp all users in a channel, including
+the user issuing the command.  This command should be
+used with discretion.
+
+Use of this command requires the +R flag channel flag.
+
+Syntax: MASS <#channel> DEHALFOP
+
+Examples:
+    /msg &nick& MASS #ChatZone DEHALFOP
