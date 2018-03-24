@@ -4,6 +4,7 @@ chanserv
 --------  
 * AntiFlood updates, making it more effective against drive-by spammers, and flooders.  Also performs a verbose notice upon trigger.  
 * MASS DE-Commands are now available. _(Such as MASS DEVOICE, MASS DEOP, etc)_  
+* Added SET NOOP - when set, only ChanServ or BotServ Bots will be allowed to be Operator and all commands must run through ChanServ.  
 
 nickserv  
 --------  
