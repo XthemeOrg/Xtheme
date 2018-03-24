@@ -350,6 +350,7 @@ loadmodule "modules/nickserv/vhost";
  * SET KEEPTOPIC command                        modules/chanserv/set_keeptopic
  * SET LIMITFLAGS command                       modules/chanserv/set_limitflags
  * SET MLOCK command                            modules/chanserv/set_mlock
+ * SET NOOP command                             modules/chanserv/set_noop
  * SET PREFIX command                           modules/chanserv/set_prefix
  * Channel info hiding (SET PRIVATE command)    modules/chanserv/set_private
  * SET PROPERTY command                         modules/chanserv/set_property
@@ -428,6 +429,7 @@ loadmodule "modules/chanserv/set_guard";
 loadmodule "modules/chanserv/set_keeptopic";
 #loadmodule "modules/chanserv/set_limitflags";
 loadmodule "modules/chanserv/set_mlock";
+loadmodule "modules/chanserv/set_noop";
 loadmodule "modules/chanserv/set_prefix";
 #loadmodule "modules/chanserv/set_private";
 loadmodule "modules/chanserv/set_property";
