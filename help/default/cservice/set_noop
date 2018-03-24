@@ -1,0 +1,10 @@
+Help for SET NOOP:
+
+SET NOOP ON designates that there should be no operators
+on the channel besides Services, and all Operator
+commands should be run through &nick&
+
+Syntax: SET <#channel> NOOP ON|OFF
+
+Example:
+    /msg &nick& SET #snoop NOOP ON
