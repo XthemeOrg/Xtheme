@@ -62,6 +62,7 @@ SRCS =			\
 	set_keeptopic.c	\
 	set_limitflags.c \
 	set_mlock.c	\
+	set_noop.c	\
 	set_prefix.c	\
 	set_private.c	\
 	set_property.c	\
