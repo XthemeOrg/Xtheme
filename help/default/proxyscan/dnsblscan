@@ -1,0 +1,10 @@
+Help for DNSBLSCAN:
+
+DNSBLSCAN allows network staff to manually scan a client
+for DNSBL matches.
+
+Syntax: DNSBLSCAN <nickname>
+
+Example:
+    /msg &nick& DNSBLSCAN BadDude
+

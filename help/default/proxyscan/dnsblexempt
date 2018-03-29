@@ -1,0 +1,14 @@
+Help for DNSBLEXEMPT:
+
+DNSBLEXEMPT allows network staff to set a list of clients
+that are EXEMPT from DNSBL matches.
+
+Syntax: DNSBLEXEMPT <action> [ip] [reason]
+
+ACTIONS: ADD, DEL, LIST
+
+Example:
+    /msg &nick& DNSBLEXEMPT ADD 123.123.123.123 authorized shell company
+    /msg &nick& DNSBLEXEMPT LIST
+    /msg &nick& DNSBLEXEMPT DEL 123.123.123.123
+
