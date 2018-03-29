@@ -1,4 +1,4 @@
-Xtheme IRC Services 8.0.0-dev6 Development Notes  
+Xtheme IRC Services 8.0.0 Development Notes  
 ========================================================  
 chanserv  
 --------  
@@ -15,6 +15,10 @@ nickserv
 operserv  
 --------  
 * Cleaned up OperServ INFO command.  Displayed output will now be in sections.  
+
+proxyscan  
+---------  
+* Added HELP files for ProxyScan.  (Note that SET DNSBLACTION is an OperServ command)  
 
 
 ## STAY UP TO DATE WITH XthemeOrg NEWS, UPDATES & SECURITY ADVISORIES  
