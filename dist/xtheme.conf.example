@@ -843,6 +843,7 @@ loadmodule "modules/transport/xmlrpc";
  * section.
  */
 #loadmodule "modules/proxyscan/main";
+#loadmodule "modules/proxyscan/help";
 #loadmodule "modules/proxyscan/dnsbl";
 
 /* Other modules.
