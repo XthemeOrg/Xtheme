@@ -516,7 +516,7 @@ static void cs_join(hook_channel_joinpart_t *hdata)
 
 		if (md != NULL)
 		{
-			notice(chansvs.nick, cu->user->nick, "Your access/flags have been \2SUSPENDED\2 on %s.", chan);
+			notice(chansvs.nick, cu->user->nick, "Your access/flags have been \2SUSPENDED\2 on %s.", mc->name);
 			notice(chansvs.nick, cu->user->nick, "Suspension \2reason:\2 %s -- \2Expiration:\2 %s", md->value, timediff(time_left));
 		}
 
