@@ -175,7 +175,6 @@ void cs_cmd_akick_add(sourceinfo_t *si, int parc, char *parv[])
 	char *uname;
 	char *token;
 	char *treason, reason[BUFSIZE];
-	metadata_t *md, *md2;
 
 	target = parv[1];
 	token = strtok(parv[2], " ");
@@ -206,8 +205,6 @@ void cs_cmd_akick_add(sourceinfo_t *si, int parc, char *parv[])
 		return;
 	}
 
-	time_t expires_on = 0;
-	long time_left = 0;
 	if (chanacs_source_has_flag(mc, si, CA_SUSPENDED))
 	{
 		command_fail(si, fault_noprivs, _("Your access in %s is \2suspended\2."), chan);
@@ -468,7 +465,6 @@ void cs_cmd_akick_del(sourceinfo_t *si, int parc, char *parv[])
 	mowgli_node_t *n, *tn;
 	char *chan = parv[0];
 	char *uname = parv[1];
-	char expiry[512];
 	metadata_t *md, *md2;
 
 	if (!chan || !uname)
@@ -497,8 +493,6 @@ void cs_cmd_akick_del(sourceinfo_t *si, int parc, char *parv[])
 		return;
 	}
 
-	time_t expires_on = 0;
-	long time_left = 0;
 	if (chanacs_source_has_flag(mc, si, CA_SUSPENDED))
 	{
 		command_fail(si, fault_noprivs, _("Your access in %s is \2suspended\2."), chan);
