@@ -506,19 +506,8 @@ static void cs_join(hook_channel_joinpart_t *hdata)
 
 	if (flags & CA_SUSPENDED)
 	{
-		md = metadata_find(ca2, "sreason");
-		if ((md2 = metadata_find(ca2, "expires")))
-		{
-			snprintf(expiry, sizeof expiry, "%s", md2->value);
-			expires_on = (time_t)atol(expiry);
-			time_left = difftime(expires_on, CURRTIME);
-		}
+		notice(chansvs.nick, cu->user->nick, "Your access/flags have been \2SUSPENDED\2 on %s.", mc->name);
 
-		if (md != NULL)
-		{
-			notice(chansvs.nick, cu->user->nick, "Your access/flags have been \2SUSPENDED\2 on %s.", mc->name);
-			notice(chansvs.nick, cu->user->nick, "Suspension \2reason:\2 %s -- \2Expiration:\2 %s", md->value, timediff(time_left));
-		}
 
 		if (ircd->uses_owner)
 		{
