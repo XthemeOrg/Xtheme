@@ -1,3 +1,19 @@
+Xtheme IRC Services 8.0.1 (Git) Development Notes  
+========================================================  
+chanserv  
+--------  
+* SUSPENDed users will now be notified of their suspension of access/flags upon joining the channel.  
+* SUSPEND has been modified to no longer refer to a list _(missed in prior removals of 'list' reference)_  
+
+proxyscan  
+---------  
+* Added HELP files for ProxyScan.  (Note that SET DNSBLACTION is an OperServ command)  
+
+
+## STAY UP TO DATE WITH XthemeOrg NEWS, UPDATES & SECURITY ADVISORIES  
+Subscribe to the XthemeOrg News at:  
+https://xtheme.org/org-tools/newsletter/   
+
 Xtheme IRC Services 8.0.0 Development Notes  
 ========================================================  
 chanserv  
@@ -15,10 +31,6 @@ nickserv
 operserv  
 --------  
 * Cleaned up OperServ INFO command.  Displayed output will now be in sections.  
-
-proxyscan  
----------  
-* Added HELP files for ProxyScan.  (Note that SET DNSBLACTION is an OperServ command)  
 
 
 ## STAY UP TO DATE WITH XthemeOrg NEWS, UPDATES & SECURITY ADVISORIES  

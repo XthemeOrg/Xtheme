@@ -347,7 +347,7 @@ void cs_cmd_suspend_add(sourceinfo_t *si, int parc, char *parv[])
 				metadata_delete(ca2, "expires");
 			}
 
-			command_success_nodata(si, _("SUSPENSION on \2%s\2 was successfully added to the SUSPEND list for \2%s\2."), mt->name, mc->name);
+			command_success_nodata(si, _("SUSPENSION on \2%s\2 was successfully added for \2%s\2."), mt->name, mc->name);
 
 			verbose(mc, "\2%s\2 SUSPENDED \2%s\2, with no expiration.", get_source_name(si), mt->name);
 			logcommand(si, CMDLOG_SET, "SUSPEND:ADD: \2%s\2 on \2%s\2", mt->name, mc->name);
