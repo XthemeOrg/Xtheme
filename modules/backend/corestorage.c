@@ -35,7 +35,7 @@ static void corestorage_db_write(void *filename, db_save_strategy_t strategy);
 static void corestorage_db_write_blocking(void *filename);
 static void corestorage_db_saved_cb(pid_t, int, void*);
 
-/* write atheme.db (core fields) */
+/* write services.db (core fields) */
 static void
 corestorage_db_save(database_handle_t *db)
 {
@@ -79,7 +79,7 @@ corestorage_db_save(database_handle_t *db)
 	db_write_word(db, bitmask_to_flags(ca_all));
 	db_commit_row(db);
 
-	slog(LG_DEBUG, "db_save(): saving myusers");
+	slog(LG_VERBOSE, "DATABASE: saving myusers");
 
 	MYENTITY_FOREACH_T(ment, &mestate, ENT_USER)
 	{
@@ -168,7 +168,7 @@ corestorage_db_save(database_handle_t *db)
 	/* XXX: groupserv hack.  remove when we have proper dependency resolution. --nenolod */
 	hook_call_db_write_pre_ca(db);
 
-	slog(LG_DEBUG, "db_save(): saving mychans");
+	slog(LG_VERBOSE, "DATABASE: saving mychans");
 
 	MOWGLI_PATRICIA_FOREACH(mc, &state, mclist)
 	{
@@ -265,7 +265,7 @@ corestorage_db_save(database_handle_t *db)
 	}
 
 	/* Services ignores */
-	slog(LG_DEBUG, "db_save(): saving svsignores");
+	slog(LG_VERBOSE, "DATABASE: saving svsignores");
 
 	MOWGLI_ITER_FOREACH(n, svs_ignore_list.head)
 	{
@@ -281,7 +281,7 @@ corestorage_db_save(database_handle_t *db)
 	}
 
 	/* Services operators */
-	slog(LG_DEBUG, "db_save(): saving sopers");
+	slog(LG_VERBOSE, "DATABASE: saving services-opers");
 
 	MOWGLI_ITER_FOREACH(n, soperlist.head)
 	{
@@ -304,7 +304,7 @@ corestorage_db_save(database_handle_t *db)
 		db_commit_row(db);
 	}
 
-	slog(LG_DEBUG, "db_save(): saving klines");
+	slog(LG_VERBOSE, "DATABASE: saving akills");
 
 	db_start_row(db, "KID");
 	db_write_uint(db, me.kline_id);
