@@ -44,6 +44,7 @@ static void cs_cmd_count(sourceinfo_t *si, int parc, char *parv[])
 	mowgli_node_t *n;
 	char str[512];
 	bool operoverride = false;
+	metadata_t *md, *md2;
 
 	if (!chan)
 	{
@@ -78,6 +79,18 @@ static void cs_cmd_count(sourceinfo_t *si, int parc, char *parv[])
 	if (chanacs_source_has_flag(mc, si, CA_SUSPENDED))
 	{
 		command_fail(si, fault_noprivs, _("Your access in %s is \2suspended\2."), chan);
+		md = metadata_find(ca, "sreason");
+		if ((md2 = metadata_find(ca, "expires")))
+		{
+			snprintf(expiry, sizeof expiry, "%s", md2->value);
+			expires_on = (time_t)atol(expiry);
+			time_left = difftime(expires_on, CURRTIME);
+		}
+
+		if (md != NULL)
+		{
+			command_fail(si, fault_noprivs, _("Suspension reason: %s -- Expiration: %s", md->value, timediff(time_left)));
+		}
 		return;
 	}
 

@@ -273,6 +273,7 @@ static void cs_cmd_flags(sourceinfo_t *si, int parc, char *parv[])
 	unsigned int addflags, removeflags, restrictflags;
 	hook_channel_acl_req_t req;
 	mychan_t *mc;
+	metadata_t *md, *md2;
 
 	if (parc < 1)
 	{
@@ -297,6 +298,18 @@ static void cs_cmd_flags(sourceinfo_t *si, int parc, char *parv[])
 	if (chanacs_source_has_flag(mc, si, CA_SUSPENDED))
 	{
 		command_fail(si, fault_noprivs, _("Your access in %s is \2suspended\2."), channel);
+		md = metadata_find(ca, "sreason");
+		if ((md2 = metadata_find(ca, "expires")))
+		{
+			snprintf(expiry, sizeof expiry, "%s", md2->value);
+			expires_on = (time_t)atol(expiry);
+			time_left = difftime(expires_on, CURRTIME);
+		}
+
+		if (md != NULL)
+		{
+			command_fail(si, fault_noprivs, _("Suspension reason: %s -- Expiration: %s", md->value, timediff(time_left)));
+		}
 		return;
 	}
 

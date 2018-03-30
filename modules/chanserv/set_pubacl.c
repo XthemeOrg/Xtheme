@@ -37,6 +37,7 @@ void _moddeinit(module_unload_intent_t intent)
 static void cs_cmd_set_pubacl(sourceinfo_t *si, int parc, char *parv[])
 {
 	mychan_t *mc;
+	metadata_t *md, *md2;
 
 	if (!(mc = mychan_find(parv[0])))
 	{
@@ -65,6 +66,18 @@ static void cs_cmd_set_pubacl(sourceinfo_t *si, int parc, char *parv[])
 	if (chanacs_source_has_flag(mc, si, CA_SUSPENDED))
 	{
 		command_fail(si, fault_noprivs, _("Your access in %s is \2suspended\2."), parv[0]);
+		md = metadata_find(ca, "sreason");
+		if ((md2 = metadata_find(ca, "expires")))
+		{
+			snprintf(expiry, sizeof expiry, "%s", md2->value);
+			expires_on = (time_t)atol(expiry);
+			time_left = difftime(expires_on, CURRTIME);
+		}
+
+		if (md != NULL)
+		{
+			command_fail(si, fault_noprivs, _("Suspension reason: %s -- Expiration: %s", md->value, timediff(time_left)));
+		}
 		return;
 	}
 
