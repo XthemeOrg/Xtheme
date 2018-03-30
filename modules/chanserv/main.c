@@ -353,7 +353,9 @@ static void cs_join(hook_channel_joinpart_t *hdata)
 	unsigned int flags;
 	bool noop;
 	bool secure;
-	metadata_t *md;
+	char strfbuf[BUFSIZE];
+	char expiry[512];
+	metadata_t *md, *md2;
 	chanacs_t *ca2;
 	char akickreason[120] = "User is banned from this channel", *p;
 
@@ -498,8 +500,26 @@ static void cs_join(hook_channel_joinpart_t *hdata)
 	/* Check to see if the user is SUSPENDED and if so; remove
 	 * any ops/protected/owner modes from them.
 	 */
+
+	 time_t expires_on = 0;
+	 long time_left = 0;
+
 	if (flags & CA_SUSPENDED)
 	{
+		md = metadata_find(ca2, "sreason");
+		if ((md2 = metadata_find(ca2, "expires")))
+		{
+			snprintf(expiry, sizeof expiry, "%s", md2->value);
+			expires_on = (time_t)atol(expiry);
+			time_left = difftime(expires_on, CURRTIME);
+		}
+
+		if (md != NULL)
+		{
+			notice(chansvs.nick, cu->user->nick, "Your access/flags have been \2SUSPENDED\2 on %s.", chan);
+			notice(chansvs.nick, cu->user->nick, "Suspension \2reason:\2 %s -- \2Expiration:\2 %s", md->value, timediff(time_left));
+		}
+
 		if (ircd->uses_owner)
 		{
 			modestack_mode_param(chansvs.nick, chan, MTYPE_DEL, ircd->owner_mchar[1], CLIENT_NAME(u));
