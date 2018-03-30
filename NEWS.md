@@ -5,6 +5,10 @@ chanserv
 * SUSPENDed users will now be notified of their suspension of access/flags upon joining the channel.  
 * SUSPEND has been modified to no longer refer to a list _(missed in prior removals of 'list' reference)_  
 
+logging  
+-------  
+* VERBOSE logging will now show refreshing (saving) of services data.   
+
 proxyscan  
 ---------  
 * Added HELP files for ProxyScan.  (Note that SET DNSBLACTION is an OperServ command)  
