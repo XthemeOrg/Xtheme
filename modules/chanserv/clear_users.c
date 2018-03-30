@@ -45,7 +45,6 @@ static void cs_cmd_clear_users(sourceinfo_t *si, int parc, char *parv[])
 	mowgli_node_t *n, *tn;
 	int oldlimit;
 	unsigned int nmembers;
-	metadata_t *md, *md2;
 
 	if (parc >= 2)
 		snprintf(fullreason, sizeof fullreason, "CLEAR USERS used by %s: %s", get_source_name(si), parv[1]);
@@ -79,18 +78,6 @@ static void cs_cmd_clear_users(sourceinfo_t *si, int parc, char *parv[])
 	if (chanacs_source_has_flag(mc, si, CA_SUSPENDED))
 	{
 		command_fail(si, fault_noprivs, _("Your access in %s is \2suspended\2."), channel);
-		md = metadata_find(ca, "sreason");
-		if ((md2 = metadata_find(ca, "expires")))
-		{
-			snprintf(expiry, sizeof expiry, "%s", md2->value);
-			expires_on = (time_t)atol(expiry);
-			time_left = difftime(expires_on, CURRTIME);
-		}
-
-		if (md != NULL)
-		{
-			command_fail(si, fault_noprivs, _("Suspension reason: %s -- Expiration: %s", md->value, timediff(time_left)));
-		}
 		return;
 	}
 

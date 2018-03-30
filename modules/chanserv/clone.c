@@ -35,7 +35,7 @@ static void cs_cmd_clone(sourceinfo_t *si, int parc, char *parv[])
 	mychan_t *mc, *mc2;
 	mowgli_node_t *n, *tn;
 	mowgli_patricia_iteration_state_t state;
-	metadata_t *md, *md2;
+	metadata_t *md;
 	chanacs_t *ca;
 	char *source = parv[0];
 	char *target = parv[1];
@@ -116,18 +116,6 @@ static void cs_cmd_clone(sourceinfo_t *si, int parc, char *parv[])
 	if (chanacs_source_has_flag(mc, si, CA_SUSPENDED))
 	{
 		command_fail(si, fault_noprivs, _("Your access in %s is \2suspended\2."), source);
-		md = metadata_find(ca, "sreason");
-		if ((md2 = metadata_find(ca, "expires")))
-		{
-			snprintf(expiry, sizeof expiry, "%s", md2->value);
-			expires_on = (time_t)atol(expiry);
-			time_left = difftime(expires_on, CURRTIME);
-		}
-
-		if (md != NULL)
-		{
-			command_fail(si, fault_noprivs, _("Suspension reason: %s -- Expiration: %s", md->value, timediff(time_left)));
-		}
 		return;
 	}
 

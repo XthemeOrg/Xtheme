@@ -132,7 +132,6 @@ void cs_cmd_suspend_add(sourceinfo_t *si, int parc, char *parv[])
 	char *uname;
 	char *token;
 	char *treason, reason[BUFSIZE];
-	metadata_t *md, *md2;
 
 	target = parv[1];
 	token = strtok(parv[2], " ");
@@ -166,18 +165,6 @@ void cs_cmd_suspend_add(sourceinfo_t *si, int parc, char *parv[])
 	if (chanacs_source_has_flag(mc, si, CA_SUSPENDED))
 	{
 		command_fail(si, fault_noprivs, _("Your access in %s is \2suspended\2."), chan);
-		md = metadata_find(ca, "sreason");
-		if ((md2 = metadata_find(ca, "expires")))
-		{
-			snprintf(expiry, sizeof expiry, "%s", md2->value);
-			expires_on = (time_t)atol(expiry);
-			time_left = difftime(expires_on, CURRTIME);
-		}
-
-		if (md != NULL)
-		{
-			command_fail(si, fault_noprivs, _("Suspension reason: %s -- Expiration: %s", md->value, timediff(time_left)));
-		}
 		return;
 	}
 
@@ -379,7 +366,6 @@ void cs_cmd_suspend_del(sourceinfo_t *si, int parc, char *parv[])
 	hook_channel_acl_req_t req;
 	chanacs_t *ca;
 	mowgli_node_t *n, *tn;
-	metadata_t *md, *md2;
 	char *chan = parv[0];
 	char *uname = parv[1];
 
@@ -411,19 +397,7 @@ void cs_cmd_suspend_del(sourceinfo_t *si, int parc, char *parv[])
 
 	if ((chanacs_source_has_flag(mc, si, CA_SUSPENDED)) && !(chanacs_source_has_flag(mc, si, CA_FOUNDER)))
 	{
-		command_fail(si, fault_noprivs, _("Your access in %s is \2suspended\2."), channel);
-		md = metadata_find(ca, "sreason");
-		if ((md2 = metadata_find(ca, "expires")))
-		{
-			snprintf(expiry, sizeof expiry, "%s", md2->value);
-			expires_on = (time_t)atol(expiry);
-			time_left = difftime(expires_on, CURRTIME);
-		}
-
-		if (md != NULL)
-		{
-			command_fail(si, fault_noprivs, _("Suspension reason: %s -- Expiration: %s", md->value, timediff(time_left)));
-		}
+		command_fail(si, fault_noprivs, _("Your access in %s is \2suspended\2."), chan);
 		return;
 	}
 

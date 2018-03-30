@@ -277,7 +277,6 @@ static void cs_cmd_quiet(sourceinfo_t *si, int parc, char *parv[])
 	char *targetlist;
 	char *strtokctx = NULL;
 	enum devoice_result devoice_result;
-	metadata_t *md, *md2;
 
 	if (!channel || !target)
 	{
@@ -307,18 +306,6 @@ static void cs_cmd_quiet(sourceinfo_t *si, int parc, char *parv[])
 	if (chanacs_source_has_flag(mc, si, CA_SUSPENDED))
 	{
 		command_fail(si, fault_noprivs, _("Your access in %s is \2suspended\2."), channel);
-		md = metadata_find(ca, "sreason");
-		if ((md2 = metadata_find(ca, "expires")))
-		{
-			snprintf(expiry, sizeof expiry, "%s", md2->value);
-			expires_on = (time_t)atol(expiry);
-			time_left = difftime(expires_on, CURRTIME);
-		}
-
-		if (md != NULL)
-		{
-			command_fail(si, fault_noprivs, _("Suspension reason: %s -- Expiration: %s", md->value, timediff(time_left)));
-		}
 		return;
 	}
 
@@ -396,7 +383,6 @@ static void cs_cmd_unquiet(sourceinfo_t *si, int parc, char *parv[])
 	char *targetlist;
 	char *strtokctx;
 	char target_extban[BUFSIZE];
-	metadata_t *md, *md2;
 
 	if (!channel)
 	{
@@ -446,18 +432,6 @@ static void cs_cmd_unquiet(sourceinfo_t *si, int parc, char *parv[])
 	if (chanacs_source_has_flag(mc, si, CA_SUSPENDED))
 	{
 		command_fail(si, fault_noprivs, _("Your access in %s is \2suspended\2."), channel);
-		md = metadata_find(ca, "sreason");
-		if ((md2 = metadata_find(ca, "expires")))
-		{
-			snprintf(expiry, sizeof expiry, "%s", md2->value);
-			expires_on = (time_t)atol(expiry);
-			time_left = difftime(expires_on, CURRTIME);
-		}
-
-		if (md != NULL)
-		{
-			command_fail(si, fault_noprivs, _("Suspension reason: %s -- Expiration: %s", md->value, timediff(time_left)));
-		}
 		return;
 	}
 
