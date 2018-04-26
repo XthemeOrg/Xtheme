@@ -42,7 +42,7 @@ https://xtheme.org/org-tools/newsletter
 ## links / contact
 
  * [GitHub](http://www.github.com/XthemeOrg/Xtheme)
- * [Website](http://www.Xtheme.org/xXtheme/)
+ * [Website](http://www.Xtheme.org/xtheme/)
  * [Xtheme Group Website] (http://www.Xtheme.org/)
  * [Xtheme Group News] https://xtheme.org/org-tools/newsletter
  * [IRC](irc://irc.IRC4Fun.net/#Xtheme) irc.IRC4Fun.net #Xtheme
