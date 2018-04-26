@@ -218,8 +218,6 @@ mqueue_should_enforce(mqueue_t *mq)
 			((newest->time - usr_first_seen) < antiflood_msg_time / 4))
 			return MQ_ENFORCE_LINE;
 
-		if (usr_matches >= 2 && ((newest->time - usr_first_seen) <= 2))
-			return MQ_ENFORCE_LINE;
 	}
 
 	return MQ_ENFORCE_NONE;
