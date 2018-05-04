@@ -69,6 +69,8 @@ static void cs_cmd_freeze(sourceinfo_t *si, int parc, char *parv[])
 	channel_t *c;
 	chanuser_t *cu, *origin_cu = NULL;
 	mowgli_node_t *n, *tn;
+	const char *topicsetter;
+	time_t prevtopicts;
 
 	if (!target || !action)
 	{
@@ -160,6 +162,11 @@ static void cs_cmd_freeze(sourceinfo_t *si, int parc, char *parv[])
 
 		}
 
+		topicsetter = "Services";
+		prevtopicts = c->topicts;
+		handle_topic(c, topicsetter, CURRTIME, "Channel has been mass suspended (FROZEN) by Network Staff");
+		topic_sts(c, chansvs.me->me, topicsetter, CURRTIME, prevtopicts, "Channel has been mass suspended (FROZEN) by Network Staff");
+
 		wallops("%s froze the channel \2%s\2 (%s).", get_oper_name(si), target, reason);
 		logcommand(si, CMDLOG_ADMIN, "FREEZE:ON: \2%s\2 (reason: \2%s\2)", target, reason);
 		command_success_nodata(si, _("\2%s\2 is now frozen."), target);
@@ -184,6 +191,11 @@ static void cs_cmd_freeze(sourceinfo_t *si, int parc, char *parv[])
 			if (!(mc->flags & MC_GUARD) && !(mc->flags & CHAN_LOG) && chanuser_find(c, user_find_named(chansvs.nick)))
 				part(target, chansvs.nick);
 		}
+
+		topicsetter = "Services";
+		prevtopicts = c->topicts;
+		handle_topic(c, topicsetter, CURRTIME, "Channel has been un-suspended (UN-FROZEN) by Network Staff");
+		topic_sts(c, chansvs.me->me, topicsetter, CURRTIME, prevtopicts, "Channel has been un-suspended (UN-FROZEN) by Network Staff");
 
 		wallops("%s unfroze the channel \2%s\2.", get_oper_name(si), target);
 		logcommand(si, CMDLOG_ADMIN, "FREEZE:OFF: \2%s\2", target);

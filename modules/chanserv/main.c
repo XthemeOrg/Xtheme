@@ -355,9 +355,11 @@ static void cs_join(hook_channel_joinpart_t *hdata)
 	bool secure;
 	char strfbuf[BUFSIZE];
 	char expiry[512];
-	metadata_t *md, *md2;
+	metadata_t *md, *md2,*md3;
 	chanacs_t *ca2;
 	char akickreason[120] = "User is banned from this channel", *p;
+	const char *topicsetter;
+	time_t prevtopicts;
 
 	if (cu == NULL || is_internal_client(cu->user))
 		return;
@@ -380,6 +382,15 @@ static void cs_join(hook_channel_joinpart_t *hdata)
 	if (chan->nummembers == 1 && mc->flags & MC_GUARD &&
 		metadata_find(mc, "private:botserv:bot-assigned") == NULL)
 		join(chan->name, chansvs.nick);
+
+	md3 = metadata_find(mc, "private:frozen:reason");
+	if (md3 != NULL)
+	{
+		topicsetter = "Services";
+		prevtopicts = chan->topicts;
+		handle_topic(chan, topicsetter, CURRTIME, "Channel has been mass suspended (FROZEN) by Network Staff");
+		topic_sts(chan, chansvs.me->me, topicsetter, CURRTIME, prevtopicts, "Channel has been mass suspended (FROZEN) by Network Staff");
+	}
 
 	/*
 	 * CS SET RESTRICTED: if they don't have any access (excluding AKICK)
