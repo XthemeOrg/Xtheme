@@ -1,9 +1,13 @@
-Xtheme IRC Services 8.0.1 (Git) Development Notes  
+Xtheme IRC Services 8.0.1 Development Notes  
 ========================================================  
 chanserv  
 --------  
 * SUSPENDed users will now be notified of their suspension of access/flags upon joining the channel.  
 * SUSPEND has been modified to no longer refer to a list _(missed in prior removals of 'list' reference)_  
+* ANTIFLOOD enhancements have been reduced back to their original values after complaints of innocent users being caught by ANTIFLOOD on _larger_ networks.  _(Services will still inform the channel each time it is triggered, and by whom triggered it.)_  
+* FROZEN channels are now topic-changed, informing of the mass-suspension (FROZEN) channel. _(The channel can continue being used, but no operator commands)_  
+* FROZEN channels are now topic-changed, informing of the mass-suspension (FROZEN) channel AT THE TIME OF ISSUE.  Recreated channels will also have their topics changed, reflecting the status.  
+* UNFROZEN channels are now topic-changed, informing of the mass UN-suspension (UNFROZEN) channel.  _(This topic will continue to get re-set upon channel's creation until changed)_  
 
 logging  
 -------  
