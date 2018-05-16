@@ -50,7 +50,7 @@
  * Asuka 1.2.1 or later                         modules/protocol/asuka
  * Bahamut 1.8.x                                modules/protocol/bahamut
  * Charybdis IRCd                               modules/protocol/charybdis
- * ChatIRCd 1.0 or later						            modules/protocol/chatircd
+ * ChatIRCd 1.0 or later                        modules/protocol/chatircd
  * DreamForge 4.6.7 or later                    modules/protocol/dreamforge
  * Hybrid 7.1.2 and later                       modules/protocol/hybrid
  * InspIRCd 2.0                                 modules/protocol/inspircd
@@ -502,7 +502,7 @@ loadmodule "modules/chanserv/antiflood";
  * SQLINE system                                modules/operserv/sqline
  * UPDATE command                               modules/operserv/update
  * UPTIME command                               modules/operserv/uptime
- * ZLINE system (DLINEs on some IRCds)			modules/operserv/zline
+ * ZLINE system (DLINEs on some IRCds)          modules/operserv/zline
  */
 loadmodule "modules/operserv/main";
 loadmodule "modules/operserv/akill";
@@ -1618,10 +1618,10 @@ memoserv {
 	maxmemos = 30;
 
   /* (*)helpgroup
-	 * If using GroupServ and MemoServ, which group should be notified of
+   * If using GroupServ and MemoServ, which group should be notified of
    * NEW HelpServ requests?
-	 */
-   helpgroup = "!Network-Staff"
+   */
+   helpgroup = "!Network-Staff";
 };
 
 /* GameServ configuration.
