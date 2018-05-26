@@ -110,7 +110,7 @@ static int mech_step_accname(sasl_session_t *p, char *message, size_t len, char 
 	o2i_ECPublicKey(&s->pubkey, &pubkey_raw_p, ret);
 
 #ifndef DEBUG_STATIC_CHALLENGE_VECTOR
-	RAND_pseudo_bytes(s->challenge, CHALLENGE_LENGTH);
+	RAND_bytes(s->challenge, CHALLENGE_LENGTH);
 #else
 	memset(s->challenge, 'A', CHALLENGE_LENGTH);
 #endif
