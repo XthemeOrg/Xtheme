@@ -71,11 +71,6 @@ static void ns_cmd_info(sourceinfo_t *si, int parc, char *parv[])
 		command_fail(si, fault_needmoreparams, _("Syntax: INFO <nickname>"));
 		return;
 	}
-	if (parv[0][0] == '#')
-	{
-		command_fail(si, fault_needmoreparams, _("That is a channel name, not a valid Nickname."));
-		return;
-	}
 
 	noexist_req.si = si;
 	noexist_req.nick = name;
