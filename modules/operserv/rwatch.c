@@ -520,6 +520,7 @@ static void rwatch_newuser(hook_user_nick_t *data)
 	char usermask[NICKLEN+USERLEN+HOSTLEN+GECOSLEN];
 	mowgli_node_t *n;
 	rwatch_t *rw;
+	kline_t *k;
 
 	/* If the user has been killed, don't do anything. */
 	if (!u)
@@ -555,7 +556,7 @@ static void rwatch_newuser(hook_user_nick_t *data)
 							u->host, u->nick, u->user, u->host,
 							rw->regex, rw->reason);
 					if (! (u->flags & UF_KLINESENT)) {
-						kline_sts("*", "*", u->host, 86400, rw->reason);
+						k = kline_add("*", u->ip, rw->reason, 86400, "RWATCH");
 						u->flags |= UF_KLINESENT;
 					}
 				}

@@ -1,3 +1,32 @@
+Xtheme IRC Services 8.0.3 Development Notes  
+========================================================  
+nickserv  
+--------  
+* badmail: Has been reverted to it's original version. The option to AKILL is really not necessary, and should not have been added.
+!NOTE:  
+ 1. You will want to perform a BADMAIL LIST and save your entries.  
+ 2. You will need to DELETE all previous entries (or edit services.db and remove all lines with 'BE2')  
+ 3. You will need to re-add all previous entries.
+  NOTE!
+
+operserv  
+--------  
+* rwatch: Update to include all RWATCH matches to the AKILL management system instead of just being sent server2server. It makes hits and matches much easier to manage.
+
+Xtheme Development is winding down.  It has been fun working on this project and it's offerings throughout the years - but all good things come to an end. Most of the (sensible) goals have been accomplished. Support will cease in February of 2019, but in the meantime can be obtained via GitHub Issues or via IRC4Fun in #Xtheme  
+
+
+Xtheme IRC Services 8.0.2 Development Notes  
+========================================================  
+nickserv  
+--------  
+* nickserv: Fixed bug that allowed users to crash services.    
+
+## STAY UP TO DATE WITH XthemeOrg NEWS, UPDATES & SECURITY ADVISORIES  
+Subscribe to the XthemeOrg News at:  
+https://xtheme.org/org-tools/newsletter/   
+
+
 Xtheme IRC Services 8.0.1 Development Notes  
 ========================================================  
 chanserv  
@@ -17,10 +46,10 @@ proxyscan
 ---------  
 * Added HELP files for ProxyScan.  (Note that SET DNSBLACTION is an OperServ command)  
 
-
 ## STAY UP TO DATE WITH XthemeOrg NEWS, UPDATES & SECURITY ADVISORIES  
 Subscribe to the XthemeOrg News at:  
 https://xtheme.org/org-tools/newsletter/   
+
 
 Xtheme IRC Services 8.0.0 Development Notes  
 ========================================================  
