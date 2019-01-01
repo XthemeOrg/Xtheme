@@ -1,3 +1,12 @@
+Xtheme IRC Services 8.0.3r2 (Git) Development Notes  
+========================================================  
+protocol  
+--------  
+* Add CertFP support for Unreal4
+
+Xtheme Development is winding down.  It has been fun working on this project and it's offerings throughout the years - but all good things come to an end. Most of the (sensible) goals have been accomplished. Support will cease in February of 2019, but in the meantime can be obtained via GitHub Issues or via IRC4Fun in #Xtheme  
+
+
 Xtheme IRC Services 8.0.3 Development Notes  
 ========================================================  
 nickserv  
